@@ -1,0 +1,24 @@
+[project]
+name = "tea-bioinformatics"
+version = "0.1.0"
+description = "A public knowledge graph (Neo4j/Cypher) reconciling Taiwanese tea cultivar genetics from fragmented literature, institutional records, and vernacular naming."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Kevin Lan" }]
+license = { file = "LICENSE" }
+keywords = ["knowledge-graph", "neo4j", "bioinformatics", "tea", "entity-resolution"]
+
+dependencies = [
+    "neo4j>=5.24",
+    "pandas>=2.2",
+    "duckdb>=1.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6.9",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

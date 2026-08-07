@@ -1,0 +1,644 @@
+---
+title: "A Public Knowledge Graph of Taiwanese Tea Genetic Heritage"
+subtitle: "Project Proposal: An MVP-First Public Web Application, with an Optional Peer-Reviewed Manuscript as a Secondary Output"
+author: "Kevin Lan"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+    fig-width: 7
+    fig-height: 5
+---
+
+# Purpose and Scope of This Document
+
+This document is a complete project proposal for building a public, browsable web application presenting Taiwanese tea genetic heritage as an interactive map and lineage explorer, built on top of a knowledge graph (a database structure that stores facts as connected nodes and relationships rather than as rows in a table). 
+
+**Primary product and secondary product.** The primary deliverable is the public web application itself — something a tea farmer, a tourist, a tea enthusiast, or a journalist could open in a browser and use, with no prior knowledge of graph databases or genetics required. A peer-reviewed manuscript and an archived, citable dataset (described in earlier drafts of this proposal as the primary goal) are retained as a **secondary, optional output** — pursued only if time allows after the web application reaches a usable state, and using the same underlying data and graph work as a side effect rather than as separately scheduled labor. This ordering is a deliberate reversal from an earlier draft of this proposal, which treated the manuscript as primary; the reasoning for the reversal is given in Part 2.
+
+**MVP-first execution model.** Given a realistic, sustained time budget of approximately three hours per week (see Part 6 for the full time and cost analysis under this constraint), the project is structured to produce a small, genuinely working, publicly visible product as early as possible — a minimum viable product (MVP) covering a small number of cultivars and regions — rather than attempting to gather complete data before anything is shippable. Additional cultivars, regions, and depth are added in subsequent, incremental passes once the MVP is live. This is a standard software engineering practice (ship a small working version, then iterate) applied deliberately here because the alternative — gathering "complete" data before building anything visible — has no natural stopping point in a domain this fragmented (see §1.3) and risks the project never reaching a public, usable state at all.
+
+This document is organized into six major parts:
+
+1. **Background and motivation** — what the problem is and why it has not already been solved.
+2. **Project direction and objectives** — what the web application is for, who it serves, and why the manuscript is now secondary rather than primary.
+3. **Methods**, written as a sequential, repeatable procedure (a "recipe") — every step a person could follow to reproduce the work, including decision points and the reasoning behind them, covering the data and graph layer shared by both the web application and the optional manuscript.
+4. **Technology stack analysis** — every combination of tools considered for the data/graph layer, their costs, and a structured comparison from the leanest possible build to the most complete build.
+5. **The public web application** — the design, page structure, and build pipeline for the primary deliverable, including the MVP-vs-full-build scoping decision.
+6. **Time and cost analysis under a 3-hour-per-week constraint** — a realistic, hour-based schedule for reaching the MVP and beyond, and how that pacing changes (or doesn't change) the cost estimates from Part 4.
+
+Every factual claim in this document is supported by a citation, a tagged assumption, or a labeled estimate. Every technical term is defined at first use. Where I am estimating or recommending rather than reporting a verified fact, I say so explicitly using the labels **[ESTIMATE]** or **[RECOMMENDATION]**.
+
+---
+
+# Part 1: Background and Problem Statement
+
+## 1.1 What a Knowledge Graph Is
+
+A **knowledge graph (KG)** is a way of organizing information as a network of entities (called *nodes*) and the labeled relationships between them (called *edges* or *relationships*), rather than as flat tables of rows and columns — a definition consistent with the standard reference text on the subject, Hogan, Blomqvist, Cochez, and d'Amato's 2021 *Knowledge Graphs* (Synthesis Lectures on Data, Semantics, and Knowledge). For example, instead of a spreadsheet row that says `cultivar_name: Jin Xuan, ttes_number: 12`, a knowledge graph stores Jin Xuan as a node and connects it to other nodes — its parent cultivars, the region it is grown in, the institution that bred it — through explicitly labeled relationships such as `BRED_FROM` or `GROWN_IN`. This structure makes it possible to ask questions that span many indirect connections at once, such as "which currently cultivated teas trace back to the wild endemic species," without writing a different table-join query for every possible path.
+
+**Neo4j** is the specific software (a *graph database management system*) this project will use to store and query the knowledge graph. It uses a query language called **Cypher**, which is built around pattern-matching on nodes and relationships rather than the row-and-column logic of SQL (Structured Query Language, the standard language for relational databases).
+
+## 1.2 The Botanical and Historical Background
+
+Tea in Taiwan exists in three genetically and historically distinct lineages, and any informatics project in this space has to model all three correctly or the resulting graph will misrepresent the domain.
+
+**Wild endemic tea.** *Camellia formosensis* is a species of wild tea native to Taiwan. It is endemic to Taiwan, found in the central, southern, and southeastern parts of the island — including Nantou, Yunlin, Chiayi, Kaohsiung, Pingtung, and Taitung Counties — at elevations of 800 to 1,800 meters above sea level. For decades it was classified as a lower-rank variety under one of the two commercially cultivated lineages, but molecular evidence using nuclear DNA sequencing recovered a monophyletic group (a set of organisms descended from a single common ancestor and excluding all others) of "Taiwanese wild tea" that was clearly separated from the other two taxa, supporting its status as a distinct species. This species is ecologically vulnerable: it is found mainly in mountainous areas at low-to-medium altitude in central and southern Taiwan, particularly in Nantou County's Renai, Sinyi, and Lugu townships, and a 2024 report from National Taiwan University's Experimental Forest Administration urged the government to designate a wild population site on Fonghuang Mountain as a conservation area because of population decline.
+
+**Introduced and naturalized large-leaf tea.** During Japanese colonial rule in the 1920s and 1930s, large-leaf Assamica-type tea trees (Camellia sinensis var. assamica) were introduced to Taiwan to support black tea production near Sun Moon Lake and Chiayi. Over time, some of these trees naturalized or were deliberately preserved, eventually becoming the "old-tree" heritage stands found today. These are referred to locally as 祖樹 ("ancestor trees").
+
+**Institutionally bred cultivars.** Since 1903, a government research institute — first named the Tea Manufacture Experiment Station, later renamed the Taiwan Tea Experiment Station, and since 2003 called the **Tea Research and Extension Station (TRES)** — has served as the only professional institution for the study and testing of tea in Taiwan, governed by the Council of Agriculture. TRES assigns each successful cultivar a sequential number prefixed "TTES" (e.g., TTES No. 12), and many of these have documented cross-breeding parentage. As one concrete example, TTES No. 12, known as Jin Xuan, was developed in 1981 by crossing "Ying Zhi Hong Xin" with TTES No. 8, and TTES No. 18 ("Ruby Red") is a cross between the native wild species Camellia formosensis and an Assamica variety from Burma — meaning this single cultivar is a literal genetic bridge between the wild endemic lineage and the commercially bred lineage.
+
+## 1.3 The Data Problem (Why This Project Is Necessary)
+
+This domain has rich underlying science but no structured, queryable, public dataset. I confirmed through direct search that TRES, despite being the sole national authority on this subject, has no public application programming interface (API — a structured way for software to request data from a service) and no downloadable structured database of its cultivar registry. The information that does exist is fragmented across three categories of source, each with its own problems:
+
+1. **Peer-reviewed genetic studies**, which contain the most rigorous data but represent it in small, inconsistent table formats embedded in PDF files, often using different identifier systems from each other. For example, one study (Hu, Tsai & Lin, 2014) analyzed 55 germplasm samples classified into sinensis type, assamica type, sinensis×assamica hybrids, assamica×assamica hybrids, formosensis (wild), and formosensis var. yungkangensis, while a separate study (the ITS2 barcode study) analyzed a different set of 113 varieties using its own internal numbering.
+
+2. **The institution's own descriptive web pages**, which contain breeding history in unstructured prose, in both English and Chinese, with no machine-readable export.
+
+3. **Identifier ambiguity across all sources.** The same cultivar is referred to by multiple, non-interchangeable names and codes. Successful cultivars developed by TRES are given two different numbers for identification — for instance, Jin Xuan is both "TTES No. 12" and the internal breeding code "2027." Tea names are, in the words of one specialist source, "on their own quite confusing," and there is "a ton of directly conflicting information and incorrect statements even amongst reputable sources."
+
+This is the actual research gap. It is not that nobody has studied Taiwanese tea genetics — several rigorous molecular studies exist. It is that nobody has reconciled these studies, the institutional records, and the historical breeding lineage into a single, internally consistent, machine-queryable structure with transparent handling of disagreement between sources. That reconciliation problem, not the tea itself, is the informatics contribution.
+
+---
+
+# Part 2: Project Direction and Objectives
+
+## 2.1 Primary Objective: A Public Web Application
+
+The primary objective of this project is a public, freely accessible website that lets a non-specialist explore Taiwanese tea genetic heritage through two main interactions: a map of named tea-growing regions, and a searchable, visual lineage explorer showing how today's commercial cultivars trace back to wild or historically introduced ancestors. The full design of this application is given in Part 5; this section states only the reasoning behind making it the primary objective.
+
+**Why this, and why now, ahead of the manuscript.** Three reasons support leading with the public application rather than the manuscript:
+
+1. **Audience reach.** A peer-reviewed paper and an archived dataset (Zenodo, GitHub) are built for researchers who already know to look for this kind of resource. They do not reach a tea farmer in Lugu, a tea drinker in Taipei, or someone outside academia trying to understand why a cultivar tastes different at different elevations. A public web application is the only one of the candidate output formats that a general audience would actually open and use.
+2. **No natural stopping point in literature-only work.** As established in §1.3, the underlying data is fragmented across colonial-era institutional records, multiple independent molecular studies, and informal vernacular naming with no existing structured integration. A manuscript-first approach tends to keep expanding its literature base in search of "complete" coverage before anything is shippable — there is always one more paper to check. A product-first approach forces an earlier, concrete stopping point: enough data to populate a small, genuinely working MVP (defined precisely in §5.6), then iterate.
+3. **The manuscript becomes easier, not harder, once the application exists.** The data extraction, entity resolution, schema design, and graph construction work described in Part 3 is shared by both outputs — none of it is wasted by reordering. A live, public, screenshot-able, citable web application is, if anything, a *stronger* "broader impact" statement for an eventual paper than a static dataset alone, since it demonstrates the data has already reached a real audience rather than only existing as a hypothetical resource.
+
+## 2.2 Secondary (Optional) Objective: A Peer-Reviewed Manuscript
+
+Producing a peer-reviewed manuscript remains a worthwhile, citable outcome, but it is treated here as **secondary and conditional on available time** after the web application reaches a usable state (see Part 6 for the time budget this implies). The manuscript content below is preserved from the original framing of this project and remains valid if and when time allows pursuing it — nothing about deprioritizing it changes what it would say, only when (or whether) it gets written.
+
+### 2.2.1 Defining "Informatics" as a Field for This Purpose
+
+Before stating the manuscript's objectives, it is necessary to be precise about what makes a contribution belong to **informatics** (the science of organizing, structuring, and computing over information) as opposed to botany, agronomy, or food science — because the venue and the framing of the paper depend entirely on this distinction. An informatics contribution is judged on whether it advances a **method, a model, or a reusable artifact** for handling information — not on whether the underlying subject matter (tea) is independently interesting. Tea is the case study; the contribution is the method.
+
+There are four general categories of informatics contribution applicable here, identified through review of comparable published work:
+
+1. **Entity resolution / data integration methods** — techniques for recognizing when records from different sources, using different identifiers, refer to the same real-world entity, and for resolving conflicts when sources disagree.
+2. **Ontology design** — formally defining the categories of thing (classes) and the categories of relationship (predicates) that exist in a domain, especially in a domain where no agreed-upon schema previously existed.
+3. **Graph analytics methods** — applying mathematical measures from network science to answer questions that were not answerable before the data existed in graph form.
+4. **Reusable software/platform contributions** — building a documented, open pipeline that other researchers could point at a *different* dataset (a different crop, a different country's germplasm registry) and get a working knowledge graph out.
+
+Existing published work confirms all four categories are active and accepted in this space. Page (2019) published "Ozymandias," a biodiversity knowledge graph built by mapping locally-scoped identifiers from different databases to shared global identifiers, explicitly framing the construction and identifier-reconciliation process itself as the contribution, in the journal *PeerJ*. Babalou et al. (2022) published "iKNOW," a platform that lets users upload biodiversity datasets, clean them, and semi-automatically extract entities and relationships into a knowledge graph, in *Biodiversity Information Science and Standards*. These are direct precedents for categories 1, 2, and 4.
+
+### 2.2.2 Candidate Manuscript Objective
+
+**[RECOMMENDATION]** If pursued, combine category 1 (entity resolution) and category 3 (graph analytics) into a single paper with the following structure, because this gives the strongest "problem → method → result" narrative arc that peer reviewers look for:
+
+> **Problem:** Botanical cultivar and germplasm data for Taiwanese tea is fragmented across colonial-era institutional records, multiple independent molecular studies using inconsistent identifier systems, and informal vernacular naming, with no existing structured integration.
+>
+> **Method:** A reproducible pipeline is developed that extracts cultivar and species records from primary literature, resolves conflicting identifiers into a canonical entity model using an explicit, documented resolution procedure, and loads the resolved entities into a property graph (a graph database model in which both nodes and relationships can carry attributes, as opposed to a plain triple-based model) with full source provenance retained on every claim.
+>
+> **Result:** The resulting graph is queried using network centrality measures (mathematical measures of how structurally important a node is within a network, defined precisely in §3.8) to test whether the documented concern in the literature — that many recently released cultivars descend from a single ancestor variety, Chin-Shin-Oolong, creating a potential genetic vulnerability risk for the crop — can be objectively quantified and demonstrated using graph structure alone, rather than asserted qualitatively. A working, public web application built on the same graph (Part 5) can additionally be cited as a broader-impact and data-reuse artifact in the manuscript's data availability statement.
+
+### 2.2.3 Further-Optional Objective
+
+**[RECOMMENDATION]** If time and reviewer feedback permit extending the paper further, layer in objective category 2 (ontology design) as a methodological appendix: formally align the schema developed in §3.4 with **Darwin Core**, the most widely used data standard for sharing biodiversity occurrence data, maintained by the **Biodiversity Information Standards (TDWG)** organization. TDWG, originally called the Taxonomic Databases Working Group, is a non-profit scientific association, affiliated with the International Union of Biological Sciences, that develops open standards for biodiversity data exchange — most notably the Darwin Core standard, used by the Global Biodiversity Information Facility (GBIF) to aggregate over a billion biological observation records. Aligning to this standard is not required for a valid contribution, but it substantially increases the interoperability of the resulting dataset and is something reviewers in this specific subfield reward, since alignment with international standards like OWL (Web Ontology Language, a formal standard for representing knowledge) enhances an ontology's interoperability and facilitates integration with broader knowledge graphs.
+
+### 2.2.4 Target Venue (If Pursued)
+
+**[RECOMMENDATION]** *Biodiversity Information Science and Standards (BISS)* is the most realistic and well-matched target venue. BISS is published on the ARPHA journal platform, which supports the full life cycle of a manuscript from writing through submission, peer review, and publication, and Pensoft (its publisher) adheres strictly to gold open access, meaning all published articles are made freely available immediately upon publication under a Creative Commons Attribution license. BISS is specifically described as an "innovative open access journal publishing abstracts related to biodiversity standards, methods, guidelines, models and applications in biodiversity informatics," submitted to TDWG for presentation at its annual meeting — TDWG's 2026 meeting is scheduled for September 21–25, 2026, in Oslo, Norway, with a stated theme of "Research and Robot-ready Biodiversity Data Standards."
+
+
+A secondary, higher-rigor-bar option is *PeerJ* or *PeerJ Computer Science*, which has already published directly comparable work — Page's Ozymandias biodiversity knowledge graph paper appeared in PeerJ in 2019. This venue would be appropriate if the graph analytics (centrality) component is developed with greater statistical rigor than a BISS short-format methods paper requires.
+
+---
+
+# Part 3: Methods — Written as a Recipe
+
+This section is written as a sequential procedure. Each step states what to do, what tool performs it, what the expected output is, and — where relevant — what decision the researcher must make and why. Steps are numbered for direct reference in a future methods section of the manuscript, should the secondary objective in §2.2 be pursued.
+
+**A note on MVP scope versus full scope.** Every step below describes the complete, eventual version of that step — the full literature base, the full schema, the full set of extracted records. Per the MVP-first execution model stated in the Purpose and Scope section, the *first pass* through Steps 1–7 should deliberately use a deep but narrow slice of this scope — enough cultivars, species, and regions to populate a working version of the public web application's four pages (Part 5), not the full eventual dataset. §5.6 gives the precise MVP data-scope target. Each step can then be re-run, incrementally, with a larger slice of data, without changing the procedure itself — the recipe does not change between an MVP pass and a later, fuller pass, only how much raw material goes into it each time.
+
+## 3.1 Recipe Overview (Mise en Place)
+
+Before any step-specific tool is opened, the following accounts and resources should be set up. This is the equivalent of gathering and prepping ingredients before cooking begins.
+
+| Resource | Purpose | Cost |
+|---|---|---|
+| Zotero account + browser connector | Reference and PDF capture | Free |
+| Neo4j AuraDB Free instance | Hosted graph database | Free — supports a single database with up to 200,000 nodes and 400,000 relationships, no credit card required |
+| DuckDB (installed as a Python package) | Lightweight embedded staging/validation database | Free — open source, no account or server setup required, installed with a single package command |
+| GitHub account + empty repository | Version-controlled code and data storage | Free |
+| Zenodo account (can link to GitHub) | Permanent archival + DOI minting for the final dataset | Free |
+| Python environment (managed via `uv`) | All scripting | Free |
+| Obsidian (local installation) | Note-taking and pre-graph conceptual sketching | Free |
+
+## 3.2 Step 1 — Literature Acquisition
+
+**Goal:** Assemble the complete set of primary sources before any data extraction begins, so that entity resolution in Step 3 has the full picture and does not need to be redone as new sources are discovered mid-project.
+
+**Procedure:**
+
+1. Using Perplexity Pro's Deep Research mode (or, as a no-cost substitute, repeated manual web searches plus Google Scholar), run targeted queries for each of the three taxonomic lineages described in §1.2: the wild endemic species, the introduced Assamica lineage, and the TRES-bred cultivar series.
+2. For every source that contains a structured table, a named cultivar with a TTES number, a documented cross-parentage, or population/location data for wild *C. formosensis*, save the full text PDF (where legally accessible — see note below) into Zotero using its browser connector. This automatically captures bibliographic metadata (author, year, journal, DOI) alongside the file.
+3. Tag every saved item in Zotero with one of three category tags corresponding to the three lineages, plus a fourth tag for general/contextual sources (history, terminology, market context).
+
+**Output of this step:** A Zotero library of all primary sources, fully tagged and ready to export as a bibliography file (`.bib`) for use directly in the Quarto manuscript.
+
+**Note on legal access:** Only sources that are open access or that the researcher has legitimate institutional/personal access to should be downloaded in full. Where full text is not accessible, the bibliographic record and abstract are sufficient for citation purposes; the data extraction in Step 3 should rely only on what is legitimately readable.
+
+## 3.3 Step 2 — Conceptual Sketching Before Formal Modeling
+
+**Goal:** Externalize the researcher's own understanding of the domain into a navigable form *before* committing to a rigid graph schema, so that schema design in Step 4 is informed by accumulated understanding rather than guessed upfront.
+
+**Procedure:**
+
+1. In Obsidian, create one Markdown note per distinct real-world entity encountered during reading: one note per species, one per cultivar, one per named institution, one per named geographic region.
+2. Within each note, use double-bracket "wikilink" syntax (e.g., `[[Camellia formosensis]]`) any time that note refers to another entity. Obsidian automatically builds a visual graph of these links.
+3. Periodically open Obsidian's Graph View. Visually inspect which notes have many connections and which are isolated. An isolated note (no links in or out) signals either a genuinely standalone fact or — more often — a relationship the researcher has not yet articulated explicitly. Both cases require a decision before proceeding.
+
+**Output of this step:** A linked note vault that serves as a human-readable, informally-structured precursor to the formal graph schema. This vault is not the final data source — it is a thinking tool — but it substantially de-risks Step 4 by surfacing ontology gaps early, when they are cheap to fix, rather than after data is loaded into Neo4j.
+
+## 3.4 Step 3 — Ontology and Schema Design
+
+**Goal:** Define, in writing, every class of node and every type of relationship that the knowledge graph will contain, before any data loading occurs. This step produces the formal contract that all later steps must conform to.
+
+**Procedure:**
+
+1. Using a free diagramming tool (draw.io), draw every node type as a labeled box and every relationship type as a labeled arrow between boxes. Do not yet add example data — this diagram describes *types* of things, not specific instances.
+2. For every relationship arrow, the label must be a specific, falsifiable predicate — not a vague catch-all. For example, `BRED_FROM` (with a direction indicating parent → offspring) is acceptable; a generic label like `RELATED_TO` is not, because it cannot later be queried meaningfully.
+3. For every node type, list its required attributes (called *properties* in Neo4j terminology) and explicitly mark which properties are mandatory versus optional.
+4. **Critical design decision — provenance modeling.** Because source documents disagree with each other (see §1.3), every relationship in the schema must carry, at minimum, the following properties: `source` (a citation key linking back to the Zotero/BibTeX entry), and `confidence` (a categorical label such as `primary_molecular_data`, `institutional_record`, or `secondary_synthesis`, capturing how authoritative that specific claim is). This is not optional — without it, the graph silently presents contested claims as settled fact, which is both a scientific integrity problem and a likely point of peer-review rejection.
+5. Where a fact is genuinely disputed between two sources (for example, conflicting reported parentage for the same cultivar), the schema must support representing *both* claims as separate relationship instances, each with its own source and confidence tag, rather than forcing a single answer. This decision should be documented explicitly in the eventual methods section, since it is itself a methodological contribution (it demonstrates how to represent epistemic uncertainty in a graph database, a generalizable technique).
+
+**The schema (minimum viable version):**
+
+```
+Node types:
+  Species        {scientific_name, chinese_name, iucn_status, first_described_year}
+  Cultivar        {ttes_number, breeding_code, name_zh, name_en, year_released, purpose}
+  ParentGermplasm {name, origin_country, taxonomic_type}
+  Region          {name, county, elevation_min_m, elevation_max_m}
+  Institution     {name, abbreviation, founded_year}
+
+Relationship types:
+  (:Cultivar)-[:BRED_FROM {source, confidence, year_documented}]->(:ParentGermplasm)
+  (:Cultivar)-[:BRED_FROM {source, confidence}]->(:Cultivar)
+  (:Cultivar)-[:DERIVED_FROM_SPECIES {source, confidence}]->(:Species)
+  (:Cultivar)-[:GROWN_IN {source}]->(:Region)
+  (:Species)-[:FOUND_IN {source, population_status}]->(:Region)
+  (:Institution)-[:DEVELOPED {source}]->(:Cultivar)
+```
+
+**Output of this step:** A finalized schema diagram (exported as an image and stored in the project repository) and a written data dictionary defining every node property and relationship type. This artifact is itself a candidate supplementary file for the eventual publication.
+
+## 3.5 Step 4 — Data Extraction and Entity Resolution
+
+**Goal:** Convert unstructured and semi-structured source material (PDF tables, institutional web prose) into clean, structured records, and then resolve every record referring to the same real-world entity under a single canonical identifier — this step is the paper's primary technical contribution.
+
+**Procedure:**
+
+1. **Structured extraction from papers with tables.** For sources containing genuine data tables (such as the germplasm classification table in the Hu, Tsai & Lin 2014 study, or the variety list in the ITS2 barcode study), extract the table programmatically. Where the PDF's text layer is parseable, use a Python PDF-table extraction library; where it is not (e.g., a scanned or image-based table), transcribe manually into a CSV (comma-separated values) file, with a `source_page` column noting exactly where each row came from.
+
+2. **Unstructured extraction from institutional prose.** For TRES's own descriptive pages and similar narrative sources, extraction cannot be automated reliably because the information is embedded in sentences, not tables. Use a large language model (such as Claude) as an extraction assistant: provide the raw text and a strict output schema, and request structured output (e.g., JSON) containing only the fields defined in the Step 3 schema. **This step requires mandatory human verification** — every machine-extracted record must be spot-checked against the original source text before being accepted, because language models can mis-state or hallucinate specific numeric facts (e.g., a year or a parentage claim) even when the surrounding prose is summarized correctly. Record which records were human-verified as a `verified: true/false` flag in the dataset; this is a transparency requirement, not a formality.
+
+3. **Build the entity crosswalk table.** This is the central artifact of the entity resolution process. For every distinct cultivar, create one row in a crosswalk table containing every known alias: the TTES number, the internal breeding code, the Chinese name, the romanized name, and any English common name (e.g., the documented case where "Jin Xuan is both 12 and 2027" becomes one crosswalk row mapping both identifiers to a single canonical ID, e.g., `cultivar_0012`).
+
+4. **Resolve conflicts explicitly, never silently.** When two sources disagree (for instance, on a release year, or on which parent variety was used in a cross), do not pick one value and discard the other. Instead, encode both claims as separate `BRED_FROM` relationships (per the schema decision in §3.4, step 4) and record the disagreement in a `data_quality_notes.md` file in the repository. This file becomes a direct input to the "Discussion" or "Data Quality" section of the eventual manuscript — disagreements found in the literature are a finding, not a nuisance to be hidden.
+
+5. **Validate referential integrity.** Before moving to graph loading, run an automated check confirming that every relationship in the cleaned dataset references a node that actually exists in the node tables (i.e., no relationship points to an entity that was never defined). This is a standard data-quality gate and should be scripted, not done by eye.
+
+**Output of this step:** A set of clean, validated CSV files — one per node type, one per relationship type — plus the crosswalk table and the data quality notes file, all committed to the GitHub repository.
+
+## 3.6 Step 5 — Staging, Validation, and Querying in a Lightweight Analytical Database
+
+**Goal:** Insert a queryable staging layer between the flat CSV output of Step 4 and the graph database in Step 6, so that the dataset can be inspected, validated, and analyzed with full SQL (Structured Query Language) expressiveness *before* committing to the graph — catching structural problems while they are still cheap to fix, and giving the researcher a fast, local way to answer ad hoc questions about the dataset without needing a running Neo4j connection at all.
+
+**Why this layer is necessary and what tool fills it.** The CSV files produced in Step 4 are correct in content but awkward to interrogate directly — answering a question like "how many distinct cultivars have at least one `BRED_FROM` relationship with `confidence: primary_molecular_data`" requires either writing custom Python/pandas logic for every new question or loading the data into Neo4j first, which is the wrong order of operations if the goal is to catch data quality problems *before* the graph is built. **DuckDB** is the appropriate tool to fill this gap. It is an embedded, in-process analytical database — meaning it runs as a library directly inside a Python script or a command-line session, requires no separate server process, no installation beyond a single package install, and stores its entire database as one portable file on disk (or can run purely in-memory for a single session). DuckDB can query CSV and Parquet (a compressed, columnar file format) files directly using standard SQL syntax without a separate import step, and its columnar, vectorized execution engine — meaning it processes data in batches of values using modern CPU instructions rather than one row at a time — makes it substantially faster than pandas for the kind of aggregation, join, and group-by queries that data validation requires, particularly as the dataset grows.
+
+**Why DuckDB specifically, and not SQLite.** SQLite, the other common lightweight embedded database, is optimized for OLTP (Online Transaction Processing) workloads — fast reads and writes of individual, complete rows, the pattern used by mobile apps and transactional systems. DuckDB is optimized for OLAP (Online Analytical Processing) workloads — aggregations, joins, and full-column scans across many rows, which is exactly the access pattern needed for data validation and pre-graph analysis (e.g., "count all cultivars," "find all rows where a foreign key reference does not exist," "group relationships by confidence level"). Both tools are free, open-source, zero-server, single-file embedded databases, so the choice between them is purely about matching the tool to the workload shape, not about cost or complexity — and this project's workload (analytical queries over a static, already-extracted dataset) is squarely the kind DuckDB is built for.
+
+**Procedure:**
+
+1. Install DuckDB as a Python package (a single, lightweight install with no external dependencies and no server to configure).
+2. Without writing any separate loading or import script, point DuckDB directly at the CSV files produced in Step 4 and query them in place using standard `SELECT` statements — DuckDB reads the files directly from disk on each query, so there is no separate "load" step required before the data becomes queryable.
+3. **Run referential integrity checks as SQL queries instead of custom Python loops.** For example, a query that performs a `LEFT JOIN` from the relationships table to the corresponding node table and filters for `NULL` matches will surface every relationship that references a node not present in the node table — directly automating the integrity check already required in §3.5, step 5, but now expressed declaratively in SQL rather than imperative Python, which is easier to read, easier to extend, and easier to re-run as the dataset grows.
+4. **Run summary and sanity-check queries** before graph loading: count of nodes per type, count of relationships per type, count of relationships per confidence tier (from the schema decision in §3.4, step 4), and a check for duplicate canonical IDs in the crosswalk table from §3.5, step 3. These are the kinds of quick, ad hoc, exploratory questions DuckDB is specifically well suited for, since it can run them directly against the CSVs in well under a second even as the dataset grows, with no server setup required.
+5. **Optionally, persist the validated dataset as a single DuckDB database file** (rather than scattered CSVs) at the end of this step, so that the cleaned, validated, query-ready version of the dataset has one canonical file location — this file becomes the actual input to the Step 6 graph-loading script, rather than the raw CSVs being read a second time.
+
+**Output of this step:** A validated, queryable intermediate dataset — either the original CSVs confirmed clean via DuckDB queries, or a single consolidated `.duckdb` database file — plus a written record of every validation query run and its result, which becomes direct supporting evidence for the "Data Quality" discussion in the eventual manuscript (per the data quality notes practice already established in §3.5, step 4).
+
+**Where this fits relative to the rest of the pipeline:** This step is a deliberate, lightweight checkpoint, not a parallel permanent data store. The dataset's final, authoritative home is still the Neo4j graph (Step 6) for relationship-centric queries and the Zenodo archive (Step 9) for permanent citation — DuckDB's role here is specifically to make the *staging and validation* phase fast, local, and SQL-queryable, since standing up Neo4j just to ask "did I introduce any duplicate IDs" would be a heavier tool than the question requires.
+
+## 3.7 Step 6 — Graph Construction
+
+**Goal:** Load the validated, resolved dataset into the Neo4j graph database, with every node and relationship carrying its full provenance metadata.
+
+**Procedure:**
+
+1. Provision a Neo4j AuraDB Free instance (free, no payment information required, per §3.1).
+2. Using the official Neo4j Python driver, write a loading script that reads each validated table produced in Step 5 (either the CSVs directly, or the consolidated DuckDB file — DuckDB's Python API can export query results directly into the formats the Neo4j driver expects) and issues Cypher `CREATE` or `MERGE` statements. Use `MERGE` (which creates a node or relationship only if a matching one does not already exist) rather than `CREATE` wherever there is any possibility the script will be re-run, to avoid creating duplicate nodes on a second run.
+3. After loading, run a node and relationship count query and compare it against the expected counts from the source CSVs, as a basic load-integrity check.
+4. Visually inspect the freshly loaded graph using Neo4j's built-in Bloom visualization tool (included free with AuraDB Free) to catch obviously wrong structures (for example, a cultivar accidentally linked to itself, or an isolated node with no relationships at all that should have had one).
+
+**Output of this step:** A populated, queryable Neo4j graph database, plus the Cypher loading scripts committed to the repository (so the graph can be reconstructed from the raw CSVs by anyone, satisfying reproducibility requirements).
+
+## 3.8 Step 7 — Graph Analytics: Quantifying Genetic Vulnerability
+
+**Goal:** Use formal network science measures to test, quantitatively, the qualitative concern already raised in the literature — that many recently released Taiwanese tea cultivars descend from a single ancestor, Chin-Shin-Oolong, creating genetic vulnerability risk.
+
+This step requires precise definitions of the measures used, since "centrality" is a family of related but distinct concepts:
+
+- **Degree centrality** is the simplest measure: it is calculated based on the number of edges (relationships) connected to a node — the more direct connections a node has, the higher its degree centrality. In this project's context, a cultivar's degree centrality in the `BRED_FROM` network reflects how many direct offspring or direct parents it has.
+
+- **Betweenness centrality** measures how frequently a node appears on the shortest path between other pairs of nodes in the graph. If a node C lies on the shortest path between nodes A and B, removing C would force any flow between A and B to take a longer route — so betweenness measures how structurally critical a node is as a "bridge" within the network. Applied here, a germplasm ancestor with high betweenness centrality is one that connects otherwise-separate branches of the breeding lineage — making it disproportionately important to the genetic diversity of the whole cultivated population.
+
+- **Eigenvector centrality** gives greater weight to a node the more it is connected to other highly-connected nodes — so a node connected to several already-important nodes scores higher than one connected to the same number of unimportant nodes, and it is often interpreted as measuring a node's overall network importance based on the quality, not just the quantity, of its connections. This measure is the most directly relevant to the genetic vulnerability question, because an ancestor whose descendants are themselves frequently used as further breeding parents represents a deeper, compounding concentration of genetic material than raw descendant count alone would suggest.
+
+**Procedure:**
+
+1. Using the Neo4j Graph Data Science (GDS) library — available at no additional cost within AuraDB Free for graphs of this size — run the built-in `degree`, `betweenness`, and `eigenvector` centrality algorithms against the `BRED_FROM` relationship subgraph.
+2. Rank all `ParentGermplasm` and `Cultivar` nodes by each of the three centrality scores. Identify whether Chin-Shin-Oolong and related foundational varieties occupy disproportionately high ranks across all three measures — this convergence (rather than a high score on only one measure) is what would constitute strong quantitative evidence for the vulnerability claim.
+3. Cross-reference the ranked list against the documented release years of each cultivar (captured in the schema in §3.4) to test whether genetic concentration has measurably *increased* in more recently released cultivars compared to earlier ones — this temporal angle is what elevates the analysis from a static description to a genuine finding.
+4. Export the ranked results as a table and as a network visualization (using Python's `networkx` and `matplotlib` libraries, or the open-source tool Gephi) suitable for direct inclusion as a figure in the manuscript.
+
+**Output of this step:** A ranked centrality table, a publication-quality network figure, and a written interpretation of whether the graph-structural evidence supports, partially supports, or fails to support the genetic vulnerability hypothesis already raised qualitatively in prior literature.
+
+## 3.9 Step 8 — Manuscript Composition
+
+**Goal:** Translate the completed technical work into a submission-ready manuscript using the existing Quarto-based workflow.
+
+**Procedure:**
+
+1. Draft the manuscript in Quarto (`.qmd`), structured according to the target venue's expected sections (for BISS: a short-format methods/standards paper; for PeerJ: a full research article with Introduction, Methods, Results, Discussion).
+2. Link the Zotero library (exported as a `.bib` file via the Better BibTeX plugin) directly into the Quarto document's bibliography field, so every citation auto-formats and stays synchronized with the reference library used throughout the project.
+3. Embed the Step 7 centrality table and figure directly via Quarto's native support for executable code chunks, so the manuscript regenerates its own results from the live data rather than from a manually pasted, potentially stale screenshot.
+4. Write a dedicated "Data Availability" section pointing to the Zenodo-archived dataset (see Step 9) and the public GitHub repository.
+
+**Output of this step:** A complete, reproducible manuscript source file, renderable to PDF or HTML, ready for submission.
+
+## 3.10 Step 9 — Archival and Publication of the Dataset Itself
+
+**Goal:** Ensure the dataset meets the **FAIR data principles** — a set of guidelines, created by Mark D. Wilkinson and a large group of collaborators in a 2016 paper, standing for Findable, Accessible, Interoperable, and Reusable, designed to enhance the reusability of research data and improve the ability of computational systems to automatically find and use it. This is treated as a procedural step, not an afterthought, because most informatics journals now require a data availability statement that demonstrates FAIR compliance.
+
+**Procedure:**
+
+1. **Findable:** Deposit the final, cleaned dataset (the validated CSVs or consolidated DuckDB file from Step 5, plus the Cypher schema from Step 6) to Zenodo. Zenodo automatically mints a persistent Digital Object Identifier (DOI) for the deposit, satisfying the principle that data and metadata be online and openly searchable with a persistent link uniquely attached to the specific dataset.
+2. **Accessible:** Set the Zenodo deposit to open access with a Creative Commons license, ensuring the data is retrievable in machine-actionable form with download options clearly described.
+3. **Interoperable:** Ensure the exported schema documentation (from Step 3) is included in the deposit, since interoperability requires that metadata use a formal, accessible, shared, and broadly applicable language for knowledge representation — this is precisely what the optional Darwin Core alignment described in §2.2.3 provides if pursued.
+4. **Reusable:** Include a complete data dictionary (every column/property defined, every controlled vocabulary term listed) and the explicit license terms in the deposit, since data are richly described with a plurality of accurate and relevant attributes and released with a clear, accessible usage license.
+
+**Output of this step:** A permanently archived, DOI-bearing, openly licensed dataset that satisfies the data availability requirements of essentially any peer-reviewed informatics venue.
+
+---
+
+# Part 4: Technology Stack Analysis
+
+## 4.1 Purpose of This Section
+
+This section exists to give explicit control over the tradeoff between cost/effort and completeness. Three tiers are defined: a **Minimum Viable Build**, a **Balanced Build**, and a **Full Completeness Build**. Each tier is a fully coherent, internally consistent stack — not a partial list — so that a choice can be made deliberately at the start of the project rather than drifting tool-by-tool. Each tool's cost is stated individually, then totaled per tier, so that combinations can be re-priced if specific substitutions are made later.
+
+A note on methodology for this section: pricing was verified directly against vendor pricing pages and recent third-party pricing aggregators as of mid-2026. Where a tool has multiple pricing tiers, only the tier sufficient for this project's data scale (low hundreds of nodes, low thousands of relationships) is costed — paying for enterprise-scale infrastructure for a dataset this size would be a mismatch between tool and task, not a measure of project quality.
+
+## 4.2 Tier 1 — Minimum Viable Build
+
+**Design philosophy:** Every tool is free, and every step in Part 3 is still technically achievable, but more manual human effort substitutes for paid automation. This tier is appropriate if the goal is to prove the concept and produce a submittable paper with the least financial outlay possible.
+
+| Step (§) | Tool | Cost | Tradeoff vs. higher tiers |
+|---|---|---|---|
+| 3.2 Literature acquisition | Manual Google Scholar / PubMed search + Zotero | $0 | Slower literature discovery; no AI-synthesized search summaries |
+| 3.3 Conceptual sketching | Obsidian (free tier) | $0 | No change — Obsidian's free tier is fully sufficient at any project tier |
+| 3.4 Schema design | draw.io (free) | $0 | No change — sufficient at any tier |
+| 3.5 Data extraction | Manual transcription from PDFs + free-tier Claude or ChatGPT for prose parsing assistance | $0 | Significantly more researcher time; higher risk of transcription error without paid tooling to cross-check |
+| 3.5 Entity resolution scripting | Python + pandas (free, open source) | $0 | No change — sufficient at any tier |
+| 3.6 Staging/validation database | DuckDB (free, open source) | $0 | No change — sufficient at any tier; DuckDB's free, open-source distribution has no paid tier at all, so there is no upgrade path to skip here regardless of budget |
+| 3.7 Graph database | Neo4j AuraDB Free | $0 | Hard limit of 200,000 nodes / 400,000 relationships — far beyond what this project needs, so no real tradeoff at this data scale |
+| 3.8 Graph analytics | Neo4j GDS library (included free in AuraDB Free for small graphs) + Python `networkx` | $0 | No change — sufficient at any tier |
+| 3.9 Manuscript | Quarto (free, open source) | $0 | No change — sufficient at any tier |
+| 3.10 Archival | GitHub (free public repos) + Zenodo (free) | $0 | No change — sufficient at any tier |
+
+**Tier 1 total cost: $0/month, $0 one-time.**
+
+**What is sacrificed at this tier:** Primarily *speed* and *error-checking redundancy*, not capability. Literature discovery via manual search takes meaningfully longer than an AI-assisted deep research tool. Prose-to-structured-data extraction (§3.5, step 2) becomes entirely manual, which is slower and more tedious, though not less rigorous if done carefully.
+
+## 4.3 Tier 2 — Balanced Build (Recommended Default)
+
+**Design philosophy:** Spend a small, fixed monthly amount only on the two tools that measurably compress researcher time at this specific project's scale — literature synthesis and the LLM-assisted extraction step — while keeping every infrastructure tool free, since the infrastructure (Neo4j, GitHub, Zenodo) is already sufficient at zero cost regardless of budget.
+
+| Step (§) | Tool | Cost | Why this tier upgrades it |
+|---|---|---|---|
+| 3.2 Literature acquisition | Perplexity Pro | **$20/month** | Deep Research mode synthesizes multi-source literature sweeps in minutes rather than hours of manual search iteration |
+| 3.3 Conceptual sketching | Obsidian (free) | $0 | Unchanged from Tier 1 |
+| 3.4 Schema design | draw.io (free) | $0 | Unchanged from Tier 1 |
+| 3.5 Data extraction (prose parsing) | Claude Pro (this assistant, or equivalent paid LLM tier) | **$20/month** (often already a sunk cost for general use) | Higher rate limits and longer context windows than free tiers allow processing full papers/pages in fewer, larger batches, reducing fragmented extraction errors |
+| 3.5 Entity resolution scripting | Python + pandas (free) | $0 | Unchanged |
+| 3.6 Staging/validation database | DuckDB (free) | $0 | Unchanged — DuckDB has no paid tier in this context; the only "upgrade" available is the optional cloud service MotherDuck, which is unnecessary at this project's data scale (see §4.4) |
+| 3.7 Graph database | Neo4j AuraDB Free | $0 | Unchanged — still far under the free tier's capacity ceiling |
+| 3.8 Graph analytics | Neo4j GDS + `networkx` (free) | $0 | Unchanged |
+| 3.9 Manuscript | Quarto (free) | $0 | Unchanged |
+| 3.10 Archival | GitHub + Zenodo (free) | $0 | Unchanged |
+
+**Tier 2 total cost: $40/month**, for the duration of active research (literature review and extraction phases only — these subscriptions can be paused once data extraction is complete, since every later step uses only free tools).
+
+**[ESTIMATE]** If the literature review and extraction phases together take roughly six to eight weeks of part-time work, the realistic total spend for Tier 2 is approximately **$60–$80 total**, not an ongoing monthly commitment, since the paid tools are not needed once Step 6 (graph construction) begins.
+
+## 4.4 Tier 3 — Full Completeness Build
+
+**Design philosophy:** This tier exists to answer a different question than Tiers 1 and 2: not "what is sufficient," but "what would maximize the rigor, polish, and interoperability of the final contribution if budget were not the binding constraint." This tier adds tools that increase *formal rigor* (ontology standards compliance), *visual polish* (publication-grade figures), and *collaborative/version-control sophistication* — none of which are required for a valid publication, but each of which strengthens it.
+
+| Step (§) | Tool | Cost | What it adds beyond Tier 2 |
+|---|---|---|---|
+| 3.2 Literature acquisition | Perplexity Pro + Elicit (paid tier) | **$20/month** + **~$10–$42/month** (Elicit's paid tiers vary; lowest paid tier is in this range as of search) | Elicit adds structured, simultaneous question-answering across dozens of papers at once, useful if the literature base grows beyond the handful of core papers identified in this proposal |
+| 3.3 Conceptual sketching | Obsidian + Obsidian Sync (official paid sync service) | **$4–$8/month** (one-time-quoted; verify current price before purchase) | Multi-device synchronization of the note vault; not required for a solo researcher working from one machine |
+| 3.4 Schema design | draw.io (free) **+** Protégé (free, open source) for formal OWL ontology authoring | $0 | Protégé allows the schema to be expressed in OWL/RDF (Web Ontology Language / Resource Description Framework — both formal, machine-verifiable standards for representing knowledge), enabling formal alignment with Darwin Core and submission to ontology repositories, supporting the optional objective in §2.2.3 |
+| 3.5 Data extraction | Claude Pro/Max tier or API access with higher throughput | **$20–$100+/month** depending on tier and volume | Enables batch-processing larger volumes of source text via the API rather than the chat interface, useful only if the literature base scales well beyond what this proposal currently scopes |
+| 3.6 Staging/validation database | DuckDB (free, local) **+ optionally** MotherDuck (cloud-hosted DuckDB) | $0 for local DuckDB; MotherDuck's free tier provides 10 GB of cloud storage at no cost, with paid tiers starting in the hundreds of dollars per month for team-collaboration features this project does not need | MotherDuck adds cloud-hosted querying and a shareable link to the staged dataset, which would let a collaborator (e.g., a co-author) query the same staged data without copying files by hand — a convenience, not a capability this project requires at its current single-researcher scale, and the paid tiers exist for team/enterprise use cases entirely out of scope here |
+| 3.7 Graph database | Neo4j AuraDB **Professional** (paid tier) | **$65/GB/month**, consumption-based — at this project's data scale, the actual GB usage would be a small fraction of 1 GB, meaning real billed cost would be a small fraction of the headline rate, but the tier exists for completeness of comparison | Adds production-grade features and higher availability guarantees that are unnecessary for a research dataset of this size but would matter if the graph were later operationalized into a live public-facing tool rather than a static research artifact |
+| 3.8 Graph analytics | Neo4j GDS (free, sufficient) + Gephi (free, open source) for advanced visual layout | $0 | Gephi produces more visually refined, publication-grade static network layouts than Neo4j Bloom's interactive viewer, which is optimized for exploration rather than print/figure output |
+| 3.9 Manuscript | Quarto (free) + professional copyediting pass (human or paid AI editing service) | **[ESTIMATE] $0–$150 one-time**, highly variable | Improves prose polish; not a methodological requirement |
+| 3.10 Archival | GitHub + Zenodo (free) + formal Darwin Core Archive packaging tools (free, open source, maintained by GBIF) | $0 | Produces a dataset package importable directly into GBIF's global aggregation infrastructure, maximizing long-term discoverability and reuse — directly fulfilling the "Interoperable" FAIR principle at its highest practical standard |
+
+**Tier 3 total cost: approximately [ESTIMATE] $50–$170/month** during active phases, depending on which optional add-ons are selected, plus possible one-time costs in the tens of dollars range for editing services. No individual component of Tier 3 is required for the paper to be valid and publishable — every addition in this tier is a rigor or polish multiplier, not a capability unlock.
+
+## 4.5 Combination Logic — Choosing Across Tiers Per Step
+
+Because the tiers are presented as coherent packages but the steps are independent, any step can be sourced from a different tier than its neighbors without breaking the pipeline. The table below makes this explicit, so that, for example, a Tier 1 literature process can be paired with a Tier 3 ontology process if that specific combination best matches available time and priorities.
+
+| Step | Tier 1 cost | Tier 2 cost | Tier 3 cost | Mixable? |
+|---|---|---|---|---|
+| Literature acquisition | $0 | $20/mo | $30–62/mo | Yes — independent of all other steps |
+| Conceptual sketching | $0 | $0 | $4–8/mo | Yes — only affects multi-device convenience |
+| Schema design | $0 | $0 | $0 (Protégé is free) | Yes — Protégé can be added at any tier with no cost penalty |
+| Data extraction | $0 (manual) | $20/mo | $20–100+/mo | Partially — higher-throughput tooling only matters if literature volume is large |
+| Staging/validation database | $0 (DuckDB) | $0 (DuckDB) | $0 local / $0–250+/mo if MotherDuck added | Yes — DuckDB itself is free at every tier; only the optional cloud-collaboration layer (MotherDuck) carries a cost, and only a team scenario would justify it |
+| Graph database | $0 | $0 | $0–fraction-of-$65/GB | Practically always $0 at this project's data scale regardless of tier chosen |
+| Graph analytics | $0 | $0 | $0 (Gephi is free) | Yes — Gephi can be added at any tier with no cost penalty |
+| Manuscript | $0 | $0 | $0–150 one-time | Yes — copyediting is a discretionary final-polish add-on |
+| Archival | $0 | $0 | $0 | Always free — Zenodo, GitHub, and GBIF's Darwin Core tools carry no cost at any tier |
+
+**[RECOMMENDATION]** The highest-leverage, lowest-cost upgrade from Tier 1 is adding Protégé (free) for formal ontology authoring, DuckDB (free) for staging and validation, and Gephi (free) for visualization polish — three Tier 3-style capabilities that cost nothing, meaning a "Tier 1.5" combination exists that captures meaningful rigor gains at zero additional dollar cost, with the only price being the additional learning time for three new (free) tools. Of these three, DuckDB is the one with the least optional character — unlike Protégé and Gephi, which add rigor and polish respectively but are skippable, the validation role DuckDB fills (catching referential integrity errors and crosswalk duplicates before they propagate into the graph) is functionally necessary at every tier; the only real choice is whether that validation is done via DuckDB's SQL queries or via slower, more error-prone, hand-written Python loops doing the equivalent checks.
+
+## 4.6 Summary Comparison
+
+| | Tier 1: Minimum Viable | Tier 2: Balanced (default) | Tier 3: Full Completeness |
+|---|---|---|---|
+| **Monthly cost during active phases** | $0 | $40 | $50–170 (variable) |
+| **One-time costs** | $0 | $0 | $0–150 |
+| **Publishable as-is?** | Yes | Yes | Yes |
+| **Primary benefit over lower tier** | — | Time compression on literature review and extraction | Formal standards compliance (OWL/Darwin Core), visual polish, scalability headroom |
+| **Recommended for** | Proving feasibility on the tightest possible budget | The default choice for this project's actual scale and goals | Pursuing GBIF integration or treating this as the seed of a larger, ongoing public dataset project |
+
+---
+
+# Part 5: The Public Web Application
+
+## 5.1 Purpose and Audience
+
+The application's purpose is to let someone with no background in genetics, graph databases, or Taiwanese tea history open a link and come away understanding two things: where Taiwanese tea heritage physically exists in the landscape, and how today's commercial cultivars are genetically connected to wild and historical ancestors. The target audience is deliberately broad and non-specialist — a tourist planning a trip, a tea drinker curious about a bag in their cupboard, a journalist looking for a citable visual, a Taiwanese diaspora person reconnecting with cultural heritage — rather than the narrower audience (researchers, TRES staff) that the optional manuscript in §2.2 would reach.
+
+## 5.2 Page Structure
+
+The application consists of four pages, each addressing a different entry point into the same underlying data:
+
+**Page 1 — Map.** An interactive map of Taiwan showing named tea-growing regions (for example Alishan, Lugu, Sun Moon Lake, Pinglin, and Fonghuang Mountain, per the regions already identified in §1.2). Clicking a region surfaces which cultivars are grown there, whether wild *C. formosensis* populations are documented nearby, and the region's elevation range. This page is the primary entry point for a visitor with no prior knowledge of tea cultivars — geography is a more intuitive starting point than genetics for a general audience.
+
+**Page 2 — Lineage Explorer.** A search box plus an interactive, visual network diagram (built with D3.js, per §5.4) showing breeding ancestry. A visitor searches a cultivar name (for example "Jin Xuan"), and the diagram renders that cultivar plus one or two generations of its documented parentage; clicking a parent node expands the view further outward. A separate, opt-in "show full network" toggle renders the complete lineage graph for visitors who want the overview, rather than making that the default landing state (see §5.4 for the reasoning behind this default).
+
+**Page 3 — Species Deep Page.** A dedicated page for *Camellia formosensis*, the wild endemic species described in §1.2: what distinguishes it taxonomically, where it survives today, and — critically — which commercially available cultivars carry its genetic line forward (for example TTES No. 18 / Ruby Red, documented in §1.2 as a direct cross between the wild species and an introduced Assamica variety). This page is where the conservation argument from §1.2 (the NTU Experimental Forest Administration's documented concern about population decline) is made visible to a general audience, with outward links to conservation information sources rather than only stating the concern abstractly.
+
+**Page 4 — About / Methodology.** A short page disclosing who built the site, what sources the data is drawn from, and — deliberately, as a trust signal rather than a liability — any unresolved disagreements between sources, using the same `data_quality_notes.md` practice already established in §3.5, step 4 for the research side of the project. This page also links to the GitHub repository, the Zenodo dataset (once archived per §3.10), and the manuscript (if and when §2.2 is pursued).
+
+## 5.3 Build Architecture: Static Site, Not a Live Database-Backed Application
+
+**The core architectural decision is that the public site never queries Neo4j directly.** Three reasons support this:
+
+1. **Cost and risk.** Exposing a Neo4j AuraDB Free endpoint to public internet traffic risks both unwanted load against a free tier intended for research use, not public traffic, and a public attack surface that a research database was never hardened against.
+2. **Availability.** AuraDB Free carries no production-grade uptime guarantee. A public site that depends on it being reachable at every visitor's request would go down whenever the database has any issue, however brief.
+3. **Reproducibility.** Per §2.1, the site should be screenshot-able and citable in a way that matches exactly what a visitor sees. A static site, built once from a known data snapshot, guarantees this; a live query against a database that might be updated mid-session does not.
+
+**The resolution is a build step.** Neo4j remains the working, research-side database — every Cypher query, the centrality analysis from §3.8, and any future graph editing happens there. At publish time, a build script runs the queries needed for each page (region-to-cultivar lookups for Page 1, ancestry paths for Page 2, the species-specific subgraph for Page 3) and exports the results as static JSON files. The website's JavaScript reads only from these JSON files; it never opens a connection to Neo4j. This is the same pattern used by most data journalism and static data-visualization sites: a database as the source of truth during development, flat files as what actually ships.
+
+## 5.4 The Lineage Explorer's Visual Design
+
+The Lineage Explorer (Page 2) uses a **force-directed graph layout** — a technique, native to D3.js, that calculates node positions as the resolved state of a physics simulation, treating connected nodes as if pulled together by springs and all nodes as if mutually repelling like magnets, until the layout settles into a configuration where related items cluster together and unrelated items spread apart. This visual style is what makes a finding like "Chin-Shin-Oolong sits at the center of many cultivars' ancestry" immediately visible as a dense cluster of converging lines, rather than requiring a viewer to read a table of relationships and infer the pattern themselves.
+
+**Two design decisions were made deliberately rather than by default:**
+
+**Filtered, search-driven default view, not a full-graph dump.** Force-directed layouts become visually unreadable past roughly 100 to 150 simultaneously displayed nodes, and the full eventual graph (Part 3's [ESTIMATE] of 150–400 records, which includes node types like `Region` and `Institution` that don't belong on this specific page) would likely exceed that threshold. The page therefore loads with a search box and a mostly empty canvas, not the entire graph; a search renders only the searched cultivar plus a small number of generations of ancestry, and clicking a node expands the view outward from there. The previously mentioned "show full network" toggle remains available as an explicit opt-in for visitors who want the overview shot, but it is not the default.
+
+**Pre-computed node positions, not a live in-browser simulation.** The force-directed physics simulation that determines node positions is run once, ahead of time, as part of the same build step described in §5.3 — not inside each visitor's browser on every page load. The resulting fixed coordinates are stored in the exported JSON and simply drawn by the page. This guarantees that the layout is visually identical for every visitor, on every device, on every visit, and — critically — identical to whatever static figure of the same network might be used in the optional manuscript (§2.2), so "the figure in the paper" and "what visitors see on the live site" are the same image rather than two layouts that happen to look similar. The tradeoff given up is the brief "nodes visibly settling into place" animation a live simulation would produce on load; this can be approximated cheaply by animating nodes moving from random starting positions to their already-known final positions, which preserves the visual interest without reintroducing layout unpredictability.
+
+## 5.5 Technology Choices for the Application Layer
+
+| Component | Tool | Cost | Why |
+|---|---|---|---|
+| Map | Leaflet.js | Free, open source | Does not require an API key for basic map tiles (unlike some commercial map providers), and is the de facto standard lightweight mapping library for exactly this kind of point-and-click regional explorer |
+| Network diagram | D3.js | Free, open source | The standard tool for custom, interactive node-and-edge diagrams on the web; used here specifically for its force-directed layout capability, run at build time per §5.4 |
+| Site assembly | Plain HTML/CSS/JavaScript, optionally a lightweight static site generator if the page count grows | Free, open source | No need for a heavier framework at four pages; a static site generator can be introduced later without restructuring the underlying data if the site grows beyond an MVP |
+| Hosting | GitHub Pages | Free — 1 GB published site size, a soft 100 GB/month bandwidth limit, included with any GitHub account, no credit card required | Directly reuses the GitHub repository already established in §3.1 for code and data versioning, so no separate hosting account is needed |
+| Hosting (alternative, if bandwidth becomes a concern) | Cloudflare Pages | Free, with unlimited bandwidth on its free tier (unlike GitHub Pages, Netlify, and Vercel, which all cap free bandwidth at 100 GB/month) | Worth switching to only if the site's public reach actually grows large enough to approach GitHub Pages' soft cap — for example, if a conservation-angle story (per §5.2, Page 3) gets picked up by a media outlet and drives a traffic spike; not necessary for an MVP-stage launch |
+
+## 5.6 MVP Scope: What "Minimum Viable" Means Here, Precisely
+
+Per the MVP-first execution model stated in the Purpose and Scope section, the first version of the application should not wait for the full eventual dataset. A concrete, bounded MVP target:
+
+- **Approximately 6–10 named regions** for the map (Page 1) — enough to cover the major, well-documented tea-growing areas already named in §1.2 (Alishan, Lugu, Sun Moon Lake, Pinglin, Fonghuang Mountain, and a small number of others), not an exhaustive regional survey.
+- **Approximately 15–25 cultivars and their documented immediate parentage** for the Lineage Explorer (Page 2) — enough to include the well-documented TTES cultivars already identified in §1.2 (including TTES No. 12, No. 13, and No. 18, since No. 18's wild-species cross is a particularly compelling node for a general audience) without requiring the full eventual 150–400 record dataset from Part 3.
+- **One fully written Species Deep Page (Page 3)** for *C. formosensis*, since this is a single page regardless of how many cultivars eventually populate the rest of the site.
+- **A complete, even if short, About/Methodology page (Page 4)** from the start — this page's honesty about current scope and limitations is itself part of the MVP's credibility, not something to add later.
+
+This MVP scope is deliberately a strict subset of the full data-gathering work described in Part 3 — it does not require new methods, only a smaller first pass through the same steps, with later passes adding more cultivars, regions, and depth incrementally once the MVP is live and working. §6 gives the time budget this MVP implies under a 3-hour-per-week pace.
+
+---
+
+# Part 6: Time and Cost Analysis Under a 3-Hour-Per-Week Constraint
+
+## 6.1 Purpose of This Section
+
+The cost estimates in Part 4 were built around the implicit assumption of a researcher able to dedicate concentrated, multi-hour work sessions to this project. This section re-derives both the *time* schedule and the *dollar cost* estimate under a more realistic, sustained constraint of approximately three hours per week — the goal being a schedule and budget that could actually be followed by someone fitting this project around a full-time job, not an idealized estimate that assumes unavailable free time.
+
+## 6.2 Task-Level Time Estimate for the MVP
+
+**[ESTIMATE]** The following hour figures are rough planning estimates, not measured data, and are labeled as such throughout. They assume the MVP data scope defined in §5.6 (roughly 15–25 cultivars, 6–10 regions), not the full eventual dataset.
+
+| Task | Corresponding step(s) | Estimated hours |
+|---|---|---|
+| Literature sweep, MVP subset (roughly 8–10 core sources covering the MVP's cultivars and regions, not the full 15–25 sources implied by the complete scope in Part 3) | §3.2 | 6 |
+| Conceptual notes in Obsidian, MVP-focused pass | §3.3 | 3 |
+| Schema design, MVP version (the core `Cultivar`, `Species`, and `Region` node types from §3.4; `Institution` and detailed `ParentGermplasm` records can be deferred to a later pass) | §3.4 | 4 |
+| Data extraction and entity resolution, MVP subset (roughly 40–60 records, not the full 150–400 estimated in Part 3) | §3.5 | 10 |
+| Geocoding tea regions for the map — a task not previously itemized in Part 3, since it is specific to the web application's Page 1, requiring latitude/longitude or boundary data for each named region | §5.2, Page 1 | 3 |
+| DuckDB staging and validation setup and scripts | §3.6 | 3 |
+| Neo4j schema and load script, MVP version | §3.7 | 4 |
+| D3 force-layout pre-computation script (the build-time physics simulation described in §5.4) | §5.4 | 4 |
+| Leaflet map page build (Page 1) | §5.2, §5.5 | 5 |
+| D3 Lineage Explorer page build, including the search-and-expand interaction (Page 2) | §5.2, §5.4, §5.5 | 8 |
+| Species Deep Page content and layout (Page 3) | §5.2 | 3 |
+| About/Methodology page (Page 4) | §5.2 | 2 |
+| Site assembly and GitHub Pages deployment | §5.5 | 3 |
+| Quality assurance pass (cross-browser/cross-device check) | — | 2 |
+| **Total** | | **[ESTIMATE] approximately 60 hours** |
+
+## 6.3 Calendar Time at a 3-Hour-Per-Week Pace
+
+**[ESTIMATE]** Sixty hours at three hours per week works out to approximately **20 weeks**, or **roughly four and a half months**, of calendar time to reach the MVP described in §5.6 — assuming no week is skipped and no task is significantly underestimated, both of which are optimistic assumptions for a side project running alongside full-time work. A more conservative planning figure, allowing for some inevitable skipped weeks and rework, is **[ESTIMATE] five to six months** to a live MVP.
+
+This is not a discouraging number in context: it reflects building a complete public web application with two genuinely interactive pages (a map and a force-directed network explorer) from scratch, on top of original data extraction and entity resolution work, at a sustainable, non-burnout pace. The alternative — attempting the same scope in a compressed timeframe — would require either far more than three hours per week or a reduction in MVP scope, not a faster version of the same plan.
+
+## 6.4 Does Weekly Pacing Change the Token/API Cost Estimate from Part 7?
+
+This is worth checking explicitly rather than assuming, since the original cost-optimization architecture in Part 7 (model routing, structured output, batch processing, and prompt caching) was described without reference to a specific work cadence.
+
+**The finding: pacing does not materially change the dollar estimate, provided each weekly session still batches its own work internally.** Anthropic's prompt caching (§7.5) operates on a short window — five minutes by default, or up to one hour with an explicit setting — so a cache written in one week's three-hour session will have expired long before the next week's session begins; each weekly session effectively starts a fresh cache rather than building on the previous week's cache. This does **not** undermine the architecture, because the batch processing discount (§7.4) and the within-session caching benefit both still apply fully *within* a single three-hour session, as long as that session's extraction calls are submitted together as one batch job rather than trickled out as many small interactive calls across the week. The practical implication is a restated rule: **batch within each weekly session, not across weekly sessions** — which changes nothing about the architecture itself, only confirms that it remains correctly designed under this slower cadence.
+
+**[ESTIMATE]** Given this, the absolute dollar cost estimate from §7.7 — likely under $5 to $10 total for the complete extraction phase — is unaffected by spreading that work across many three-hour sessions instead of fewer, longer ones. The MVP's smaller data scope (§5.6's 40–60 records, versus the full dataset's 150–400) if anything makes this estimate more conservative than necessary, since the actual MVP-stage token spend would plausibly be lower still.
+
+## 6.5 Revised Tiered Cost Estimate Under the 3-Hour-Per-Week Constraint
+
+The three tiers from Part 4 remain structurally valid, but their *total dollar exposure* changes once stretched across a 20-week (or longer) calendar, because subscription-based tools (Perplexity Pro, Claude Pro) are billed monthly regardless of how many hours were actually spent that month.
+
+| Tier | Monthly subscription cost (unchanged from Part 4) | Number of months actually needed at 3 hrs/week pace for the literature + extraction phase | **[ESTIMATE] Total subscription spend for MVP** |
+|---|---|---|---|
+| Tier 1 (Minimum Viable) | $0 | N/A | **$0** |
+| Tier 2 (Balanced, recommended default) | $40/month (Perplexity Pro + Claude Pro) | Literature acquisition (§3.2) and data extraction (§3.5) together account for roughly 19 of the 60 total MVP hours (per §6.2's table), which at 3 hrs/week is **[ESTIMATE] approximately 6–7 weeks**, or **2 calendar months** allowing for the subscriptions to be active slightly before and after the core work to handle stragglers | **[ESTIMATE] approximately $80** (2 months × $40), after which both subscriptions can be paused, since every remaining MVP task (§3.6 onward) uses only free tools |
+| Tier 3 (Full Completeness) | $50–$170/month, depending on optional add-ons selected | Same literature/extraction window as Tier 2, plus possible longer use of higher-throughput API access if extraction volume runs higher than the MVP's 40–60 record estimate | **[ESTIMATE] $100–$340** for the same 2-month window, before non-subscription one-time costs (e.g., optional copyediting) |
+
+**[RECOMMENDATION]** Given the 3-hour-per-week constraint, Tier 2 remains the right default specifically *because* its paid tools can be cleanly bounded to a 2-month window early in the schedule, then dropped — the remaining roughly 17 weeks of the 20-week MVP timeline (per §6.3) involve no paid software at all under Tier 2. This is a meaningfully better fit for a slow, sustained pace than it might first appear from Part 4's monthly figures alone, since "the project takes 4–6 months" does not mean "$40/month for 4–6 months" — it means $40/month for roughly the first 2 months only.
+
+---
+
+
+
+## 7.1 Why This Gets Its Own Section
+
+Part 3, §3.5 already described the data extraction and entity resolution step as a procedure. This section treats the *same step* as an engineering design problem in its own right, because it is the most labor-intensive and the most cost-sensitive part of the entire project. Two concerns drive this design:
+
+1. **Token consciousness.** Every call to a large language model (LLM — a model like Claude that processes and generates text) consumes "tokens" (the discrete chunks of text the model reads and writes, roughly three to four characters of English text each), and providers bill per token. A poorly designed extraction pipeline can burn through tokens redundantly — for example, by re-sending the same long instructions on every single call — without the researcher noticing until the bill arrives.
+2. **Workflow efficiency toward semi-automation.** "Semi-automated" means the pipeline should require a human only at points where human judgment is genuinely necessary (verifying a contested fact, resolving an ambiguous name), and should run unattended everywhere else (parsing, formatting, first-pass classification). This is a deliberate middle ground between full manual transcription (Tier 1 in Part 4) and a fully autonomous pipeline (which would be inappropriate here, because §3.5 already established that human verification of extracted facts is a non-negotiable scientific integrity requirement, not merely a nice-to-have).
+
+The architecture below is organized around four engineering levers, each independently confirmed as effective for this exact kind of workload — bulk, offline, repetitive document-extraction processing — by current LLM provider documentation and third-party benchmarking.
+
+## 7.2 Lever 1 — Model Routing (Use the Cheapest Model That Can Do the Job)
+
+**The principle:** Not every extraction task requires the most capable (and most expensive) model. Pricing data confirm a roughly fifteen-to-fifty-times cost difference between budget-tier and flagship-tier models, and the most effective architectures explicitly reserve flagship models for complex reasoning while routing simple classification and extraction tasks to cheaper models.
+
+**Applied to this project, the task breakdown is:**
+
+| Task | Complexity | Recommended model tier | Why |
+|---|---|---|---|
+| Pulling a clean number/name/date out of a sentence with an unambiguous pattern (e.g., "TTES No. 12 was released in 1981") | Low | Budget tier (e.g., Claude Haiku) | This is pattern recognition, not reasoning. A schema with fewer than ten flat fields is, according to current provider guidance, nearly as accurately handled by a budget-tier model as a flagship one, at a fraction of the cost. |
+| Resolving which of two conflicting parentage claims is more likely correct, or noticing a subtle naming collision between two sources | Medium–High | Mid/flagship tier (e.g., Claude Sonnet) | This requires comparing two pieces of context against each other and exercising judgment, which is exactly the kind of task that justifies the higher per-token cost of a more capable model. |
+| Drafting prose for the eventual manuscript (Step 8, §3.9) | High | Flagship tier | Writing quality and nuance benefit most from the most capable model; this task happens rarely (a handful of times total), so its higher per-call cost barely affects the overall budget. |
+
+**[RECOMMENDATION]** Build the extraction pipeline so the *model name is a configuration parameter, not something hardcoded inside the prompt logic*. This means the same extraction code can be pointed at a cheap model for a first pass and re-pointed at a more capable model only for the subset of records that the first pass flags as low-confidence or ambiguous — a "cascade" pattern that applies the expensive model only where it is actually needed.
+
+## 7.3 Lever 2 — Structured Output (Guarantee the Shape of the Answer, Don't Ask Nicely For It)
+
+**The principle:** Asking a model in plain English to "please return JSON" is unreliable — providers' own documentation acknowledges that prompting alone can yield JSON occasionally wrapped in markdown formatting or accompanied by unwanted conversational text. The reliable alternative is to force the model to use a defined "tool" (in Claude's API, a tool is a function-like schema the developer defines; the model's response is then constrained to match that schema exactly, rather than being free-form text). When the developer sets `tool_choice` to force the model to call one specific tool, the model's output is guaranteed to be valid, schema-conforming data — a pattern providers explicitly recommend as the standard for any production data extraction workload.
+
+**Applied to this project:** Define one tool per node type in the schema from §3.4 (one for `Cultivar`, one for `Species`, one for `ParentGermplasm`, and so on). Each tool's schema should mirror exactly the node properties already defined in §3.4 — meaning the schema design work from Part 3 is directly reusable here, not separate work. Every field description inside the tool schema should be written carefully, since the description text is itself part of what the model reads and uses to decide what to extract — better field descriptions measurably produce better extractions.
+
+**Concrete mechanical benefit:** This eliminates an entire category of wasted tokens and wasted time — failed parsing attempts that require a retry. A single failed JSON-parsing attempt that triggers a retry costs more in tokens than the small schema overhead added by using structured tool calls in the first place.
+
+## 7.4 Lever 3 — Batch Processing (Don't Pay for Speed You Don't Need)
+
+**The principle:** Anthropic's Batch API allows asynchronous submission of large volumes of requests, processed within a 24-hour window, at a flat 50% discount on both input and output tokens, for every Claude model, with no minimum volume threshold required to unlock the discount. The only requirement is that the workload tolerate a delay of minutes to hours rather than needing an instant reply — which is exactly the nature of document extraction, since no human is sitting and waiting for each individual record to be extracted in real time.
+
+**Applied to this project:** None of the steps in §3.5 require an instant response. The entire first-pass extraction step (pulling structured records out of every saved source) should be submitted as a single batch job: every paper, every TRES web page excerpt, bundled into one submission, rather than triggered one document at a time through an interactive chat interface. This single architectural choice halves the cost of the entire extraction phase before any other optimization is applied.
+
+## 7.5 Lever 4 — Prompt Caching (Don't Re-Pay for the Same Instructions Every Time)
+
+**The principle:** Every extraction call in this project will share a large, unchanging block of content: the system instructions describing the extraction task, the full schema definitions for all node types, and possibly a few worked examples showing correct extraction. Anthropic's prompt caching feature allows this shared, unchanging content to be cached on the provider's servers; a cache read costs only ten percent of the normal input token price — a ninety percent reduction — with the break-even point reached after as few as one or two reuses of that cached content.
+
+**Applied to this project:** Structure every extraction prompt so that the large, constant part (system instructions plus the full schema) comes first and is marked as cacheable, and the small, variable part (the specific paragraph or table row being extracted in that particular call) comes last. Because this project will make many extraction calls that all share the identical instructions and schema, and differ only in which small chunk of source text is being processed, this is close to the ideal use case for caching — high reuse of a stable prefix is precisely the condition under which caching delivers its largest savings.
+
+**Stacking the two discounts:** Batch processing and prompt caching discounts apply independently and stack together. A cached batch request becomes even cheaper because batch cuts eligible input pricing by 50% on top of the already-discounted cache read rate. Combining both levers on the same workload is the single highest-leverage engineering decision available for this project's cost profile.
+
+## 7.6 Putting the Four Levers Together: The Pipeline Architecture
+
+```
+                         ┌─────────────────────────────────┐
+                         │   STATIC, CACHED PREFIX           │
+                         │   (sent once, reused many times)  │
+                         │                                    │
+                         │  - System instructions             │
+                         │  - Full node-type tool schemas     │
+                         │    (from §3.4)                     │
+                         │  - 2-3 worked extraction examples  │
+                         └─────────────────────────────────┘
+                                       │
+                                       │  (cache write: paid once,
+                                       │   at a small premium)
+                                       ▼
+        ┌─────────────────────────────────────────────────────┐
+        │  FOR EACH SOURCE DOCUMENT / TABLE ROW / PARAGRAPH:    │
+        │                                                        │
+        │   1. Append the small, variable chunk of source text  │
+        │      to the cached prefix (cache read: 90% cheaper)   │
+        │   2. Route to Haiku-tier model for simple, pattern-   │
+        │      matchable records (most records)                 │
+        │   3. Route to Sonnet-tier model only for records       │
+        │      flagged ambiguous, contradictory, or low-         │
+        │      confidence by a simple heuristic check             │
+        │   4. Force structured tool-call output                │
+        │      (guarantees valid, schema-conforming JSON)        │
+        │   5. Bundle ALL of the above into ONE Batch API         │
+        │      submission (50% off everything, stacks with       │
+        │      caching)                                          │
+        └─────────────────────────────────────────────────────┘
+                                       │
+                                       ▼
+                         ┌─────────────────────────────────┐
+                         │  AUTOMATED VALIDATION (no LLM)    │
+                         │  - Schema conformance check        │
+                         │    (Pydantic, free, no tokens)     │
+                         │  - Referential integrity check     │
+                         │    (from §3.5, step 5)             │
+                         │  - Flag any record with a          │
+                         │    confidence_low marker            │
+                         └─────────────────────────────────┘
+                                       │
+                                       ▼
+                         ┌─────────────────────────────────┐
+                         │  HUMAN-IN-THE-LOOP REVIEW          │
+                         │  (the only step requiring a person) │
+                         │  - Review only flagged/low-        │
+                         │    confidence records, NOT every   │
+                         │    record                          │
+                         │  - Resolve contested claims per    │
+                         │    §3.5 step 4 (record both,        │
+                         │    don't silently pick one)         │
+                         └─────────────────────────────────┘
+```
+
+This architecture is "semi-automated" in the precise sense requested: every record passes through the LLM extraction step unattended, but a human only opens the result when the automated validation step has already flagged a specific reason to look — a low-confidence score, a referential integrity failure, or a direct contradiction between two sources. This means human attention scales with the *number of actual problems in the data*, not with the *total number of records processed* — which is the entire point of semi-automation as distinct from either full manual labor or full unsupervised automation.
+
+## 7.7 Estimated Cost Under This Architecture
+
+**[ESTIMATE]** The following is a rough order-of-magnitude calculation, not a guaranteed quote, intended only to demonstrate the relative scale of savings from the architecture above versus a naive (unoptimized) approach. Assume the literature base for this project (per §3.2 and the sources already identified in earlier discussion) comprises on the order of 15–25 source documents, each contributing somewhere between a handful and a few dozen extractable records, for a total **[ESTIMATE] in the range of 150–400 individual entity/relationship records** to be extracted.
+
+| Approach | Mechanism | Rough relative cost |
+|---|---|---|
+| **Naive baseline** | Every record sent as a separate, uncached, real-time (non-batch) call to a flagship model, full instructions repeated every time | 1x (reference point) |
+| **+ Model routing only** | Cheap model for most records, flagship only for flagged ambiguous cases | roughly 0.3–0.5x of baseline |
+| **+ Batch processing** | All calls submitted as a batch job | roughly 0.5x of whatever the prior step cost (the discount is unconditional and stacks) |
+| **+ Prompt caching** | Shared instructions/schema cached and reused across all calls | an additional roughly 0.5–0.9x reduction on the input-token portion specifically, depending on how large the shared prefix is relative to the per-record variable text |
+| **All four levers combined** | Full architecture in §7.6 | **[ESTIMATE]** plausibly in the range of 10–25% of the naive baseline cost, consistent with the general finding that strategic optimization commonly cuts LLM costs by 60–80% and that combining caching with batch discounts can push effective cost down to roughly five to ten percent of an unoptimized baseline for highly repetitive extraction workloads |
+
+In absolute terms, given that this project's total record count is small (low hundreds, not the tens-of-thousands-per-day production workloads referenced in most published cost case studies), the realistic absolute dollar cost of the entire extraction phase under this architecture is **[ESTIMATE] likely under $5–$10 total** in raw API spend, even using a mid-tier model for the majority of calls — meaning the engineering effort invested in this architecture is justified primarily by *workflow discipline and reproducibility*, not by the absolute dollar savings alone, since the project's data volume is simply too small for the dollar amounts to be large in either the optimized or unoptimized case.
+
+**[RECOMMENDATION]** Given the above, the practical advice is: implement model routing (§7.2) and structured output (§7.3) unconditionally, since they cost nothing extra to build and directly improve reliability regardless of project size. Implement batch processing (§7.4) and prompt caching (§7.5) as well, since both are simple configuration choices in the Anthropic API client, not architectural overhauls — there is no scenario at this project's scale where skipping them is the better choice, since they add engineering effort measured in single-digit lines of code, not added complexity that would offset their (admittedly small, in absolute dollar terms) benefit.
+
+## 7.8 What "Semi-Automated" Explicitly Does Not Mean Here
+
+To avoid ambiguity for future reference: this architecture does not remove the human verification requirement already established in §3.5, step 2, which states that every machine-extracted record must be spot-checked against the original source text before being accepted into the dataset, because language models can mis-state specific facts even when surrounding context is summarized correctly. The automation described in this Part 5 changes *how much human time is spent per record* and *how that time is allocated* (concentrated on flagged, uncertain records rather than spread evenly across all records) — it does not eliminate human verification as a step, because doing so would violate the scientific integrity requirement already established as non-negotiable earlier in this proposal.
+
+---
+
+This document cites material gathered via web search during its preparation. A formal `.bib` file should be assembled from the Zotero library described in §3.2 before this document is adapted into a manuscript; the in-text citations above are traceable to their original web sources and should be replaced with full peer-reviewed bibliographic records at that time.

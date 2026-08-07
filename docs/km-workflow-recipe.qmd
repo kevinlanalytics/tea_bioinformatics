@@ -1,0 +1,408 @@
+---
+title: "Knowledge Management Workflow Recipe"
+subtitle: "Integrating Obsidian, Zotero, and Claude for the Tea Heritage Knowledge Graph Project"
+author: "KL"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+  pdf:
+    toc: true
+    number-sections: true
+execute:
+  eval: false
+---
+
+## Purpose of this document
+
+This document is a **step-by-step operating recipe** for the knowledge management
+system supporting the Taiwanese tea species heritage and cultivar lineage knowledge
+graph (KG) project. It describes how three categories of tools — a reference
+manager (Zotero), a note-taking/synthesis tool (Obsidian), and an AI assistant
+(Claude, in two different deployment forms) — fit together into one workflow,
+why each tool occupies the role it does, and exactly how data and content move
+between them.
+
+Every technical term is defined at first use. Where a design choice is debatable
+(plugin selection, sequencing, tagging conventions) the reasoning is stated
+explicitly so the recipe can be revisited and adjusted as the project evolves.
+
+---
+
+## System overview
+
+### The three-layer model
+
+The workflow is organized into three layers, each with a distinct responsibility.
+Separating responsibilities this way avoids a common failure mode in research
+projects: mixing literature capture, human synthesis, and computational
+pipeline work in one undifferentiated tool, which produces a system that is
+hard to audit and hard to scale past a single contributor.
+
+| Layer | Tool | Responsibility |
+|---|---|---|
+| Capture | Zotero | Collect and tag source literature (papers, TRES bulletins, database records) |
+| Synthesis | Obsidian | Human-readable notes, linking, and AI-assisted summarization, clearly labeled |
+| Execution | Claude Code (CLI) | Code, data pipeline, and knowledge graph construction with filesystem and execution access |
+
+A fourth surface — **Claude in a chat interface** (claude.ai or the Claude app,
+where this conversation is happening) — sits alongside all three layers for
+conceptual discussion, drafting, and any task that doesn't need file or
+execution access. It is not a fourth "layer" in the data flow because it does
+not store or act on project state; it is a thinking and drafting surface used
+on demand.
+
+### Why this separation matters
+
+- **Provenance**: A reviewer (or future you) should be able to trace any claim
+  in the eventual manuscript or web application back to a specific source
+  document, a specific extraction step, and a specific tool that performed it.
+  Mixing layers obscures this chain.
+- **Tool fit**: Each tool is good at a narrow set of things. Zotero excels at
+  bibliographic metadata and citation key generation. Obsidian excels at
+  bidirectional linking between atomic notes. Claude Code excels at iterative
+  code execution against real data. Using each for its strength, rather than
+  forcing one tool to do all three jobs, is the main efficiency gain of this
+  recipe.
+- **Time budget**: With a roughly three-hour-per-week constraint, ambiguity
+  about "where does this go" is itself a cost. A fixed layer assignment removes
+  that decision overhead on every work session.
+
+---
+
+## Term glossary (defined at first use, collected here for reference)
+
+- **Knowledge graph (KG)**: A data structure representing entities (e.g., a
+  cultivar, a region, a gene) as **nodes** and the relationships between them
+  (e.g., "derived from," "bred at") as **edges**. Used here to encode tea
+  cultivar lineage and provenance.
+- **Cultivar**: A plant variety produced through selective breeding,
+  distinguished by particular characteristics and given a distinct name (e.g.,
+  TTES No. 12, commonly called "Jinxuan").
+- **TRES**: Taiwan Tea Research and Extension Station, the government
+  institution responsible for breeding and registering Taiwanese tea cultivars.
+- **TTES**: The numbered cultivar series issued by TRES (e.g., "TTES No. 17").
+- **_Camellia formosensis_**: The scientific name for Taiwan's wild endemic tea
+  species, distinct from cultivated *Camellia sinensis*.
+- **Assamica**: A botanical variety of the tea plant (*Camellia sinensis* var.
+  *assamica*) originating in northeast India/Myanmar, introduced to Taiwan and
+  used in some cultivar lineages.
+- **Entity resolution**: The computational task of determining when two
+  different textual references (e.g., "Qingxin Oolong" and "青心烏龍") refer to
+  the same real-world entity.
+- **Graph centrality**: A family of metrics quantifying how "important" or
+  "central" a node is within a graph, based on its connections — relevant here
+  for identifying foundational cultivars in the lineage network.
+- **Cypher**: The query language used by the Neo4j graph database to create,
+  read, and traverse nodes and edges.
+- **Neo4j**: A graph database management system; the chosen storage layer for
+  the final knowledge graph.
+- **DuckDB**: An embedded, file-based analytical database used here as a
+  **staging layer** — an intermediate place to load, validate, and clean data
+  extracted from source documents before it is committed to Neo4j.
+- **OCR (Optical Character Recognition)**: Software that converts images of
+  text (e.g., scanned older Chinese-language TRES bulletins) into machine-
+  readable text. **Tesseract** is the specific open-source OCR engine used.
+- **NER (Named Entity Recognition)**: A natural language processing technique
+  for automatically identifying and classifying entities (e.g., cultivar names,
+  place names, gene identifiers) within unstructured text.
+- **TWD97 / WGS84**: Two geographic coordinate reference systems. TWD97 is
+  Taiwan's national survey datum; WGS84 is the global standard used by GPS and
+  most web mapping libraries (including Leaflet). Coordinates must be converted
+  from TWD97 to WGS84 before being placed on a web map.
+- **GBIF**: Global Biodiversity Information Facility, an international data
+  infrastructure aggregating species occurrence records.
+- **ITIS**: Integrated Taxonomic Information System, an authoritative source
+  for taxonomic classification and nomenclature.
+- **Citekey**: A short, stable, unique identifier assigned to a reference
+  (e.g., `chen2019teagenome`), used to link a citation in a note to its full
+  bibliographic record without retyping it.
+- **BibTeX / Better BibTeX**: BibTeX is a reference format used by citation
+  tools; "Better BibTeX" is a Zotero plugin that generates and maintains stable
+  citekeys for use elsewhere, including in Obsidian.
+- **Dataview**: An Obsidian plugin that lets notes be queried like a database
+  — e.g., "list all notes tagged `#metabolomics` AND `#camellia-sinensis`" —
+  by reading note metadata (tags, frontmatter fields).
+- **Templater**: An Obsidian plugin for creating reusable note templates with
+  dynamic fields, ensuring every literature note has the same structure.
+- **Frontmatter**: A block of structured metadata (key-value pairs) placed at
+  the top of a note file, which Dataview and other plugins can read
+  programmatically.
+- **MCP (Model Context Protocol)**: An open protocol that lets an AI assistant
+  connect to external tools and data sources (e.g., a database, a project
+  management tool) through a standard interface, rather than a one-off
+  integration per tool.
+- **Claude Code**: Anthropic's agentic coding tool, available as a command-
+  line interface (CLI), which can read, write, and execute code within a
+  project directory across multiple steps, as opposed to a single-turn chat
+  response.
+- **Claudian**: A community-built Obsidian plugin (by developer Yishen Tu)
+  that embeds Claude Code inside Obsidian's interface, letting the agent read,
+  write, and search vault files directly rather than requiring manual copy-
+  paste between a chat window and the vault.
+- **CLAUDE.md**: A markdown file conventionally placed at a project's root
+  directory that Claude Code reads automatically to load persistent project
+  context (terminology, prior decisions, conventions) at the start of a
+  session.
+
+---
+
+## Step-by-step recipe
+
+### Step 1 — Establish the tagging taxonomy before capturing literature
+
+**What**: Before adding papers to Zotero in volume, define a fixed set of tag
+categories: organism, omics type (e.g., genomics, metabolomics,
+transcriptomics), pathway (e.g., catechin biosynthesis), and extraction method.
+
+**Why first**: Retroactively re-tagging a literature library after dozens of
+papers have accumulated is far more time-consuming than tagging consistently
+from the start. This is a one-time decision with compounding returns, which is
+why it is sequenced ahead of every other step, including tool installation.
+
+**Where**: Defined as a controlled vocabulary, applied in Zotero tags and
+mirrored in Obsidian frontmatter fields.
+
+### Step 2 — Configure Zotero as the capture layer
+
+**What**: Install **Better BibTeX** in Zotero. As papers, TRES bulletins, and
+database records are collected, assign citekeys (automatic via Better BibTeX)
+and apply the Step 1 taxonomy as Zotero tags.
+
+**Why Zotero specifically**: It is purpose-built for bibliographic metadata
+management and produces stable, exportable citekeys — a prerequisite for
+linking literature into Obsidian without manual retyping of author/year/title
+strings.
+
+### Step 3 — Configure Obsidian as the synthesis layer
+
+**What**: Install four community plugins:
+
+1. **Zotero Integration** — inserts literature notes, citations, and PDF
+   annotations from Zotero into Obsidian.
+2. **Better BibTeX** dependency is on the Zotero side, not Obsidian, but
+   Zotero Integration relies on it being present.
+3. **Dataview** — enables querying notes by tag/frontmatter (e.g., "all notes
+   tagged `#camellia-formosensis`").
+4. **Templater** — defines the literature note template (fields: citekey,
+   organism, gene/pathway, method, key finding, sample size).
+
+**Why these four and not alternatives**: A simpler **Citations** plugin
+exists and provides inline citekeys with less setup overhead, but it does not
+support inserting PDF annotations directly, which matters for a
+bioinformatics literature base where figures and tables carry primary data.
+Zotero Integration was chosen for that reason despite its larger
+configuration surface.
+
+**Why Templater specifically, not manual note creation**: Manual note
+creation produces drift — one note has a "method" field, another doesn't —
+which breaks Dataview queries downstream, since a query can only surface a
+field that consistently exists.
+
+### Step 4 — Build literature notes through the capture-to-synthesis pipeline
+
+**What**: For each source:
+
+1. In Zotero, the item is tagged per the Step 1 taxonomy.
+2. In Obsidian, Zotero Integration pulls the item into a new note using the
+   Templater template, auto-filling citekey, title, authors, and abstract.
+3. PDF annotations and highlights are imported into the same note.
+
+**Why this order**: Tagging happens in Zotero first because Zotero is the
+authoritative bibliographic record; Obsidian notes are downstream artifacts
+that should inherit metadata rather than duplicate it by hand.
+
+### Step 5 — Use Claude (chat interface) for literature synthesis, clearly labeled
+
+**What**: Paste a paper's text, abstract, or your literature note into Claude
+(the chat interface) to: summarize methodology, extract gene/protein
+identifiers, explain an unfamiliar pathway, or compare findings across
+several papers. Paste the output back into the literature note under a
+dedicated **"Synthesis (AI-assisted)"** heading or callout block.
+
+**Why a dedicated, labeled section rather than blending into your own
+notes**: AI-generated summaries can contain subtly incorrect inferences even
+when fluent and well-formatted. Keeping AI output visually and structurally
+separate from your own reading notes means any later error is contained to a
+clearly marked region, and a co-author or reviewer can identify exactly which
+claims were human-verified versus AI-synthesized.
+
+**Why the chat interface for this step specifically, not Claude Code**: This
+task is single-document, conversational, and does not require filesystem or
+execution access. Using the heavier agentic tool here would add setup
+overhead without adding capability.
+
+### Step 6 — Build cross-cutting synthesis notes with Dataview
+
+**What**: Create higher-level notes (e.g., "Tea flavonoid pathway — papers")
+that link to individual literature notes via wikilinks (`[[note name]]`) and
+embed a Dataview query table that automatically lists all notes matching
+given tags.
+
+**Why Dataview rather than manually maintained lists**: A manually maintained
+list of "all papers on flavonoid biosynthesis" goes stale the moment a new
+paper is tagged but not added to the list by hand. A Dataview query is
+re-evaluated live each time the note is opened, so it cannot go stale as long
+as tagging (Step 1/Step 4) stays consistent.
+
+### Step 7 — Establish persistent project memory for Claude Code
+
+**What**: Create a `CLAUDE.md` file at the root of the project's code
+repository, containing: the project's domain vocabulary (TTES codes, TRES,
+*C. formosensis* vs. Assamica distinctions), the locked architectural
+decisions (Neo4j/Cypher, DuckDB staging, the six-layer pipeline structure),
+and any standing conventions (e.g., coordinate conversion rules).
+
+**Why this step before pipeline coding begins**: Claude Code reads this file
+automatically at the start of a session. Without it, each new session would
+require re-explaining project-specific terminology and prior decisions,
+which is a recurring time cost directly in tension with the project's
+three-hour-per-week budget. This is the code-execution-layer equivalent of
+Step 1's tagging taxonomy: a one-time setup cost that compounds in savings.
+
+### Step 8 — Run the six-layer extraction pipeline via Claude Code (CLI)
+
+**What**: Using Claude Code in a terminal (or within an editor's integrated
+terminal), build and iterate on the pipeline layers in order:
+
+1. **Source inventory** by format type (PDF, scanned bulletin, database
+   export, etc.)
+2. **Format-specific extractors** — `pdfplumber` for text-based PDFs,
+   `unstructured` for mixed-format documents, **Tesseract** OCR for scanned
+   older Chinese-language TRES bulletins, `biopython` for any sequence/
+   genomic data files
+3. **Normalization layer** — resolving cultivar name synonyms (e.g.,
+   "Qingxin Oolong" / "青心烏龍" / a TTES registry code all referring to one
+   cultivar) and converting coordinates from **TWD97** to **WGS84**
+4. **NER and LLM-assisted relation extraction** — identifying entities and
+   the relationships between them (e.g., "cultivar X derived from cultivar Y")
+   from extracted text
+5. **Staging-to-graph-load with validation** — loading extracted, normalized
+   records into **DuckDB** first, where they can be checked for nulls,
+   duplicates, and inconsistent values before being committed to Neo4j
+6. **Provenance and versioning** — tagging every node and edge with its
+   source document and extraction method, and tracking changes via Git
+
+**Why Claude Code rather than the chat interface for this step**: This work
+is iterative against real files and real errors — running a script, seeing
+it fail on a specific malformed PDF, fixing the extractor, re-running. Claude
+Code has direct filesystem and execution access, so it can complete this
+loop without you manually copying error messages and code back and forth, as
+the chat interface would require.
+
+**Why DuckDB as an intermediate step rather than loading straight into
+Neo4j**: Validating data quality in a lightweight, file-based analytical
+database before committing it to the graph database avoids polluting the
+final knowledge graph with extraction errors that are easier to catch and fix
+upstream.
+
+### Step 9 — Construct and load the knowledge graph in Neo4j
+
+**What**: Using Claude Code, write Cypher queries to create nodes (e.g.,
+cultivar, region, gene) and typed relationships (`DERIVED_FROM`, `BRED_AT`,
+`GROWN_IN`, `HAS_GENOTYPE`) from the validated DuckDB staging tables.
+
+**Why this schema of relationship types**: Each relationship type encodes a
+distinct, queryable claim — lineage (`DERIVED_FROM`), institutional origin
+(`BRED_AT`), geographic cultivation (`GROWN_IN`), and genetic data
+(`HAS_GENOTYPE`) — which supports both the planned graph centrality analysis
+(identifying foundational cultivars) and straightforward map/lineage-explorer
+queries from the web application.
+
+### Step 10 — Build the web application against the graph
+
+**What**: Using Claude Code in the project repository, build the static site
+components: a Leaflet map (using converted WGS84 coordinates from Step 8.3),
+a D3.js force-directed lineage explorer (querying the Neo4j graph), a
+*C. formosensis* conservation page, and a methodology page documenting the
+pipeline.
+
+**Why a static site with these specific libraries**: Leaflet is a standard,
+lightweight library for interactive web maps; D3's force-directed graph
+layout is well suited to visualizing lineage networks where node positions
+should reflect relationship structure rather than a fixed geographic or
+hierarchical layout.
+
+### Step 11 (optional) — Bring Claude Code into Obsidian via Claudian
+
+**What**: Once the Step 3 note template and Step 1 taxonomy are stable
+(i.e., not actively being revised), optionally install **Claudian** to let
+Claude Code operate on the Obsidian vault directly — batch-restructuring
+notes, building Dataview-backed indexes, or running multi-step synthesis
+across many literature notes at once.
+
+**Why this step is sequenced last, and marked optional**: Claudian grants an
+AI agent direct file-write access to the vault. Introducing this while the
+note structure is still being decided risks the agent "helpfully" applying
+an inconsistent structure across notes faster than a human would notice. Once
+the structure is locked, the same capability becomes a net time-saver instead
+of a consistency risk. This sequencing rationale was the deciding factor in
+recommending Claudian for later adoption rather than immediate setup.
+
+---
+
+## End-to-end data flow diagram
+
+```
+                         ┌─────────────┐
+                         │   Zotero    │  Step 1–2
+                         │ (capture)   │  tag taxonomy, citekeys
+                         └──────┬──────┘
+                                │  Zotero Integration + Better BibTeX
+                                ▼
+                         ┌─────────────┐
+                         │  Obsidian   │  Step 3–6
+                         │ (synthesis) │  literature notes, Dataview,
+                         │             │  Claude (chat)-assisted summaries
+                         └──────┬──────┘
+                                │  manually identified extraction targets
+                                │  (which sources feed the KG pipeline)
+                                ▼
+                      ┌───────────────────┐
+                      │   Claude Code     │  Step 7–10
+                      │   (CLI, repo)     │
+                      │                   │
+                      │  PDF/OCR extract  │
+                      │        ↓          │
+                      │  DuckDB staging   │
+                      │        ↓          │
+                      │  Normalization    │
+                      │        ↓          │
+                      │  NER/relation ext │
+                      │        ↓          │
+                      │  Neo4j KG load    │
+                      │        ↓          │
+                      │  Web app (D3/     │
+                      │  Leaflet)         │
+                      └───────────────────┘
+
+   [Optional, Step 11]: Claudian connects Claude Code into the
+   Obsidian layer directly, once note structure is stable.
+```
+
+---
+
+## Summary table: tool-to-responsibility mapping
+
+| Tool | Layer | Primary job | Key plugins/components |
+|---|---|---|---|
+| Zotero | Capture | Bibliographic metadata, tagging, citekeys | Better BibTeX |
+| Obsidian | Synthesis | Literature notes, linking, queryable synthesis | Zotero Integration, Dataview, Templater |
+| Claude (chat) | Synthesis (ad hoc) | Summarization, explanation, drafting | — |
+| Claude Code (CLI) | Execution | Pipeline code, DuckDB/Neo4j, web app, Git | `CLAUDE.md` for persistent context |
+| Claudian (optional) | Synthesis (agentic) | Vault-wide automated restructuring | Built on Claude Code |
+
+---
+
+## Open decisions to revisit
+
+- Exact controlled vocabulary for Step 1 tags (organism / omics type / pathway
+  / method) — draft and finalize before large-scale Zotero capture begins.
+- Whether `CLAUDE.md` should be a single root file or split per-pipeline-stage
+  as the codebase grows past initial MVP scope.
+- Timing of Claudian adoption — tied to template/taxonomy stability, not a
+  fixed calendar date.

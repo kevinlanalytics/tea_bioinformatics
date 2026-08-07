@@ -1,0 +1,469 @@
+---
+title: "Building a Literature Tagging Taxonomy"
+subtitle: "Step 1 of Knowledge Management — Tea Heritage Knowledge Graph Project"
+author: "KL"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    theme: cosmo
+---
+
+## Why this document exists
+
+Before extracting data from sources (GBIF, NCBI, TRES bulletins), the literature
+you read needs a **consistent, controlled set of tags** in Obsidian/Zotero. Without
+this, you will end up with synonyms scattered across notes (e.g. `#formosensis`,
+`#C.formosensis`, `#taiwan-wild-tea` all meaning the same thing), and you will have
+to redo the tagging later — which costs more time than doing it right now.
+
+This document is a **literal, step-by-step walkthrough**, using 5 real published
+papers as worked examples. No botany or evolutionary biology background is assumed.
+You only need to be able to read a title and abstract.
+
+::: {.callout-note}
+## What a "tag dimension" means
+A *dimension* is a category you'll always want to filter by — like a column in a
+spreadsheet. A *tag* is one specific value inside that column. "Organism" is a
+dimension; `formosensis` is a tag inside it. You will derive both directly from
+real papers in Action 2 below — you do not need to invent them from scratch.
+:::
+
+---
+
+## The 5 worked-example papers
+
+These are real, verifiable papers relevant to your project. You can substitute your
+own papers later, but use these now so you have concrete material instead of a blank
+page.
+
+| # | Paper | Source |
+|---|-------|--------|
+| 1 | Su, Hsieh & Tsou (2009). "The confirmation of *Camellia formosensis* (Theaceae) as an independent species based on DNA sequence analyses." *Botanical Studies* 50(4):477–485. | [PDF](https://ejournal.sinica.edu.tw/bbas/content/2009/4/Bot504-11.pdf) |
+| 2 | Wu et al. "The Plastome of *Camellia formosensis* (Theaceae) Reconfirms the Endemism of Taiwanese Wild Tea." | [TFRI](https://www.tfri.gov.tw/en/News_Content2.aspx?n=7589&s=32788) |
+| 3 | "Development of STS and CAPS markers for variety identification and genetic diversity analysis of tea germplasm in Taiwan." *Botanical Studies* 55:12. | [Springer](https://link.springer.com/article/10.1186/1999-3110-55-12) |
+| 4 | Study on "Influence of natural light intensities on growth and content of catechins and caffeine in *Camellia formosensis* leaves and tea infusion." | (ResearchGate listing) |
+| 5 | International Camellia Register species entry for *Camellia formosensis*, including TTES cultivar lineage notes (TTES #18 "Ruby," TTES #24). | [Register](https://camellia.iflora.cn/Species/Detail?latin=Camellia+formosensis) |
+
+::: {.callout-important}
+## Evidence check before you proceed
+Paper 1 is the taxonomic foundation of your whole project: it's the study that
+established *C. formosensis* as its own species using nuclear DNA sequence
+analysis (the RPB2 gene), separate from *C. sinensis* var. *sinensis* and var.
+*assamica*. Everything downstream (TRES breeding, TTES cultivars) assumes this
+species boundary. If you only read one paper before building your taxonomy, read
+this one's abstract.
+:::
+
+---
+
+## Action 1 — Gather the 5 papers (or your own equivalents)
+
+**What to do:** Open each link above (or search Google Scholar / NCBI / GBIF for
+your own 5–10 papers if you prefer). You only need the **title + abstract** for
+each — do not read the full paper yet.
+
+### Search keywords by topic direction
+
+If you're sourcing your own papers instead of using the 5 above, here are concrete
+search strings to use per topic area — these map directly to the dimensions
+you'll build in Action 3, so searching across all four directions now gives you
+a more balanced starting table.
+
+**Taxonomy / species identity:**
+- `"Camellia formosensis" taxonomy`
+- `"Camellia formosensis" DNA sequence species`
+- `Camellia sinensis var. assamica vs sinensis Taiwan`
+
+**Genomics / molecular:**
+- `"Camellia formosensis" plastome OR chloroplast genome`
+- `Camellia formosensis genome sequencing`
+- `tea plant Camellia genome NCBI`
+
+**Lineage / breeding / cultivars:**
+- `TTES cultivar Taiwan tea breeding`
+- `"Taiwan Tea Research and Extension Station" cultivar`
+- `Qingxin Oolong cultivar lineage`
+- `STS CAPS markers tea germplasm Taiwan`
+
+**Chemistry / phytochemistry:**
+- `Camellia formosensis catechin caffeine content`
+- `Taiwan wild tea phytochemical composition`
+
+**Cultivation / agronomy / geography:**
+- `Camellia formosensis distribution Taiwan elevation`
+- `Taiwan tea growing region GBIF occurrence`
+
+::: {.callout-tip}
+## Why search across all four directions, not just one
+If you only search "Camellia formosensis genome," you'll end up with 8 genomics
+papers and nothing on lineage or chemistry — your Action 2 table will look
+lopsided, and you won't get a representative tag list. Pull 1–2 results from each
+direction above instead of maximizing results from one search.
+:::
+
+**Time:** 10–15 minutes.
+
+**Watch out for:** The temptation to start deeply reading paper 1 because it's
+interesting. Resist — this stage is inventory, not comprehension. You're scanning,
+not studying.
+
+---
+
+## Action 2 — Fill in a 4-column table, one row per paper
+
+For each paper, answer four questions **in your own plain words** — no jargon
+required, and nothing here requires you to evaluate the science:
+
+1. **Organism** — which species or cultivar is this paper about?
+2. **Method** — what kind of evidence did they generate (DNA sequencing, plant
+   measurements, chemical analysis, historical records)?
+3. **Pathway/topic** — what relationship does this paper inform (is it about
+   ancestry/lineage, where it grows, its chemistry, or its species classification)?
+4. **Notes** — anything that doesn't fit cleanly (flag it, don't force it)
+
+### Worked example, filled in from the 5 papers above
+
+| Paper | Organism | Method | Pathway/topic | Notes |
+|---|---|---|---|---|
+| 1. Su et al. 2009 | *C. formosensis* vs. *C. sinensis* var. *sinensis*/*assamica* | DNA sequencing (RPB2 nuclear gene) | Taxonomy (species classification) | Foundational species-naming paper |
+| 2. Plastome paper | *C. formosensis* | DNA sequencing (chloroplast genome / plastome) | Taxonomy + lineage (molecular markers for future studies) | Confirms paper 1's conclusion independently |
+| 3. STS/CAPS markers | Tea germplasm in Taiwan (multiple cultivars) | Genetic marker development (STS, CAPS — types of DNA-based ID tests) | Lineage (variety identification, genetic diversity) | Useful for your `HAS_GENOTYPE` relationship later |
+| 4. Light intensity study | *C. formosensis* | Field/lab measurement (catechin & caffeine content under light conditions) | Chemistry (phytochemical content) | Not about lineage at all — pure chemistry |
+| 5. Camellia Register entry | *C. formosensis* + TTES #18, TTES #24 (named cultivars) | Historical/registry record (not a primary research study) | Lineage (breeding history: wild species crossed into named cultivars) | This is the clearest real-world example of a `DERIVED_FROM` relationship in your schema — TTES #24 derived from wild *formosensis* populations |
+
+::: {.callout-tip}
+## Why this table is the actual taxonomy-building step
+You didn't invent "Taxonomy," "Lineage," and "Chemistry" as abstract categories —
+you read them directly off 5 real papers. This is the core trick: **the categories
+already exist in your sources; your job is to notice and name them, not invent
+them.**
+:::
+
+**Time:** 20–25 minutes for 5 papers (less once you're warmed up).
+
+---
+
+## Action 3 — Turn each column into a tag list
+
+Look down each column. Write the **distinct, deduplicated** values as a list.
+This is mechanical — you're just removing repeats.
+
+**From the Organism column:**
+
+```
+formosensis
+sinensis-assamica
+ttes-cultivar       (generic — use only when the specific cultivar/TTES number isn't named)
+ttes-18             (specific cultivar, when named — "Ruby")
+ttes-24             (specific cultivar, when named)
+multi               (paper compares more than one organism, e.g. paper 1)
+```
+
+::: {.callout-warning}
+## Watch out for: synonym collision
+Paper 5 names cultivars as "TTES #18" and "Ruby." These are the **same plant**.
+Decide now: tags use the TTES number, not the common name, because TTES numbers
+are the canonical registry identifiers TRES itself uses — common names like "Ruby"
+or "Hong Yu" can vary by source. Keep a separate note (e.g. `_synonyms.md`) mapping
+common names to TTES numbers; don't let the tag system absorb every synonym
+directly.
+:::
+
+**From the Method column:**
+
+```
+genomics            (DNA/plastome sequencing — papers 1, 2)
+genetic-markers      (STS/CAPS marker development — paper 3)
+phytochemistry       (catechin/caffeine content — paper 4)
+historical-record    (registry/bulletin entries, not primary research — paper 5)
+```
+
+**From the Pathway/topic column:**
+
+```
+taxonomy     (species classification — papers 1, 2)
+lineage      (breeding/ancestry — papers 3, 5)
+chemistry    (phytochemical profile — paper 4)
+cultivation  (growing region/agronomy — not yet seen in these 5, but reserve it; you will hit it in TRES agronomy bulletins)
+```
+
+**Time:** 10 minutes. This step is just deduplication — no new judgment calls.
+
+---
+
+## Action 4 — Write the taxonomy into one Obsidian note
+
+Create a note called `_taxonomy.md` and pin/star it. Use Obsidian's nested tag
+syntax (`#dimension/value`) — this renders hierarchically in the tag pane and lets
+you query either the parent (`#organism`) or a specific child (`#organism/ttes-24`)
+with Dataview.
+
+```markdown
+# Tagging Taxonomy
+*Last reviewed: <date>*
+
+## #organism
+- formosensis — wild Taiwanese tea species (Su et al. 2009)
+- sinensis-assamica — introduced Assamica lineage
+- ttes-18 — named cultivar "Ruby" (TRES registry)
+- ttes-24 — named cultivar bred from wild formosensis populations
+- ttes-cultivar — generic, use only if specific TTES number is unknown
+- multi — paper covers more than one organism
+
+## #method
+- genomics — DNA/plastome sequencing
+- genetic-markers — STS/CAPS or similar marker development
+- phytochemistry — chemical composition analysis
+- historical-record — registry entries, TRES bulletins, non-primary-research sources
+
+## #pathway
+- taxonomy — species classification questions
+- lineage — breeding/ancestry relationships
+- chemistry — phytochemical profile
+- cultivation — growing region, agronomic practice
+
+## Open/uncertain
+- (papers that don't fit — review monthly, see Action 5 rule)
+```
+
+**Time:** 10 minutes to write this up cleanly from Action 3's lists.
+
+---
+
+## Action 5 — Set your rule for new/uncertain values *now*
+
+You will hit a 6th paper that doesn't fit any value above. Decide the rule before
+it happens, so you don't have to think mid-reading-session:
+
+- **Rule:** Tag it `#organism/unclear` (or the equivalent for whichever dimension
+  doesn't fit) and move on immediately.
+- **Batch review:** Once a month, look at everything tagged `unclear` and decide
+  then whether it needs a new permanent tag value or was a one-off.
+
+::: {.callout-important}
+## Why batching beats real-time decisions
+If you stop to deliberate "is this a new tag or not?" every time you hit an edge
+case, tagging stops being a 2-minute task per paper and becomes a research project
+in itself. Given your ~3 hr/week budget, protect your reading time — defer the
+taxonomy edits.
+:::
+
+---
+
+## Action 6 — Tag the 5 papers, and only the 5 papers, right now
+
+Go into Zotero/Obsidian and apply tags to these 5 papers using **only** the values
+written in `_taxonomy.md`. Example for paper 5 (Camellia Register entry):
+
+```
+#organism/ttes-24 #organism/formosensis #method/historical-record #pathway/lineage
+```
+
+This is also your taxonomy's first real test. If, by paper 5, you already want to
+add a tag that's not on the list, that's useful signal — but don't add it live;
+note it and move to Action 5's batch-review rule.
+
+**Time:** 5 minutes for 5 papers.
+
+---
+
+## What you should have at the end (checklist)
+
+- [ ] `_taxonomy.md` exists with 3 dimensions and a controlled list of values for each
+- [ ] 5 papers tagged using only those values
+- [ ] A decision recorded on cultivar tagging (TTES number vs. common name) — and a
+      stub `_synonyms.md` note started, even if empty
+- [ ] A rule written down for handling new/unclear values (batch monthly)
+
+**Total time for this whole document, start to finish: ~60–75 minutes**, in one
+sitting or split across two sessions.
+
+---
+
+## The end-to-end workflow: Zotero → Obsidian → Claude assist → tags
+
+Once the taxonomy exists, here is the repeatable loop you'll run for every new
+paper. This assumes your existing setup: Zotero (Better BibTeX + Zotero Integration
+plugin) and Obsidian (Dataview, Templater).
+
+```
+1. Zotero        →  2. Obsidian literature note  →  3. Claude assist  →  4. Tag + file
+   (capture)          (auto-generated via plugin)      (summarize/extract)   (apply taxonomy)
+```
+
+### Step 1 — Capture the paper in Zotero
+
+Add the PDF/citation to Zotero as you normally would (browser connector, manual
+entry, or DOI lookup). This is your system of record for the citation itself —
+Obsidian should never hold the canonical bibliographic data, only notes *about*
+the paper.
+
+### Step 2 — Generate the literature note in Obsidian
+
+Use the Zotero Integration plugin to pull the paper into Obsidian as a new note,
+using your Templater template (the one with fields for organism, gene IDs, dataset
+accession numbers — the bioinformatics-tuned template you're building). This gives
+you a note with the citation metadata already filled in, and empty fields waiting
+for content.
+
+### Step 3 — Claude assist, inside that same note
+
+This is where Claude does extraction/summarization work — but with two hard rules,
+given your principle that AI output must stay clearly distinct from your own
+analysis:
+
+- **Label everything Claude produces.** Use a literal heading like `## AI-Assisted
+  Summary` or an inline tag like `#ai-generated`, so six months from now you can
+  tell at a glance what's Claude's extraction versus your own reading notes.
+- **Claude extracts facts, you make judgments.** Ask Claude to pull out things that
+  are explicitly stated in the abstract/methods — organism, method type, gene IDs,
+  accession numbers, sample size — not to infer significance or relevance. That
+  interpretive layer is yours.
+
+**Concrete prompt pattern to use inside the Obsidian note** (paste the abstract,
+then ask):
+
+> "From this abstract only, extract: (1) organism studied, (2) method type
+> (genomics/morphology/field-survey/historical-record/etc.), (3) any gene IDs or
+> accession numbers mentioned, (4) one sentence stating the main finding. Do not
+> infer anything not explicitly stated."
+
+This keeps Claude's output narrow, factual, and auditable — which matters if this
+note ever ends up referenced in a BISS manuscript.
+
+::: {.callout-warning}
+## Watch out for: letting Claude pick the tags
+Don't ask Claude to "tag this paper" freely — it doesn't know your controlled
+vocabulary and will invent plausible-sounding tags that don't match
+`_taxonomy.md`. Instead, ask Claude to extract the four facts above, and **you**
+map them to tag values yourself (or ask Claude to pick *only* from a pasted list
+of your existing tag values — never an open-ended ask).
+:::
+
+### Step 4 — Apply tags from `_taxonomy.md` and file the note
+
+Using the facts Claude extracted in Step 3, apply tags manually:
+
+```
+#organism/formosensis #method/genomics #pathway/taxonomy #ai-generated
+```
+
+If a value doesn't exist yet in your taxonomy, follow the Action 5 rule from
+earlier in this document — tag `unclear` and batch-review monthly, rather than
+deciding live.
+
+### Why this division of labor works
+
+- **Zotero** owns citations (stable, structured, never touched by AI)
+- **Obsidian** owns your synthesis and the taxonomy (your judgment, your tags)
+- **Claude** owns narrow, auditable extraction (clearly labeled, never freely
+  tagging or interpreting)
+
+This mirrors the same separation you're already building into the data
+pipeline — extraction/normalization is mechanical and reviewable, interpretation
+is a separate, deliberate step. The literature workflow is a smaller-scale dry run
+of the same discipline.
+
+---
+
+## Objective of this phase, stated plainly
+
+This entire document covers **one phase** of the tea heritage knowledge graph
+project: building the **knowledge management layer** — the taxonomy, synonym
+mapping, and literature workflow that everything downstream depends on.
+
+**What this phase is for:** giving every paper you read a consistent, retrievable
+identity (which organism, what evidence type, what relationship) *before* any
+data gets extracted into DuckDB/Neo4j. The categories you define here
+(`#organism`, `#method`, `#pathway`) are not busywork — they are a dry run of the
+same boundaries your normalization layer will need (cultivar synonym resolution,
+entity types for nodes). Get them stable now, cheaply, in Obsidian; avoid
+re-deriving them under pressure later while also debugging a Cypher load script.
+
+**What this phase is explicitly NOT:** data extraction, OCR pipeline work, schema
+design for Neo4j nodes/edges, or anything touching DuckDB. Those are the *next*
+phase. If you find yourself wanting to start the OCR pipeline or design `Cultivar`
+node properties while still tagging papers — that's scope creep across phases.
+Finish this one first; the milestone below tells you when.
+
+---
+
+## Milestone: Knowledge Management Layer Complete
+
+You're done with this phase — and clear to move to ETL/data extraction — when
+**all** of these are true:
+
+- [ ] `_taxonomy.md` exists with all dimensions (organism, method, pathway, +
+      cultivation if it's shown up) and each has a stable, named list of values
+- [ ] `_synonyms.md` exists with at least the cultivar name ↔ TTES-code mappings
+      you've hit so far (doesn't need to be exhaustive — just started and real)
+- [ ] **10–15 papers tagged** (not just the 5 worked examples in this document) —
+      this is the real test, because it's enough volume to surface whether your
+      taxonomy holds up or needs revision
+- [ ] You've hit at least **one genuine "doesn't fit" case** and handled it with
+      the `unclear` + batch-review rule rather than improvising a new category on
+      the spot — proves the rule works under real conditions, not just in theory
+- [ ] The Zotero → Obsidian → Claude → tag workflow has been run **end-to-end at
+      least 3 times** by you personally — Claude assists, you label, you tag
+- [ ] The Templater literature note template (organism, gene IDs, accession
+      numbers) is finalized and is what new notes are created from — not still
+      being redesigned per-paper
+
+### What "complete" does NOT require
+
+- A perfect taxonomy. It will evolve — that's what the monthly `unclear` review
+  is for.
+- Every paper you'll ever read tagged. 10–15 is enough signal; the rest gets
+  tagged as you go, using the now-stable system.
+- Zero ambiguity. One or two `unclear` tags sitting in the batch-review queue is
+  healthy, not a blocker.
+
+### Signal you're NOT done yet
+
+If you're still **renaming or restructuring dimensions** (e.g., realizing
+"method" should actually split into two axes) past paper #10, the taxonomy
+hasn't stabilized — finish that churn before starting ETL. Your DuckDB staging
+schema and normalization layer will lean on these same category boundaries;
+cultivar synonym resolution is literally the same problem as `_synonyms.md`,
+just at production scale.
+
+### Realistic timeline
+
+Given a ~3 hr/week budget, this checklist is **roughly 2–3 weeks** of light,
+steady work — most of it is reading + tagging volume, not new decisions.
+
+::: {.callout-tip}
+## Tracking progress without manual checking
+Add a Dataview query to `_taxonomy.md` that counts tagged papers per dimension
+and surfaces anything still tagged `unclear`:
+
+```dataview
+TABLE length(rows) as "Count"
+FROM #organism OR #method OR #pathway
+GROUP BY file.tags
+```
+
+And a dedicated query to flag your review queue:
+
+```dataview
+LIST
+FROM #organism/unclear OR #method/unclear OR #pathway/unclear
+```
+
+Check this monthly as part of the batch-review rule from Action 5 — it turns the
+milestone checklist above from something you track in your head into something
+Obsidian tracks for you.
+:::
+
+---
+
+## What comes next
+
+Once this taxonomy exists, the next step is the **entity/relation schema** for
+Neo4j — i.e., deciding exactly what properties a `Cultivar` node or `Region` node
+has. Notice that Action 3 above (organism tag list) and Action 4 (cultivar IDs vs.
+common names) are *previews* of that schema work — you are not duplicating effort,
+you're front-loading decisions you need anyway.

@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="KL">
+<meta name="dcterms.date" content="2026-06-28">
+
+<title>Building a Literature Tagging Taxonomy</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="tagging-taxonomy-howto_files/libs/clipboard/clipboard.min.js"></script>
+<script src="tagging-taxonomy-howto_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="tagging-taxonomy-howto_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="tagging-taxonomy-howto_files/libs/quarto-html/popper.min.js"></script>
+<script src="tagging-taxonomy-howto_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="tagging-taxonomy-howto_files/libs/quarto-html/anchor.min.js"></script>
+<link href="tagging-taxonomy-howto_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="tagging-taxonomy-howto_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="tagging-taxonomy-howto_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="tagging-taxonomy-howto_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="tagging-taxonomy-howto_files/libs/bootstrap/bootstrap-8ffd5f67044e5306d9846f29df41dda5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#why-this-document-exists" id="toc-why-this-document-exists" class="nav-link active" data-scroll-target="#why-this-document-exists">Why this document exists</a></li>
+  <li><a href="#the-5-worked-example-papers" id="toc-the-5-worked-example-papers" class="nav-link" data-scroll-target="#the-5-worked-example-papers">The 5 worked-example papers</a></li>
+  <li><a href="#action-1-gather-the-5-papers-or-your-own-equivalents" id="toc-action-1-gather-the-5-papers-or-your-own-equivalents" class="nav-link" data-scroll-target="#action-1-gather-the-5-papers-or-your-own-equivalents">Action 1 — Gather the 5 papers (or your own equivalents)</a>
+  <ul class="collapse">
+  <li><a href="#search-keywords-by-topic-direction" id="toc-search-keywords-by-topic-direction" class="nav-link" data-scroll-target="#search-keywords-by-topic-direction">Search keywords by topic direction</a></li>
+  </ul></li>
+  <li><a href="#action-2-fill-in-a-4-column-table-one-row-per-paper" id="toc-action-2-fill-in-a-4-column-table-one-row-per-paper" class="nav-link" data-scroll-target="#action-2-fill-in-a-4-column-table-one-row-per-paper">Action 2 — Fill in a 4-column table, one row per paper</a>
+  <ul class="collapse">
+  <li><a href="#worked-example-filled-in-from-the-5-papers-above" id="toc-worked-example-filled-in-from-the-5-papers-above" class="nav-link" data-scroll-target="#worked-example-filled-in-from-the-5-papers-above">Worked example, filled in from the 5 papers above</a></li>
+  </ul></li>
+  <li><a href="#action-3-turn-each-column-into-a-tag-list" id="toc-action-3-turn-each-column-into-a-tag-list" class="nav-link" data-scroll-target="#action-3-turn-each-column-into-a-tag-list">Action 3 — Turn each column into a tag list</a></li>
+  <li><a href="#action-4-write-the-taxonomy-into-one-obsidian-note" id="toc-action-4-write-the-taxonomy-into-one-obsidian-note" class="nav-link" data-scroll-target="#action-4-write-the-taxonomy-into-one-obsidian-note">Action 4 — Write the taxonomy into one Obsidian note</a></li>
+  <li><a href="#action-5-set-your-rule-for-newuncertain-values-now" id="toc-action-5-set-your-rule-for-newuncertain-values-now" class="nav-link" data-scroll-target="#action-5-set-your-rule-for-newuncertain-values-now">Action 5 — Set your rule for new/uncertain values <em>now</em></a></li>
+  <li><a href="#action-6-tag-the-5-papers-and-only-the-5-papers-right-now" id="toc-action-6-tag-the-5-papers-and-only-the-5-papers-right-now" class="nav-link" data-scroll-target="#action-6-tag-the-5-papers-and-only-the-5-papers-right-now">Action 6 — Tag the 5 papers, and only the 5 papers, right now</a></li>
+  <li><a href="#what-you-should-have-at-the-end-checklist" id="toc-what-you-should-have-at-the-end-checklist" class="nav-link" data-scroll-target="#what-you-should-have-at-the-end-checklist">What you should have at the end (checklist)</a></li>
+  <li><a href="#the-end-to-end-workflow-zotero-obsidian-claude-assist-tags" id="toc-the-end-to-end-workflow-zotero-obsidian-claude-assist-tags" class="nav-link" data-scroll-target="#the-end-to-end-workflow-zotero-obsidian-claude-assist-tags">The end-to-end workflow: Zotero → Obsidian → Claude assist → tags</a>
+  <ul class="collapse">
+  <li><a href="#step-1-capture-the-paper-in-zotero" id="toc-step-1-capture-the-paper-in-zotero" class="nav-link" data-scroll-target="#step-1-capture-the-paper-in-zotero">Step 1 — Capture the paper in Zotero</a></li>
+  <li><a href="#step-2-generate-the-literature-note-in-obsidian" id="toc-step-2-generate-the-literature-note-in-obsidian" class="nav-link" data-scroll-target="#step-2-generate-the-literature-note-in-obsidian">Step 2 — Generate the literature note in Obsidian</a></li>
+  <li><a href="#step-3-claude-assist-inside-that-same-note" id="toc-step-3-claude-assist-inside-that-same-note" class="nav-link" data-scroll-target="#step-3-claude-assist-inside-that-same-note">Step 3 — Claude assist, inside that same note</a></li>
+  <li><a href="#step-4-apply-tags-from-_taxonomy.md-and-file-the-note" id="toc-step-4-apply-tags-from-_taxonomy.md-and-file-the-note" class="nav-link" data-scroll-target="#step-4-apply-tags-from-_taxonomy.md-and-file-the-note">Step 4 — Apply tags from <code>_taxonomy.md</code> and file the note</a></li>
+  <li><a href="#why-this-division-of-labor-works" id="toc-why-this-division-of-labor-works" class="nav-link" data-scroll-target="#why-this-division-of-labor-works">Why this division of labor works</a></li>
+  </ul></li>
+  <li><a href="#objective-of-this-phase-stated-plainly" id="toc-objective-of-this-phase-stated-plainly" class="nav-link" data-scroll-target="#objective-of-this-phase-stated-plainly">Objective of this phase, stated plainly</a></li>
+  <li><a href="#milestone-knowledge-management-layer-complete" id="toc-milestone-knowledge-management-layer-complete" class="nav-link" data-scroll-target="#milestone-knowledge-management-layer-complete">Milestone: Knowledge Management Layer Complete</a>
+  <ul class="collapse">
+  <li><a href="#what-complete-does-not-require" id="toc-what-complete-does-not-require" class="nav-link" data-scroll-target="#what-complete-does-not-require">What “complete” does NOT require</a></li>
+  <li><a href="#signal-youre-not-done-yet" id="toc-signal-youre-not-done-yet" class="nav-link" data-scroll-target="#signal-youre-not-done-yet">Signal you’re NOT done yet</a></li>
+  <li><a href="#realistic-timeline" id="toc-realistic-timeline" class="nav-link" data-scroll-target="#realistic-timeline">Realistic timeline</a></li>
+  </ul></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next">What comes next</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Building a Literature Tagging Taxonomy</h1>
+<p class="subtitle lead">Step 1 of Knowledge Management — Tea Heritage Knowledge Graph Project</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>KL </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 28, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="why-this-document-exists" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-document-exists">Why this document exists</h2>
+<p>Before extracting data from sources (GBIF, NCBI, TRES bulletins), the literature you read needs a <strong>consistent, controlled set of tags</strong> in Obsidian/Zotero. Without this, you will end up with synonyms scattered across notes (e.g.&nbsp;<code>#formosensis</code>, <code>#C.formosensis</code>, <code>#taiwan-wild-tea</code> all meaning the same thing), and you will have to redo the tagging later — which costs more time than doing it right now.</p>
+<p>This document is a <strong>literal, step-by-step walkthrough</strong>, using 5 real published papers as worked examples. No botany or evolutionary biology background is assumed. You only need to be able to read a title and abstract.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What a “tag dimension” means
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <em>dimension</em> is a category you’ll always want to filter by — like a column in a spreadsheet. A <em>tag</em> is one specific value inside that column. “Organism” is a dimension; <code>formosensis</code> is a tag inside it. You will derive both directly from real papers in Action 2 below — you do not need to invent them from scratch.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="the-5-worked-example-papers" class="level2">
+<h2 class="anchored" data-anchor-id="the-5-worked-example-papers">The 5 worked-example papers</h2>
+<p>These are real, verifiable papers relevant to your project. You can substitute your own papers later, but use these now so you have concrete material instead of a blank page.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Paper</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Su, Hsieh &amp; Tsou (2009). “The confirmation of <em>Camellia formosensis</em> (Theaceae) as an independent species based on DNA sequence analyses.” <em>Botanical Studies</em> 50(4):477–485.</td>
+<td><a href="https://ejournal.sinica.edu.tw/bbas/content/2009/4/Bot504-11.pdf">PDF</a></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Wu et al.&nbsp;“The Plastome of <em>Camellia formosensis</em> (Theaceae) Reconfirms the Endemism of Taiwanese Wild Tea.”</td>
+<td><a href="https://www.tfri.gov.tw/en/News_Content2.aspx?n=7589&amp;s=32788">TFRI</a></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>“Development of STS and CAPS markers for variety identification and genetic diversity analysis of tea germplasm in Taiwan.” <em>Botanical Studies</em> 55:12.</td>
+<td><a href="https://link.springer.com/article/10.1186/1999-3110-55-12">Springer</a></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Study on “Influence of natural light intensities on growth and content of catechins and caffeine in <em>Camellia formosensis</em> leaves and tea infusion.”</td>
+<td>(ResearchGate listing)</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>International Camellia Register species entry for <em>Camellia formosensis</em>, including TTES cultivar lineage notes (TTES #18 “Ruby,” TTES #24).</td>
+<td><a href="https://camellia.iflora.cn/Species/Detail?latin=Camellia+formosensis">Register</a></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Evidence check before you proceed
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Paper 1 is the taxonomic foundation of your whole project: it’s the study that established <em>C. formosensis</em> as its own species using nuclear DNA sequence analysis (the RPB2 gene), separate from <em>C. sinensis</em> var. <em>sinensis</em> and var. <em>assamica</em>. Everything downstream (TRES breeding, TTES cultivars) assumes this species boundary. If you only read one paper before building your taxonomy, read this one’s abstract.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="action-1-gather-the-5-papers-or-your-own-equivalents" class="level2">
+<h2 class="anchored" data-anchor-id="action-1-gather-the-5-papers-or-your-own-equivalents">Action 1 — Gather the 5 papers (or your own equivalents)</h2>
+<p><strong>What to do:</strong> Open each link above (or search Google Scholar / NCBI / GBIF for your own 5–10 papers if you prefer). You only need the <strong>title + abstract</strong> for each — do not read the full paper yet.</p>
+<section id="search-keywords-by-topic-direction" class="level3">
+<h3 class="anchored" data-anchor-id="search-keywords-by-topic-direction">Search keywords by topic direction</h3>
+<p>If you’re sourcing your own papers instead of using the 5 above, here are concrete search strings to use per topic area — these map directly to the dimensions you’ll build in Action 3, so searching across all four directions now gives you a more balanced starting table.</p>
+<p><strong>Taxonomy / species identity:</strong> - <code>"Camellia formosensis" taxonomy</code> - <code>"Camellia formosensis" DNA sequence species</code> - <code>Camellia sinensis var. assamica vs sinensis Taiwan</code></p>
+<p><strong>Genomics / molecular:</strong> - <code>"Camellia formosensis" plastome OR chloroplast genome</code> - <code>Camellia formosensis genome sequencing</code> - <code>tea plant Camellia genome NCBI</code></p>
+<p><strong>Lineage / breeding / cultivars:</strong> - <code>TTES cultivar Taiwan tea breeding</code> - <code>"Taiwan Tea Research and Extension Station" cultivar</code> - <code>Qingxin Oolong cultivar lineage</code> - <code>STS CAPS markers tea germplasm Taiwan</code></p>
+<p><strong>Chemistry / phytochemistry:</strong> - <code>Camellia formosensis catechin caffeine content</code> - <code>Taiwan wild tea phytochemical composition</code></p>
+<p><strong>Cultivation / agronomy / geography:</strong> - <code>Camellia formosensis distribution Taiwan elevation</code> - <code>Taiwan tea growing region GBIF occurrence</code></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why search across all four directions, not just one
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you only search “Camellia formosensis genome,” you’ll end up with 8 genomics papers and nothing on lineage or chemistry — your Action 2 table will look lopsided, and you won’t get a representative tag list. Pull 1–2 results from each direction above instead of maximizing results from one search.</p>
+</div>
+</div>
+<p><strong>Time:</strong> 10–15 minutes.</p>
+<p><strong>Watch out for:</strong> The temptation to start deeply reading paper 1 because it’s interesting. Resist — this stage is inventory, not comprehension. You’re scanning, not studying.</p>
+<hr>
+</section>
+</section>
+<section id="action-2-fill-in-a-4-column-table-one-row-per-paper" class="level2">
+<h2 class="anchored" data-anchor-id="action-2-fill-in-a-4-column-table-one-row-per-paper">Action 2 — Fill in a 4-column table, one row per paper</h2>
+<p>For each paper, answer four questions <strong>in your own plain words</strong> — no jargon required, and nothing here requires you to evaluate the science:</p>
+<ol type="1">
+<li><strong>Organism</strong> — which species or cultivar is this paper about?</li>
+<li><strong>Method</strong> — what kind of evidence did they generate (DNA sequencing, plant measurements, chemical analysis, historical records)?</li>
+<li><strong>Pathway/topic</strong> — what relationship does this paper inform (is it about ancestry/lineage, where it grows, its chemistry, or its species classification)?</li>
+<li><strong>Notes</strong> — anything that doesn’t fit cleanly (flag it, don’t force it)</li>
+</ol>
+<section id="worked-example-filled-in-from-the-5-papers-above" class="level3">
+<h3 class="anchored" data-anchor-id="worked-example-filled-in-from-the-5-papers-above">Worked example, filled in from the 5 papers above</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Paper</th>
+<th>Organism</th>
+<th>Method</th>
+<th>Pathway/topic</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Su et al.&nbsp;2009</td>
+<td><em>C. formosensis</em> vs.&nbsp;<em>C. sinensis</em> var. <em>sinensis</em>/<em>assamica</em></td>
+<td>DNA sequencing (RPB2 nuclear gene)</td>
+<td>Taxonomy (species classification)</td>
+<td>Foundational species-naming paper</td>
+</tr>
+<tr class="even">
+<td>2. Plastome paper</td>
+<td><em>C. formosensis</em></td>
+<td>DNA sequencing (chloroplast genome / plastome)</td>
+<td>Taxonomy + lineage (molecular markers for future studies)</td>
+<td>Confirms paper 1’s conclusion independently</td>
+</tr>
+<tr class="odd">
+<td>3. STS/CAPS markers</td>
+<td>Tea germplasm in Taiwan (multiple cultivars)</td>
+<td>Genetic marker development (STS, CAPS — types of DNA-based ID tests)</td>
+<td>Lineage (variety identification, genetic diversity)</td>
+<td>Useful for your <code>HAS_GENOTYPE</code> relationship later</td>
+</tr>
+<tr class="even">
+<td>4. Light intensity study</td>
+<td><em>C. formosensis</em></td>
+<td>Field/lab measurement (catechin &amp; caffeine content under light conditions)</td>
+<td>Chemistry (phytochemical content)</td>
+<td>Not about lineage at all — pure chemistry</td>
+</tr>
+<tr class="odd">
+<td>5. Camellia Register entry</td>
+<td><em>C. formosensis</em> + TTES #18, TTES #24 (named cultivars)</td>
+<td>Historical/registry record (not a primary research study)</td>
+<td>Lineage (breeding history: wild species crossed into named cultivars)</td>
+<td>This is the clearest real-world example of a <code>DERIVED_FROM</code> relationship in your schema — TTES #24 derived from wild <em>formosensis</em> populations</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why this table is the actual taxonomy-building step
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You didn’t invent “Taxonomy,” “Lineage,” and “Chemistry” as abstract categories — you read them directly off 5 real papers. This is the core trick: <strong>the categories already exist in your sources; your job is to notice and name them, not invent them.</strong></p>
+</div>
+</div>
+<p><strong>Time:</strong> 20–25 minutes for 5 papers (less once you’re warmed up).</p>
+<hr>
+</section>
+</section>
+<section id="action-3-turn-each-column-into-a-tag-list" class="level2">
+<h2 class="anchored" data-anchor-id="action-3-turn-each-column-into-a-tag-list">Action 3 — Turn each column into a tag list</h2>
+<p>Look down each column. Write the <strong>distinct, deduplicated</strong> values as a list. This is mechanical — you’re just removing repeats.</p>
+<p><strong>From the Organism column:</strong></p>
+<pre><code>formosensis
+sinensis-assamica
+ttes-cultivar       (generic — use only when the specific cultivar/TTES number isn't named)
+ttes-18             (specific cultivar, when named — "Ruby")
+ttes-24             (specific cultivar, when named)
+multi               (paper compares more than one organism, e.g. paper 1)</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Watch out for: synonym collision
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Paper 5 names cultivars as “TTES #18” and “Ruby.” These are the <strong>same plant</strong>. Decide now: tags use the TTES number, not the common name, because TTES numbers are the canonical registry identifiers TRES itself uses — common names like “Ruby” or “Hong Yu” can vary by source. Keep a separate note (e.g.&nbsp;<code>_synonyms.md</code>) mapping common names to TTES numbers; don’t let the tag system absorb every synonym directly.</p>
+</div>
+</div>
+<p><strong>From the Method column:</strong></p>
+<pre><code>genomics            (DNA/plastome sequencing — papers 1, 2)
+genetic-markers      (STS/CAPS marker development — paper 3)
+phytochemistry       (catechin/caffeine content — paper 4)
+historical-record    (registry/bulletin entries, not primary research — paper 5)</code></pre>
+<p><strong>From the Pathway/topic column:</strong></p>
+<pre><code>taxonomy     (species classification — papers 1, 2)
+lineage      (breeding/ancestry — papers 3, 5)
+chemistry    (phytochemical profile — paper 4)
+cultivation  (growing region/agronomy — not yet seen in these 5, but reserve it; you will hit it in TRES agronomy bulletins)</code></pre>
+<p><strong>Time:</strong> 10 minutes. This step is just deduplication — no new judgment calls.</p>
+<hr>
+</section>
+<section id="action-4-write-the-taxonomy-into-one-obsidian-note" class="level2">
+<h2 class="anchored" data-anchor-id="action-4-write-the-taxonomy-into-one-obsidian-note">Action 4 — Write the taxonomy into one Obsidian note</h2>
+<p>Create a note called <code>_taxonomy.md</code> and pin/star it. Use Obsidian’s nested tag syntax (<code>#dimension/value</code>) — this renders hierarchically in the tag pane and lets you query either the parent (<code>#organism</code>) or a specific child (<code>#organism/ttes-24</code>) with Dataview.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Tagging Taxonomy</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>*Last reviewed: &lt;date&gt;*</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## #organism</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>formosensis — wild Taiwanese tea species (Su et al. 2009)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>sinensis-assamica — introduced Assamica lineage</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ttes-18 — named cultivar "Ruby" (TRES registry)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ttes-24 — named cultivar bred from wild formosensis populations</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ttes-cultivar — generic, use only if specific TTES number is unknown</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>multi — paper covers more than one organism</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## #method</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>genomics — DNA/plastome sequencing</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>genetic-markers — STS/CAPS or similar marker development</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>phytochemistry — chemical composition analysis</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>historical-record — registry entries, TRES bulletins, non-primary-research sources</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## #pathway</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>taxonomy — species classification questions</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>lineage — breeding/ancestry relationships</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>chemistry — phytochemical profile</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>cultivation — growing region, agronomic practice</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Open/uncertain</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>(papers that don't fit — review monthly, see Action 5 rule)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Time:</strong> 10 minutes to write this up cleanly from Action 3’s lists.</p>
+<hr>
+</section>
+<section id="action-5-set-your-rule-for-newuncertain-values-now" class="level2">
+<h2 class="anchored" data-anchor-id="action-5-set-your-rule-for-newuncertain-values-now">Action 5 — Set your rule for new/uncertain values <em>now</em></h2>
+<p>You will hit a 6th paper that doesn’t fit any value above. Decide the rule before it happens, so you don’t have to think mid-reading-session:</p>
+<ul>
+<li><strong>Rule:</strong> Tag it <code>#organism/unclear</code> (or the equivalent for whichever dimension doesn’t fit) and move on immediately.</li>
+<li><strong>Batch review:</strong> Once a month, look at everything tagged <code>unclear</code> and decide then whether it needs a new permanent tag value or was a one-off.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Why batching beats real-time decisions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you stop to deliberate “is this a new tag or not?” every time you hit an edge case, tagging stops being a 2-minute task per paper and becomes a research project in itself. Given your ~3 hr/week budget, protect your reading time — defer the taxonomy edits.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="action-6-tag-the-5-papers-and-only-the-5-papers-right-now" class="level2">
+<h2 class="anchored" data-anchor-id="action-6-tag-the-5-papers-and-only-the-5-papers-right-now">Action 6 — Tag the 5 papers, and only the 5 papers, right now</h2>
+<p>Go into Zotero/Obsidian and apply tags to these 5 papers using <strong>only</strong> the values written in <code>_taxonomy.md</code>. Example for paper 5 (Camellia Register entry):</p>
+<pre><code>#organism/ttes-24 #organism/formosensis #method/historical-record #pathway/lineage</code></pre>
+<p>This is also your taxonomy’s first real test. If, by paper 5, you already want to add a tag that’s not on the list, that’s useful signal — but don’t add it live; note it and move to Action 5’s batch-review rule.</p>
+<p><strong>Time:</strong> 5 minutes for 5 papers.</p>
+<hr>
+</section>
+<section id="what-you-should-have-at-the-end-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-should-have-at-the-end-checklist">What you should have at the end (checklist)</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>_taxonomy.md</code> exists with 3 dimensions and a controlled list of values for each</label></li>
+<li><label><input type="checkbox">5 papers tagged using only those values</label></li>
+<li><label><input type="checkbox">A decision recorded on cultivar tagging (TTES number vs.&nbsp;common name) — and a stub <code>_synonyms.md</code> note started, even if empty</label></li>
+<li><label><input type="checkbox">A rule written down for handling new/unclear values (batch monthly)</label></li>
+</ul>
+<p><strong>Total time for this whole document, start to finish: ~60–75 minutes</strong>, in one sitting or split across two sessions.</p>
+<hr>
+</section>
+<section id="the-end-to-end-workflow-zotero-obsidian-claude-assist-tags" class="level2">
+<h2 class="anchored" data-anchor-id="the-end-to-end-workflow-zotero-obsidian-claude-assist-tags">The end-to-end workflow: Zotero → Obsidian → Claude assist → tags</h2>
+<p>Once the taxonomy exists, here is the repeatable loop you’ll run for every new paper. This assumes your existing setup: Zotero (Better BibTeX + Zotero Integration plugin) and Obsidian (Dataview, Templater).</p>
+<pre><code>1. Zotero        →  2. Obsidian literature note  →  3. Claude assist  →  4. Tag + file
+   (capture)          (auto-generated via plugin)      (summarize/extract)   (apply taxonomy)</code></pre>
+<section id="step-1-capture-the-paper-in-zotero" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-capture-the-paper-in-zotero">Step 1 — Capture the paper in Zotero</h3>
+<p>Add the PDF/citation to Zotero as you normally would (browser connector, manual entry, or DOI lookup). This is your system of record for the citation itself — Obsidian should never hold the canonical bibliographic data, only notes <em>about</em> the paper.</p>
+</section>
+<section id="step-2-generate-the-literature-note-in-obsidian" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-generate-the-literature-note-in-obsidian">Step 2 — Generate the literature note in Obsidian</h3>
+<p>Use the Zotero Integration plugin to pull the paper into Obsidian as a new note, using your Templater template (the one with fields for organism, gene IDs, dataset accession numbers — the bioinformatics-tuned template you’re building). This gives you a note with the citation metadata already filled in, and empty fields waiting for content.</p>
+</section>
+<section id="step-3-claude-assist-inside-that-same-note" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-claude-assist-inside-that-same-note">Step 3 — Claude assist, inside that same note</h3>
+<p>This is where Claude does extraction/summarization work — but with two hard rules, given your principle that AI output must stay clearly distinct from your own analysis:</p>
+<ul>
+<li><strong>Label everything Claude produces.</strong> Use a literal heading like <code>## AI-Assisted Summary</code> or an inline tag like <code>#ai-generated</code>, so six months from now you can tell at a glance what’s Claude’s extraction versus your own reading notes.</li>
+<li><strong>Claude extracts facts, you make judgments.</strong> Ask Claude to pull out things that are explicitly stated in the abstract/methods — organism, method type, gene IDs, accession numbers, sample size — not to infer significance or relevance. That interpretive layer is yours.</li>
+</ul>
+<p><strong>Concrete prompt pattern to use inside the Obsidian note</strong> (paste the abstract, then ask):</p>
+<blockquote class="blockquote">
+<p>“From this abstract only, extract: (1) organism studied, (2) method type (genomics/morphology/field-survey/historical-record/etc.), (3) any gene IDs or accession numbers mentioned, (4) one sentence stating the main finding. Do not infer anything not explicitly stated.”</p>
+</blockquote>
+<p>This keeps Claude’s output narrow, factual, and auditable — which matters if this note ever ends up referenced in a BISS manuscript.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Watch out for: letting Claude pick the tags
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t ask Claude to “tag this paper” freely — it doesn’t know your controlled vocabulary and will invent plausible-sounding tags that don’t match <code>_taxonomy.md</code>. Instead, ask Claude to extract the four facts above, and <strong>you</strong> map them to tag values yourself (or ask Claude to pick <em>only</em> from a pasted list of your existing tag values — never an open-ended ask).</p>
+</div>
+</div>
+</section>
+<section id="step-4-apply-tags-from-_taxonomy.md-and-file-the-note" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-apply-tags-from-_taxonomy.md-and-file-the-note">Step 4 — Apply tags from <code>_taxonomy.md</code> and file the note</h3>
+<p>Using the facts Claude extracted in Step 3, apply tags manually:</p>
+<pre><code>#organism/formosensis #method/genomics #pathway/taxonomy #ai-generated</code></pre>
+<p>If a value doesn’t exist yet in your taxonomy, follow the Action 5 rule from earlier in this document — tag <code>unclear</code> and batch-review monthly, rather than deciding live.</p>
+</section>
+<section id="why-this-division-of-labor-works" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-division-of-labor-works">Why this division of labor works</h3>
+<ul>
+<li><strong>Zotero</strong> owns citations (stable, structured, never touched by AI)</li>
+<li><strong>Obsidian</strong> owns your synthesis and the taxonomy (your judgment, your tags)</li>
+<li><strong>Claude</strong> owns narrow, auditable extraction (clearly labeled, never freely tagging or interpreting)</li>
+</ul>
+<p>This mirrors the same separation you’re already building into the data pipeline — extraction/normalization is mechanical and reviewable, interpretation is a separate, deliberate step. The literature workflow is a smaller-scale dry run of the same discipline.</p>
+<hr>
+</section>
+</section>
+<section id="objective-of-this-phase-stated-plainly" class="level2">
+<h2 class="anchored" data-anchor-id="objective-of-this-phase-stated-plainly">Objective of this phase, stated plainly</h2>
+<p>This entire document covers <strong>one phase</strong> of the tea heritage knowledge graph project: building the <strong>knowledge management layer</strong> — the taxonomy, synonym mapping, and literature workflow that everything downstream depends on.</p>
+<p><strong>What this phase is for:</strong> giving every paper you read a consistent, retrievable identity (which organism, what evidence type, what relationship) <em>before</em> any data gets extracted into DuckDB/Neo4j. The categories you define here (<code>#organism</code>, <code>#method</code>, <code>#pathway</code>) are not busywork — they are a dry run of the same boundaries your normalization layer will need (cultivar synonym resolution, entity types for nodes). Get them stable now, cheaply, in Obsidian; avoid re-deriving them under pressure later while also debugging a Cypher load script.</p>
+<p><strong>What this phase is explicitly NOT:</strong> data extraction, OCR pipeline work, schema design for Neo4j nodes/edges, or anything touching DuckDB. Those are the <em>next</em> phase. If you find yourself wanting to start the OCR pipeline or design <code>Cultivar</code> node properties while still tagging papers — that’s scope creep across phases. Finish this one first; the milestone below tells you when.</p>
+<hr>
+</section>
+<section id="milestone-knowledge-management-layer-complete" class="level2">
+<h2 class="anchored" data-anchor-id="milestone-knowledge-management-layer-complete">Milestone: Knowledge Management Layer Complete</h2>
+<p>You’re done with this phase — and clear to move to ETL/data extraction — when <strong>all</strong> of these are true:</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>_taxonomy.md</code> exists with all dimensions (organism, method, pathway, + cultivation if it’s shown up) and each has a stable, named list of values</label></li>
+<li><label><input type="checkbox"><code>_synonyms.md</code> exists with at least the cultivar name ↔︎ TTES-code mappings you’ve hit so far (doesn’t need to be exhaustive — just started and real)</label></li>
+<li><label><input type="checkbox"><strong>10–15 papers tagged</strong> (not just the 5 worked examples in this document) — this is the real test, because it’s enough volume to surface whether your taxonomy holds up or needs revision</label></li>
+<li><label><input type="checkbox">You’ve hit at least <strong>one genuine “doesn’t fit” case</strong> and handled it with the <code>unclear</code> + batch-review rule rather than improvising a new category on the spot — proves the rule works under real conditions, not just in theory</label></li>
+<li><label><input type="checkbox">The Zotero → Obsidian → Claude → tag workflow has been run <strong>end-to-end at least 3 times</strong> by you personally — Claude assists, you label, you tag</label></li>
+<li><label><input type="checkbox">The Templater literature note template (organism, gene IDs, accession numbers) is finalized and is what new notes are created from — not still being redesigned per-paper</label></li>
+</ul>
+<section id="what-complete-does-not-require" class="level3">
+<h3 class="anchored" data-anchor-id="what-complete-does-not-require">What “complete” does NOT require</h3>
+<ul>
+<li>A perfect taxonomy. It will evolve — that’s what the monthly <code>unclear</code> review is for.</li>
+<li>Every paper you’ll ever read tagged. 10–15 is enough signal; the rest gets tagged as you go, using the now-stable system.</li>
+<li>Zero ambiguity. One or two <code>unclear</code> tags sitting in the batch-review queue is healthy, not a blocker.</li>
+</ul>
+</section>
+<section id="signal-youre-not-done-yet" class="level3">
+<h3 class="anchored" data-anchor-id="signal-youre-not-done-yet">Signal you’re NOT done yet</h3>
+<p>If you’re still <strong>renaming or restructuring dimensions</strong> (e.g., realizing “method” should actually split into two axes) past paper #10, the taxonomy hasn’t stabilized — finish that churn before starting ETL. Your DuckDB staging schema and normalization layer will lean on these same category boundaries; cultivar synonym resolution is literally the same problem as <code>_synonyms.md</code>, just at production scale.</p>
+</section>
+<section id="realistic-timeline" class="level3">
+<h3 class="anchored" data-anchor-id="realistic-timeline">Realistic timeline</h3>
+<p>Given a ~3 hr/week budget, this checklist is <strong>roughly 2–3 weeks</strong> of light, steady work — most of it is reading + tagging volume, not new decisions.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tracking progress without manual checking
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Add a Dataview query to <code>_taxonomy.md</code> that counts tagged papers per dimension and surfaces anything still tagged <code>unclear</code>:</p>
+<pre class="dataview"><code>TABLE length(rows) as "Count"
+FROM #organism OR #method OR #pathway
+GROUP BY file.tags</code></pre>
+<p>And a dedicated query to flag your review queue:</p>
+<pre class="dataview"><code>LIST
+FROM #organism/unclear OR #method/unclear OR #pathway/unclear</code></pre>
+<p>Check this monthly as part of the batch-review rule from Action 5 — it turns the milestone checklist above from something you track in your head into something Obsidian tracks for you.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="what-comes-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-comes-next">What comes next</h2>
+<p>Once this taxonomy exists, the next step is the <strong>entity/relation schema</strong> for Neo4j — i.e., deciding exactly what properties a <code>Cultivar</code> node or <code>Region</code> node has. Notice that Action 3 above (organism tag list) and Action 4 (cultivar IDs vs. common names) are <em>previews</em> of that schema work — you are not duplicating effort, you’re front-loading decisions you need anyway.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

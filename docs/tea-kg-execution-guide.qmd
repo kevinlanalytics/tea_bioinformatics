@@ -1,0 +1,381 @@
+---
+title: "Execution Guide: Tier 2 (Balanced/Paid) Build"
+subtitle: "Step-by-Step Setup and Tool Integration for the Taiwanese Tea Heritage Knowledge Graph and Web Application"
+author: "Kevin Lan"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    code-fold: false
+    theme: cosmo
+---
+
+# Purpose and Scope of This Document
+
+This document is a companion to the main project proposal ("A Public Knowledge Graph of Taiwanese Tea Genetic Heritage"). Where the main proposal describes *what* to do and *why*, in three cost tiers, this document describes *how* to actually do it — concretely, tool by tool, screen by screen — assuming the **Tier 2 ("Balanced") budget** is the one being used: a small amount of paid software (Perplexity Pro and Claude Pro, roughly $40/month during the literature and extraction phases only) layered on top of free infrastructure (Neo4j AuraDB Free, DuckDB, GitHub, Zenodo, Leaflet, D3).
+
+The organizing question for this document is **integration**: not just "what tool do I use for this step," but "how does this specific tool hand its output to the next tool in the chain, and what is the literal mechanism — a file, an API call, an MCP connection, a copy-paste — that makes that handoff work." Every tool named in the main proposal is covered here with its actual setup steps and its actual connection point to the rest of the pipeline.
+
+Every factual claim in this document is supported by a citation, a tagged assumption, or a labeled estimate, and every technical term is defined at first use, consistent with the main proposal. Where a step is a judgment call rather than a verified fact, it is labeled **[RECOMMENDATION]**.
+
+---
+
+# Part 1: Account and Environment Setup (Do This Once, Before Anything Else)
+
+## 1.1 Accounts to Create
+
+| Account | URL | Cost (Tier 2) | Notes |
+|---|---|---|---|
+| Zotero | zotero.org | Free | Create account, then install the desktop app and the browser connector extension separately — the web account alone does not capture PDFs |
+| Perplexity Pro | perplexity.ai | $20/month | Sign up, then immediately go to Settings and connect any relevant integrations (see §2.1) |
+| Claude Pro | claude.ai | $20/month | This subscription is what unlocks Claude Code at the usage tier needed for this project; a basic claude.ai account alone is not sufficient for the agentic coding work in Part 4 |
+| Neo4j AuraDB | console.neo4j.io | Free (Free tier) | No credit card required for the Free tier |
+| GitHub | github.com | Free | Create one repository now, named something like `tea-heritage-kg`, set to public (required for free GitHub Pages hosting) |
+| Zenodo | zenodo.org | Free | Can be created now or deferred until the archival step; linking it to GitHub (§1.3) is worth doing early |
+
+## 1.2 Local Software to Install
+
+This assumes a Mac, consistent with your existing dev environment (Oh My Zsh, Powerlevel10k, `uv`, VS Code/Zed).
+
+```bash
+# Python environment manager (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# DuckDB as a Python package
+uv pip install duckdb
+
+# Neo4j Python driver
+uv pip install neo4j
+
+# pandas for general data wrangling
+uv pip install pandas
+
+# Quarto CLI (for the manuscript and this document's rendering)
+brew install quarto
+
+# Claude Code (the agentic coding CLI)
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+The Claude Code install command is the official Anthropic-documented installer. After installation, run `claude` from inside your project directory once to confirm it activates correctly, then run `/login` to authenticate — since you have Claude Pro, choose the subscription-based login rather than an API key, which keeps this work billed under your flat $20/month rather than metered API usage. A paid Anthropic plan (the documented minimum being the $17–20/month Pro tier) is required for Claude Code to function at all — there is no free tier for the CLI itself.
+
+## 1.3 Connecting GitHub and Zenodo Now
+
+Go to Zenodo, sign in (you can sign in directly with your GitHub account, which is the simplest path), navigate to **Settings → GitHub**, and toggle on the `tea-heritage-kg` repository. Once toggled on, any GitHub **Release** you publish on that repository automatically triggers Zenodo to archive a snapshot and mint a DOI for it — this is the mechanism described in the main proposal's §3.10 (Archival), and setting the connection up now means there is nothing left to configure later; the only action needed at archival time is clicking "Create a new release" on GitHub.
+
+---
+
+# Part 2: Literature Acquisition — Perplexity Pro → Zotero
+
+## 2.1 The Honest Integration Reality
+
+**There is no automated, one-click integration between Perplexity Pro and Zotero.** This is worth stating plainly rather than implying a seamless pipeline that does not exist: Perplexity does not currently offer a native plugin or export format that writes directly into a Zotero library. The integration is manual — copy a source's identifying information from Perplexity into Zotero, one source at a time, via Zotero's own browser connector. This is a real limitation, not a configuration step you might be missing.
+
+**[RECOMMENDATION]** Given that limitation, the efficient workflow is:
+
+1. Run your literature query inside Perplexity Pro's **Deep Research** mode (toggle this on before submitting the query, in the mode selector above the input box).
+2. Perplexity returns a synthesized answer with numbered citations. Do not copy the synthesized text into your notes as a source — copy the **underlying source links**, which appear either inline or in a sources panel alongside the answer.
+3. For each underlying source that looks substantive (a peer-reviewed paper, an institutional page, not a forum post or low-quality aggregator), open it in your browser.
+4. With the Zotero browser connector extension installed (a small icon appears in your browser's toolbar once installed), click it while viewing the source page. Zotero automatically detects the page type — journal article, webpage, PDF — and captures the bibliographic metadata plus, where available, the full-text PDF, directly into your Zotero library.
+5. Tag the newly captured item immediately, using the four-tag scheme from the main proposal (`#wild-species`, `#tres-cultivar`, `#assamica-introduced`, `#context`) so that later retrieval doesn't require re-reading every item to remember why it was saved.
+
+This means Perplexity functions as a **discovery layer** — it tells you where to look — while Zotero remains the actual **system of record**. Treat every Perplexity answer as a pointer to sources, never as the source itself, both for citation-accuracy reasons (Perplexity's citation accuracy has been measured at roughly 87% in independent testing, meaning roughly one in eight citations may misrepresent its source) and because the synthesized prose itself is not something you want to accidentally treat as primary literature.
+
+## 2.2 Recommended Perplexity Query Templates for This Project
+
+Run these as separate Deep Research queries, not one combined query, since each targets a different lineage from the main proposal's §1.2:
+
+```
+Query 1: "Camellia formosensis taxonomy distribution conservation status Taiwan"
+Query 2: "TRES TTES cultivar breeding lineage complete list Taiwan tea"
+Query 3: "Taiwan heritage tea trees old growth Assamica Sun Moon Lake Nantou"
+Query 4: "[specific region name] tea cultivation elevation coordinates"
+   (run once per MVP region identified in the main proposal's §5.6)
+```
+
+The fourth query template is new relative to the main proposal's original three — it directly supports the web application's map page (§5.2, Page 1), which needs geographic coordinates that the original three literature-focused queries do not surface.
+
+## 2.3 Quality Control Step (Do Not Skip)
+
+Per the main proposal's general guidance on AI-assisted research, every Perplexity-sourced claim that will end up in the actual dataset (not just background reading) must be checked against the original source before being trusted — open the link, confirm the claim is actually stated there, and confirm the publication date and venue are what Perplexity reported. This is the same human-verification discipline applied later to LLM-based extraction (Part 3), applied one step earlier in the pipeline.
+
+---
+
+# Part 3: Data Extraction — Claude (Web/Pro) and Claude Code, Feeding pandas/DuckDB
+
+## 3.1 Two Different Claude Surfaces, Two Different Jobs
+
+This project uses Claude in two distinct modes, and conflating them causes confusion, so the distinction is worth being explicit about:
+
+**Claude.ai (the chat interface, what you are using right now)** is the right surface for *prose-to-structured-data extraction* — taking an unstructured paragraph from a TRES web page or a paper and turning it into a structured record. This is a conversational, judgment-heavy task where you want to see the model's reasoning and correct it interactively.
+
+**Claude Code (the CLI, installed in §1.2)** is the right surface for *writing and running the actual pipeline code* — the Python scripts that load CSVs into DuckDB, validate referential integrity, and push records into Neo4j. This is a coding task where you want an agent that can read your existing files, write new files, and execute them, not a conversation about what code might look like.
+
+## 3.2 Step-by-Step: Prose Extraction in Claude.ai
+
+1. Open a new conversation in claude.ai.
+2. Paste the relevant excerpt of source text — for example, a paragraph from a TRES cultivar description page — along with an explicit instruction to extract specific fields matching the schema from the main proposal's §3.4 (cultivar name, TTES number, year released, parentage, etc.).
+3. **[RECOMMENDATION]** Explicitly request the output as a fenced JSON code block with exactly the field names from your schema, rather than free-form prose — this makes the next step (pasting into a script or a spreadsheet) mechanical rather than requiring you to manually reformat Claude's answer.
+4. Before accepting any specific fact (a year, a parentage claim, a numeric code), check it against the original source text yourself. Per the main proposal's §3.5 step 2, this human verification step is non-negotiable, not optional — language models can misstate a specific number even when the surrounding summary is accurate.
+5. Paste the verified JSON into a running CSV or a plain text file in your project's `data/raw/` folder. At this MVP scale (the main proposal's §5.6 target of 40–60 records), accumulating these as you go in a single growing CSV, rather than building tooling to automate the paste step, is the right level of effort — building automation for a one-time, 40–60-record task would itself cost more time than it saves.
+
+## 3.3 Step-by-Step: Setting Up Claude Code for the Pipeline Scripts
+
+1. Open your terminal (Ghostty, per your existing setup) and `cd` into your project directory — the same one connected to your `tea-heritage-kg` GitHub repository.
+2. Run `claude` to start a session. Claude Code automatically reads the contents of the directory it's launched from, so it can already see your `data/raw/` CSVs from §3.2 without being told where they are.
+3. **[RECOMMENDATION]** Create a `CLAUDE.md` file in the project root before writing any code. This is a file Claude Code reads automatically at the start of every session in that directory, and it is the correct place to record durable project context — your schema definition from the main proposal's §3.4, your provenance-tagging requirement, and a note that this is a low-budget, MVP-first project (so Claude Code does not over-engineer a solution sized for a much larger dataset than the 40–60 records actually in scope).
+4. Ask Claude Code directly, in plain language, for what you need: for example, "write a Python script that reads every CSV in `data/raw/`, validates that every `BRED_FROM` relationship references a cultivar that exists in the node table, and writes any violations to `data/validation_errors.csv`." Claude Code will write the file, and — because it has access to your terminal — can also run it immediately and show you the output, rather than you needing to copy code out of a chat window and run it yourself.
+5. Review every script Claude Code writes before trusting its output, the same verification discipline as §3.2, just applied to code instead of extracted facts.
+
+## 3.4 The Handoff to DuckDB
+
+Once your CSVs in `data/raw/` are reasonably populated (no need to wait for "complete" — incremental is fine, consistent with the MVP-first model), ask Claude Code to write the DuckDB staging script described in the main proposal's §3.6:
+
+```python
+import duckdb
+
+# DuckDB can query CSV files directly, no separate import step required
+con = duckdb.connect("tea_kg_staging.duckdb")
+
+# Example: load and inspect a CSV directly
+con.sql("SELECT * FROM 'data/raw/cultivars.csv' LIMIT 5").show()
+
+# Example: the referential integrity check from the main proposal's §3.6, step 3
+con.sql("""
+    SELECT r.cultivar_id
+    FROM 'data/raw/bred_from.csv' r
+    LEFT JOIN 'data/raw/cultivars.csv' c ON r.cultivar_id = c.cultivar_id
+    WHERE c.cultivar_id IS NULL
+""").show()
+```
+
+This script can be requested from Claude Code directly ("write a DuckDB script that loads all my CSVs and runs the integrity checks from my schema notes") rather than hand-written, since this is exactly the kind of mechanical, well-specified scripting task Claude Code handles reliably once it has the schema context from your `CLAUDE.md` file.
+
+---
+
+# Part 4: Graph Construction — Neo4j AuraDB, Connected Directly to Claude via MCP
+
+## 4.1 Setting Up the AuraDB Instance
+
+1. Go to console.neo4j.io, sign in, and click **Create instance**.
+2. Choose **AuraDB Free**. No payment information is required for this tier.
+3. Note the generated credentials (connection URI, username, password) the moment they are shown — AuraDB displays the password only once, at creation time.
+4. Store these credentials in a local `.env` file in your project root, **not** committed to GitHub — add `.env` to your `.gitignore` file immediately, before you forget, since this is exactly the kind of credential-leak mistake that's easy to make under time pressure.
+
+```bash
+# .env file contents
+NEO4J_URI=neo4j+s://your-instance-id.databases.neo4j.io
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your-generated-password
+NEO4J_DATABASE=neo4j
+```
+
+```bash
+# add this line to .gitignore
+echo ".env" >> .gitignore
+```
+
+## 4.2 The Genuinely High-Leverage Integration: Connecting Claude Directly to Neo4j via MCP
+
+This is the integration most worth setting up deliberately, because it changes the actual day-to-day workflow rather than just being a one-time convenience. **MCP (Model Context Protocol)** is an open standard, originated by Anthropic, that lets an AI assistant like Claude connect directly to external tools and data sources — in this case, your Neo4j database — rather than you manually writing and running every Cypher query yourself. Neo4j publishes an official MCP server for exactly this purpose, which exposes tools for schema introspection (letting Claude discover your node and relationship types on its own) and for running both read and write Cypher queries, and which works with Claude Desktop, Claude Code, Cursor, and other MCP-compatible clients including Zed, which is already part of your existing setup alongside the `fert-mcp` and `mempalace` MCP servers you have configured there.
+
+**Setup steps (Claude Code, via the command line):**
+
+```bash
+# Register the official Neo4j MCP server with Claude Code,
+# pointing at your AuraDB instance using the credentials from §4.1
+claude mcp add \
+  --transport stdio \
+  -e NEO4J_URI=neo4j+s://your-instance-id.databases.neo4j.io \
+  -e NEO4J_USERNAME=neo4j \
+  -e NEO4J_PASSWORD=your-generated-password \
+  -e NEO4J_DATABASE=neo4j \
+  -- uvx mcp-neo4j-cypher@latest
+```
+
+After running this once, restart Claude Code. From then on, inside any Claude Code session in this project, you can ask things like "show me the current database schema" or "how many `Cultivar` nodes exist right now" in plain English, and Claude Code will call the MCP server's `get-schema` or `read-cypher` tools directly, without you writing any Cypher by hand. The official Neo4j MCP server's tools are explicitly: schema discovery (so the AI can "reason on your data model without prior knowledge"), running both read and write Cypher queries against the database in response to natural-language prompts, and inspecting nodes, relationships, and paths to answer questions or feed data into other workflows.
+
+**Setup steps (Zed, since this is already part of your editor configuration):** add the same server to Zed's MCP configuration following the same pattern documented for `fert-mcp` and `mempalace` — Zed's external-agent architecture explicitly supports forwarding its own configured MCP servers to agents like Claude Agent, so a server registered once in Zed's settings becomes available across your existing AI tooling there too, not just inside Claude Code's terminal sessions.
+
+**[RECOMMENDATION] Set `NEO4J_READ_ONLY=true` for everyday exploration sessions**, and only switch it off temporarily when actually intending to load or modify data. The official server supports this as an explicit environment variable, and given that you'll be using Claude conversationally to explore and sanity-check your graph far more often than you'll be bulk-loading it, defaulting to read-only meaningfully reduces the chance of an accidental write during an exploratory question.
+
+## 4.3 Loading Data: From DuckDB to Neo4j
+
+With the MCP connection live, the actual load step can be done conversationally rather than by hand-writing a full loading script from scratch:
+
+1. In a Claude Code session (with the Neo4j MCP server connected per §4.2), point Claude at your validated DuckDB file from §3.4 and ask it to write a loading script that reads each table and issues Cypher `MERGE` statements — `MERGE` rather than `CREATE`, per the main proposal's §3.7, so that re-running the script does not create duplicate nodes.
+2. Have Claude Code run the script directly, since it has terminal access — you do not need to copy the script elsewhere to execute it.
+3. Ask Claude, through the same MCP connection, to confirm node and relationship counts match your DuckDB source tables — a natural-language version of the load-integrity check from the main proposal's §3.7.
+4. For visual inspection beyond counts, open Neo4j's built-in **Bloom** visualization (accessible from the AuraDB console, included free with the Free tier) to look for obviously wrong structures — a cultivar linked to itself, or a node with no relationships that should have had one.
+
+---
+
+# Part 5: Graph Analytics — Neo4j GDS, Queried via the Same MCP Connection
+
+The centrality analysis from the main proposal's §3.8 (degree, betweenness, and eigenvector centrality, run against the `BRED_FROM` subgraph to test the genetic vulnerability hypothesis) uses the **Neo4j Graph Data Science (GDS) library**, which is available at no additional cost within AuraDB Free for graphs of this project's size. The official Neo4j MCP server's tool list explicitly includes a `list-gds-procedures` tool, meaning the same MCP connection already set up in Part 4 extends naturally to this analytical step — you do not need a separate integration for analytics versus data loading.
+
+**Practical flow:**
+
+1. In a Claude Code (or Zed Agent) session with the Neo4j MCP server connected, ask Claude to list available GDS procedures, then to run degree, betweenness, and eigenvector centrality on the `BRED_FROM` relationship type.
+2. Ask Claude to rank the results and identify whether Chin-Shin-Oolong and related foundational varieties (per the main proposal's §1.3 discussion of genetic concentration risk) score disproportionately high across all three measures — convergence across measures, not a high score on just one, is what would constitute strong evidence.
+3. Export the ranked results — ask Claude to write them to a CSV via the MCP write-cypher or via a short Python script — so they can be used both in the optional manuscript (main proposal §2.2) and in the web application's pre-computed D3 layout (main proposal §5.4).
+
+---
+
+# Part 6: The Web Application Build — D3, Leaflet, and the Static Export Step
+
+## 6.1 The Critical Handoff: Neo4j to Static JSON
+
+Per the main proposal's §5.3, the public web application never queries Neo4j live. The integration point here is a **build script**, not a live connection — this is the one deliberate place in the whole pipeline where the AI-tool integration stops and a plain, repeatable script takes over, because reproducibility (the same data producing the same site, every time) matters more here than conversational flexibility.
+
+**[RECOMMENDATION]** Ask Claude Code to write this export script once, then treat it as a stable, rarely-modified piece of infrastructure rather than something to keep iterating on conversationally:
+
+```python
+# export_for_web.py — run this whenever the graph is updated
+# and the public site needs to reflect new data
+
+from neo4j import GraphDatabase
+import json
+import os
+
+uri = os.environ["NEO4J_URI"]
+user = os.environ["NEO4J_USERNAME"]
+password = os.environ["NEO4J_PASSWORD"]
+
+driver = GraphDatabase.driver(uri, auth=(user, password))
+
+with driver.session() as session:
+    # Page 1 (Map): regions with their cultivars and species
+    regions = session.run("""
+        MATCH (r:Region)
+        OPTIONAL MATCH (c:Cultivar)-[:GROWN_IN]->(r)
+        OPTIONAL MATCH (s:Species)-[:FOUND_IN]->(r)
+        RETURN r.name AS region, r.county AS county,
+               collect(DISTINCT c.name_en) AS cultivars,
+               collect(DISTINCT s.scientific_name) AS species
+    """).data()
+
+    with open("web/data/regions.json", "w") as f:
+        json.dump(regions, f, indent=2)
+
+    # Page 2 (Lineage Explorer): cultivars and their parentage
+    lineage = session.run("""
+        MATCH (c:Cultivar)-[b:BRED_FROM]->(p)
+        RETURN c.name_en AS cultivar, c.ttes_number AS ttes_number,
+               p.name AS parent, b.confidence AS confidence
+    """).data()
+
+    with open("web/data/lineage.json", "w") as f:
+        json.dump(lineage, f, indent=2)
+
+driver.close()
+```
+
+This script can be run directly by Claude Code, or by you, from the terminal, whenever the underlying graph changes meaningfully. It is the literal mechanical boundary described conceptually in the main proposal's §5.3 — Neo4j (and the MCP connection to it) stops being involved the moment this script finishes; everything downstream reads only from the JSON files it produces.
+
+## 6.2 Pre-Computing the D3 Force Layout
+
+Per the main proposal's §5.4, the force-directed physics simulation for the Lineage Explorer runs once, at build time, not in each visitor's browser. This is most easily done with a small Node.js script using D3's force simulation module in a "headless" mode (running the simulation's math without rendering it to a screen), since D3 itself is a JavaScript library:
+
+```bash
+# Install D3 for use in a build script (not in the browser)
+npm install d3
+```
+
+```javascript
+// precompute_layout.js — run once after lineage.json is updated
+const d3 = require("d3");
+const fs = require("fs");
+
+const lineage = JSON.parse(fs.readFileSync("web/data/lineage.json"));
+
+// Build nodes and links from the lineage data, then run the
+// simulation synchronously to completion (.stop() after enough ticks)
+// rather than letting it run indefinitely as it would in a live browser
+const simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d => d.id))
+  .force("charge", d3.forceManyBody())
+  .force("center", d3.forceCenter(400, 300))
+  .stop();
+
+for (let i = 0; i < 300; i++) simulation.tick();
+
+fs.writeFileSync("web/data/lineage_positions.json", JSON.stringify(nodes));
+```
+
+**[RECOMMENDATION]** Ask Claude Code to write and refine this script rather than hand-coding D3's simulation API from scratch — D3's force simulation has several configuration parameters (charge strength, link distance, number of ticks needed to "settle") that benefit from iterative tuning against your actual data, and Claude Code can run the script, inspect the resulting JSON, and adjust parameters in the same session, which is meaningfully faster than the edit-run-inspect loop done manually.
+
+## 6.3 Building the Map and Lineage Pages
+
+These are standard frontend build tasks well within Claude Code's core competency — ask directly for what's needed:
+
+- "Build a Leaflet map page that reads `regions.json` and shows a marker for each region; clicking a marker should show the region's cultivars and species in a popup."
+- "Build a D3 page that reads `lineage_positions.json` and renders the pre-computed network; add a search box that filters to a searched cultivar plus its immediate connections, with a button to toggle showing the full network."
+
+Claude Code can write the HTML/CSS/JavaScript directly into a `web/` folder in your project, and — since it has terminal access — can also start a local development server (for example Python's built-in `http.server`) so you can preview the pages in your browser before deploying, without needing a separate tool for local testing.
+
+## 6.4 Deployment: GitHub Pages
+
+1. In your GitHub repository's settings, navigate to **Pages**.
+2. Under **Source**, select the branch and folder containing your built site (commonly the `web/` folder, or a dedicated `gh-pages` branch if you prefer to keep build output separate from source code).
+3. GitHub Pages builds and publishes automatically on every push to that branch — no separate deploy command is needed once this is configured.
+4. The free tier covers a 1 GB published site size and a soft 100 GB/month bandwidth limit, both far beyond what this project's MVP scope would approach.
+
+**[RECOMMENDATION]** If the species conservation page (main proposal §5.2, Page 3) ever gets picked up by a media outlet and drives an unusually large traffic spike, Cloudflare Pages is a free, drop-in alternative with no bandwidth cap at all on its free tier — switching later, if ever needed, requires only pointing the same GitHub repository at a new Cloudflare Pages project, not rebuilding the site.
+
+---
+
+# Part 7: Putting the Whole Chain Together — One End-to-End Pass
+
+This section exists to make the full tool-to-tool handoff visible as a single sequence, since Parts 2 through 6 each focused on one link in the chain individually.
+
+```
+Perplexity Pro (Deep Research)
+   │  manual: copy source links out
+   ▼
+Zotero (browser connector captures PDF + metadata)
+   │  manual: read source, identify extractable facts
+   ▼
+Claude.ai chat (prose → structured JSON, human-verified)
+   │  manual: paste verified JSON into CSV
+   ▼
+data/raw/*.csv  (plain files in your project folder)
+   │  Claude Code writes + runs the script
+   ▼
+DuckDB (staging, validation queries)
+   │  Claude Code writes + runs the loading script,
+   │  using the Neo4j MCP connection
+   ▼
+Neo4j AuraDB  (the graph itself; also queried conversationally
+   │            via MCP for analytics — Part 5)
+   │  Claude Code writes + runs export_for_web.py
+   ▼
+web/data/*.json  (flat files, static)
+   │  Claude Code writes + runs precompute_layout.js
+   ▼
+web/data/lineage_positions.json
+   │  Claude Code builds the actual site pages
+   ▼
+web/ (HTML/CSS/JS)
+   │  git push, GitHub Pages auto-builds
+   ▼
+Public website (live URL)
+```
+
+Every arrow above is either a manual, deliberate human action (the literature and extraction steps, where judgment is genuinely required and automating it would be a mistake, per the main proposal's emphasis on mandatory human verification) or a Claude Code-executed script (the mechanical, well-specified steps, where conversational AI assistance with direct terminal and database access is faster than hand-coding alone). No step in this chain requires a tool not already covered in Parts 1 through 6.
+
+---
+
+# Part 8: Monthly Cost Recap for This Execution Path
+
+This restates the main proposal's §6.5 cost table in execution-specific terms, tying each dollar to the specific integration steps in this document rather than to abstract tool names.
+
+| Cost | Covers | Tied to |
+|---|---|---|
+| $20/month, Perplexity Pro | Literature discovery (Part 2) | Active only during the literature acquisition phase; cancel or pause once Zotero library is sufficiently populated for the MVP scope |
+| $20/month, Claude Pro | Both the conversational extraction work (Part 3, §3.2) and everything Claude Code does (Parts 3–6: scripting, MCP-based database work, and the web build) | Active for the full duration of hands-on building, since Claude Code is load-bearing infrastructure for this entire execution path, not just the literature phase |
+| $0 | Neo4j AuraDB Free, DuckDB, GitHub, GitHub Pages, Zenodo, D3, Leaflet, the official Neo4j MCP server | All free and open source regardless of how long the project runs |
+
+**[RECOMMENDATION]** Given that Claude Code is used throughout Parts 3 through 6, not just during the literature phase, the Claude Pro subscription is reasonably kept active for the entire build — including the roughly 17 weeks of the 20-week MVP timeline (per the main proposal's §6.3) that the main proposal's §6.5 had assumed would run on free tools alone once extraction finished. This is a real, deliberate departure from the main proposal's original cost table, made explicit here: that table assumed Claude Pro was needed only for prose extraction; this execution guide's reliance on Claude Code for the DuckDB, Neo4j, and web-build steps means the more accurate planning assumption is **Claude Pro active for the full build duration**, which raises the realistic total Tier 2 spend from the main proposal's [ESTIMATE] of approximately $80 to a revised **[ESTIMATE] of approximately $20/month × 4–6 months, or roughly $80–$120 total**, since Perplexity Pro can still be dropped after the literature phase while Claude Pro's role extends through the entire build.
