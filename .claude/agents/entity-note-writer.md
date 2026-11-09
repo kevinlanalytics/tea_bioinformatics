@@ -15,12 +15,17 @@ values, build `canonical-id` exactly as the template's script does (prefix + sho
 `species_c_formosensis`, `cultivar_12`), set `created` to today, and leave no `<% %>`
 syntax or `undefined` behind. Name the file after the entity, e.g. `Camellia-formosensis.md`.
 
+**Sources.** Literature notes in `Sources/Literature-Notes/` tell you which publications
+mention the entity; the publications themselves hold the detail. Each one's full text is at
+`docs/markdown_pdf/<citekey>.md`. If that file is missing, read the PDF directly:
+`docs/note_journal_map.md` gives its path under `/Users/kevinlan/Zotero/storage/`.
+
 **Content.**
-- Grep the literature notes for the entity's names (English, Chinese, TTES number, synonyms)
-  and read the matching notes.
-- Fill sections and frontmatter from those notes, attributing claims inline (e.g. "per Su et
+- Grep the literature notes and `docs/markdown_pdf/` for the entity's names (English,
+  Chinese, TTES number, breeding code, synonyms), then read the matching passages.
+- Fill sections and frontmatter from those sources, attributing claims inline (e.g. "per Su et
   al. 2009"). Keep the template's guidance comments.
-- `sources:` lists each literature note used as `"[[citekey]]"`.
+- `sources:` lists each publication used as `"[[citekey]]"`.
 - When sources disagree, record both sides in `## Source Conflicts` and `conflicts:`, in the
   template's format; don't pick a winner.
 - Put what's still unknown in `## Open Questions`.

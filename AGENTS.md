@@ -10,7 +10,8 @@ a specific source, and disagreements between sources get recorded rather than sm
 
 ## Gotchas
 
-- `docs/note_journal_map.md` is the authoritative citekey ↔ Zotero item ↔ PDF map.
+- Source PDFs live in `/Users/kevinlan/Zotero/storage/<attachment_key>/`;
+  `docs/note_journal_map.md` is the authoritative citekey ↔ Zotero item ↔ PDF map.
 - `docs/markdown_pdf/` is a gitignored markitdown cache; regenerate it, don't hand-edit it.
 - Two template engines live here: Zotero Integration (Nunjucks `{{ }}`) renders
   `_templates/literature-note-template.md`; Templater (`<% %>`) renders `_templates/Notes/`.
