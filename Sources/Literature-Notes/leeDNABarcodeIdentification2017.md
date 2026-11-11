@@ -46,7 +46,7 @@ The major aim of made tea identiﬁcation is to identify the variety and provena
 - ITS2 phylogenetic trees could reliably identify **variety** but showed **no regular pattern for identifying provenance** (domestic PJK- vs. imported TJK- samples) among the 65 tested made-tea samples.
 - Of 30 imported made teas, 19 (especially from Vietnam and Indonesia) matched Taiwan cultivars: 12 similar to TRES breeding varieties, 10 similar to TTES No.12, 2 similar to TTES No.13, plus 5 identified as Chin Shin Oolong and 2 as Shy Jih Chuen — interpreted as evidence that Taiwan-bred cultivars (esp. TTES No.12/13) have been moved abroad through unofficial channels.
 - For TTES No.12 (Chinhsuan) made-tea samples from 7 Taiwan production areas plus the TRES reference plant (19 samples total): ITS2 similarity ranged 0.910–1.000; every made-tea sample differed from the TRES reference sequence.
-- Region-level SNP frequency (of 160 aligned ITS2 sites) for Chinhsuan: lowest in Jhushan, Nantou at 1.3% (2/160); highest in Pinglin, New Taipei at 9.4% (15/160); the three Hualien samples (PJK1034, 1036, 1038) were identical to one another.
+- Region-level SNP frequency (of 160 aligned ITS2 sites) for Chinhsuan: lowest in Jhushan, Nantou at 1.3% (2/160). The text calls Pinglin, New Taipei the highest at 9.4% (15/160), but Table 4 gives Yilan 12.5% (20/160) — see Conflicts; the three Hualien samples (PJK1034, 1036, 1038) were identical to one another.
 - Average SNP frequency: domestic Chinhsuan 5.1% (8.1/160); domestic Chin Shin Oolong 8.8% (14.1/160); imported/foreign Chinhsuan 11.6% (18.5/160) — roughly double the domestic Chinhsuan rate and higher than domestic Chin Shin Oolong.
 - Highest single-site-group SNP frequency measured: Chin Shin Oolong from Taitung (PJK452–454), 14.4% (23/160 sites).
 - Across the three focal varieties: No.13 Tzuiyu had 14 SNP sites (8.8% of total sites); No.107 Chin Shin Oolong had 53 SNPs (33.1%, the most of the three); No.12 Chinhsuan had 32 SNPs (20.0%).
@@ -119,7 +119,12 @@ The major aim of made tea identiﬁcation is to identify the variety and provena
 
 ## Conflicts With Other Sources
 
-No direct disagreements identified against other sources currently in the vault (cross-checked 2026-08-07). This paper's variety-level ITS2 similarities and its treatment of *C. assamica* as = *C. sinensis var. assamica* are consistent with [[huDevelopmentSTSCAPS2014]], [[huSSRbasedMolecularDiagnosis2023]], and [[weiDevelopmentGenomewide200K2022]].
+No direct disagreements identified against other sources currently in the vault (cross-checked 2026-08-07).
+
+**Inconsistencies inside this paper** (checked against the PDF text layer 2026-11-10; all three are in the paper, not conversion errors; recorded `Decision: pending` in the region notes):
+- **Pinglin "highest":** the text says the Pinglin Chinhsuan samples (PJK570, PJK574) had the highest SNP frequency, 9.4% (15/160); Table 4 lists Yilan (PJK907–909) at 12.5% (20/160). See [[Pinglin]].
+- **Taitung denominator:** the text gives "14.4% (23/156) of the total 160 sites"; Table 4 gives 14.4 (23/160). See [[Luye]].
+- **Alishan Chinhsuan:** Table 2 and the text include an Alishan Chinhsuan sample (PJK1136), but Table 4's Chinhsuan rows list only six areas (Jhushan, Mingjian, Taitung, Pinglin, Yilan, Hualien). See [[Alishan]]. This paper's variety-level ITS2 similarities and its treatment of *C. assamica* as = *C. sinensis var. assamica* are consistent with [[huDevelopmentSTSCAPS2014]], [[huSSRbasedMolecularDiagnosis2023]], and [[weiDevelopmentGenomewide200K2022]].
 
 ## Extraction Status
 

@@ -11,10 +11,12 @@ canonical-id: <% canonicalId %>
 name-zh: <% nameZh %>
 name-en: <% nameEn %>
 abbreviation: <% abbreviation %>
+aliases: []
 founded-year: 
 role: 
 url: 
 sources: []
+conflicts: []
 verified: false
 tags: [entity, institution]
 created: <% tp.date.now("YYYY-MM-DD") %>
@@ -38,6 +40,15 @@ created: <% tp.date.now("YYYY-MM-DD") %>
 ## Key Publications
 
 <!-- Bulletins, journals, reports produced by this institution that are in your Zotero library. -->
+
+## Name History
+
+<!-- Dated renamings and branch-station names, each with its source. List spelling variants in aliases. -->
+
+## Source Conflicts
+
+<!-- Explicitly document any disagreement between sources on any field above. -->
+<!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
 ## Notes
 

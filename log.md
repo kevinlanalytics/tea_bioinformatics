@@ -5,7 +5,69 @@ What changed in the vault, newest first. Problems found along the way go in
 
 ---
 
+## 2026-11-11
+
+### Tea-process notes added
+
+- **New folder** `Entities/Prepare_process/` and template `_templates/Notes/tea-process-template.md`
+  (user-supplied format: `type: tea-process`, `name`, `name-zh`, `verified`, `sources`;
+  sections Definition, Distinguishing features, Variations).
+- **Notes**, from the publications only:
+  - `Fermentation.md`: industry term for oxidation (Hu 2023 footnote); levels none → full for
+    nine specialty teas (Hu 2023 Table 2); NF/PF/F cultivar suitability (Lee 2017); DNA
+    degradation (Hu 2014, Hu 2023).
+  - `Roasting.md`: roasting levels none → heavy (Hu 2023 Table 2), independent of
+    fermentation; `name-zh: 焙火` from the user's template, not a vault source.
+  - `Panning.md`: high-temperature step with fermentation treatments (Hu 2014); Lee 2017's
+    "fixed, dried … without fermentation" green-tea preparation.
+- No source describes temperatures, durations or equipment for any process, and none covers
+  withering, rolling/shaping or drying as manufacturing steps; no notes made for those.
+- `entity-note-writer`, `fill-entity-note` and `docs/workflow.md` list the new type.
+- `issues.md`: added ISS-030 (P2 High), the missing sources for withering, rolling/shaping and drying.
+
 ## 2026-11-10
+
+### Region notes: schema and source fixes
+
+- **Gazetteer reference adopted** (user decision): new `Sources/Reference/taiwan-gazetteer.md`
+  (`[[taiwan-gazetteer]]`) gives Chinese names, current administrative areas and township
+  points from Wikidata (accessed 2026-11-10). The official MOI place-name service had no usable
+  public API; swap in official values when captured. Yongkang Mountain has no entry;
+  Meiyuanshan = 眉原山 is inferred from a 0.7 km coordinate match.
+- **Templates:** `region-template.md` gains `aliases`, `elevation-basis`, `coord-basis`,
+  `wild-population-evidence`; `wild-population-present` is now present/absent/unknown;
+  `## Source Conflicts` section added; guidance on county naming and `cultivars-grown`.
+  `institution-template.md` gains `aliases`, `conflicts`, `## Name History` and
+  `## Source Conflicts` (ISS-004, 006, 009, 015, 016).
+- **ISS-003 resolved:** Su 2009 Table 1 (PDF) has Nantou DNA samples from Meiyuanshan,
+  Derhuasia and Fenhuanshan only; `Camellia-formosensis.md` no longer lists Luku, Yuchih etc. as
+  DNA sampling sites.
+- **ISS-011 resolved:** removed the blank line before the species note's frontmatter.
+- **ISS-001 resolved:** `Sources/Literature-Notes/2019TTESNo.md` no longer infers a Yuchi
+  headquarters; the PDF gives no TBRS location.
+- **Revised all 8 region notes** (one `entity-note-writer` each) to the new template:
+  - `name-zh`, current `county` and township points from the gazetteer for Alishan, Liouguei,
+    Lugu, Luye, Pinglin, Yuchi; Meiyuanshan keeps its specimen point and gets 眉原山 (inferred);
+    Yongkang Mountain has no gazetteer entry, so `name-zh` is blank and coordinates empty.
+  - `aliases` with the basis of each in Geographic Notes (e.g. Gyoti/Yuchih per Su 2009; Luku,
+    Liukui assumed).
+  - `wild-population-present`: present (Liouguei, Lugu, Yuchi herbarium-only; Meiyuanshan,
+    Yongkang dna-sample), unknown (Alishan, Luye, Pinglin; was `false` or blank).
+  - `cultivars-grown` limited to cultivars a source says are grown/produced there, as
+    `[[TTES-No-N]]` links: Alishan, Lugu, Pinglin (Chin-Shin-Oolong, TTES No. 12), Luye (No. 12),
+    Yuchi (No. 18).
+  - Every note has `## Source Conflicts`. Kept: Lee 2017 internal inconsistencies (Alishan,
+    Pinglin, Luye; pending, PDF-confirmed); Yuchi substation/branch naming and Ming-Hai holding
+    site (decided for the newer source) and one Su 2009 internal item (pending). Dropped: Yuchi
+    headquarters (extraction error), Meiyuanshan tree height (species-level, ISS-019),
+    Yongkang classification labels (scheme differences).
+- **Lee 2017 PDF checked** (ISS-002, ISS-014): the Pinglin "highest", 23/156 vs 23/160 and
+  missing Alishan Table 4 row are all in the paper; recorded in its literature note.
+- **`.claude/skills/fill-entity-note/SKILL.md`:** briefs carry only name, type, path and
+  candidate sources (ISS-021).
+- **`issues.md`:** 13 issues resolved (R-011 … R-023); ISS-007 and ISS-024 in progress; new
+  ISS-029 (Wikidata gazetteer, township-level points).
+
 
 ### Cultivar notes TTES No. 1–25 completed
 

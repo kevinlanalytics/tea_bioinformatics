@@ -24,7 +24,7 @@ Two note layers, each with one job:
 | Layer | Location | One per | Created by | Purpose |
 |---|---|---|---|---|
 | Literature notes | `Sources/Literature-Notes/<citekey>.md` | Source (paper, bulletin, institutional page) | Obsidian Zotero Integration plugin | Provenance record: what *this source* says |
-| Entity notes | `Entities/{Cultivars,Species,Regions,Institutions}/<Name>.md` | Future graph node | Agent (`fill-entity-note`) or Templater | Synthesis: what *all sources* say about one thing, with conflicts |
+| Entity notes | `Entities/{Cultivars,Species,Regions,Institutions,Prepare_process}/<Name>.md` | Future graph node | Agent (`fill-entity-note`) or Templater | Synthesis: what *all sources* say about one thing, with conflicts |
 
 The guiding rule throughout: every claim traces to a specific source, and disagreements between
 sources are recorded on both sides rather than resolved silently. Disagreements are findings

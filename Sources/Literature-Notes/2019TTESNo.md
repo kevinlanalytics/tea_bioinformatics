@@ -61,7 +61,7 @@ This Tea and Beverage Research Station (TBRS, 農業部茶及飲料作物改良�
 <!-- List every named geographic location. These become Region node candidates. -->
 
 - 東部分場 (Eastern Branch Station) — the TBRS branch station credited with breeding/introducing TTES No. 24; associated contact addresses (e.g. taitung027@tbrs.gov.tw) indicate a Taitung (臺東) location.
-- 產業服務科 (Industry Service Section) — TBRS unit listed among consultation contacts; phone area code (03-) is consistent with TBRS's main Yuchi (魚池), Nantou headquarters.
+- 產業服務科 (Industry Service Section) — TBRS unit listed among consultation contacts; phone area code (03-). The PDF gives no address or location for TBRS; it never mentions Yuchi. (An earlier extraction inferred a Yuchi headquarters here; removed 2026-11-10, see issues.md ISS-001. [[huSSRbasedMolecularDiagnosis2023]] gives the station's address as Yangmei, Taoyuan.)
 - 永康 (Yongkang) — appears as part of the parent designation "永康變種" (Yongkang variant); the report does not explicitly state this is a place name, but it likely denotes the collection locality of the wild tea source population.
 
 ## Methods Used

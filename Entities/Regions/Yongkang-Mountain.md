@@ -1,23 +1,27 @@
 ---
 node-type: Region
 canonical-id: region_yongkang
-name-zh: 永康山
+name-zh: 
 name-en: Yongkang Mountain
+aliases: ["Yungkangshan", "Yung-Kang", "Yong-Kang", "Yung Kang", "永康"]
 county: Taitung County
 elevation-min-m: 900
 elevation-max-m: 1100
+elevation-basis: specimen-label
 lat: 
 lon: 
-wild-population-present: true
+coord-basis: 
+wild-population-present: present
+wild-population-evidence: dna-sample
 cultivars-grown: []
 sources: ["[[suConfirmationCamelliaFormosensis]]", "[[jhouInfluenceNaturalLight2024]]", "[[2019TTESNo]]", "[[TTESNo24]]", "[[huDevelopmentSTSCAPS2014]]", "[[huSSRbasedMolecularDiagnosis2023]]", "[[leeDNABarcodeIdentification2017]]"]
-conflicts: ["Source gap on place-name status of 永康: [[2019TTESNo]] and [[TTESNo24]] give only 永康變種 (Yongkang variant) as TTES No. 24's parent and never say 永康 is a place; [[jhouInfluenceNaturalLight2024]] says the source C. formosensis is from Yongkang Mountain, Taitung County", "Taxonomic rank of the Yongkang population: [[huDevelopmentSTSCAPS2014]] classifies Yung-Kang wild tea as C. formosensis var. yungkangensis (and [[2019TTESNo]]/[[TTESNo24]] use 永康變種); [[suConfirmationCamelliaFormosensis]] lists the Yungkangshan specimens under C. formosensis with no infraspecific rank; [[leeDNABarcodeIdentification2017]] files the native wild teas, Yung Kang included, under C. sinensis", "Origin type of TTES No. 24 (derived from this population): [[huSSRbasedMolecularDiagnosis2023]] labels V024 Hybrid; [[2019TTESNo]], [[TTESNo24]] and [[jhouInfluenceNaturalLight2024]] describe introduction/selection from the wild Yongkang material"]
+conflicts: []
 verified: false
 tags: [entity, region]
 created: 2026-11-08
 ---
 
-# Yongkang Mountain (永康山)
+# Yongkang Mountain
 
 **County:** Taitung County
 **Canonical ID:** `region_yongkang`
@@ -27,30 +31,41 @@ created: 2026-11-08
 ## Geographic Notes
 
 <!-- Elevation range, climate type, location relative to other named regions. -->
+<!-- county: current administrative name; give the source's older name (e.g. Kaohsiung County) here. -->
+<!-- aliases: list each spelling variant with its basis: confirmed by a source (cite it) or assumed. -->
 
-- **Names in the sources.** "Yungkangshan" in Su et al. (2009), listed under **Taitung Co.**; "Yongkang Mountain, Taitung County" in Jhou et al. (2024); "永康" only as part of the parent name 永康變種 in the TBRS cultivar documents (2019TTESNo; TTESNo24). Germplasm accessions are named "Yung-Kang wild tea" (Hu et al. 2014, "Original from Taitung"), "Yong-Kang wild tea No. 2 / 5 / 13 / 20" (Hu et al. 2023) and "No. 102 Yung Kang" (Lee et al. 2017). The full Chinese form 永康山 does not appear in any source in the vault. It comes from the task brief.
-- **Elevation.** The only elevations come from the herbarium specimen records in Su et al. (2009): Yungkangshan, **elev. 900 m** (S. Y. Lu 18580, 18595, TAIF, 9 Mar 1986), and **elev. 900–1,100 m** (M. H. Su 653, 654, 655, 656, 659, 660, 661, TAI, 28 Sep 2005). The frontmatter's 900–1,100 m therefore gives the elevations at which plants were collected, not a mapped extent of the mountain or the population.
+- **Names in the sources.** "Yungkangshan" in Su et al. (2009), listed under **Taitung Co.**; "Yongkang Mountain, Taitung County" in Jhou et al. (2024); "永康" only as part of the parent name 永康變種 in the TBRS cultivar documents (2019TTESNo; TTESNo24). Germplasm accessions are named "Yung-Kang wild tea" (Hu et al. 2014, "Original from Taitung"), "Yong-Kang wild tea No. 2 / 5 / 13 / 20" (Hu et al. 2023) and "No. 102 Yung Kang" (Lee et al. 2017). The full Chinese form 永康山 does not appear in any source in the vault, and [[taiwan-gazetteer]] has no entry for it, so `name-zh` is blank (see Open Questions).
+- **Aliases and their basis.**
+  - "Yungkangshan": a Taitung County collecting site in [[suConfirmationCamelliaFormosensis]] (Su et al. 2009). That it is the same place as Jhou's "Yongkang Mountain, Taitung County" is **assumed** from the matching name and county; no source equates them.
+  - "Yung-Kang" ([[huDevelopmentSTSCAPS2014]]), "Yong-Kang" ([[huSSRbasedMolecularDiagnosis2023]]), "Yung Kang" ([[leeDNABarcodeIdentification2017]]): printed only as germplasm accession names. That they refer to this mountain is **assumed**; none of these papers names a collection locality beyond Taitung (Hu 2014) or the Taitung station/plantation (Hu 2023, Lee 2017).
+  - "永康": printed only inside 永康變種 ([[2019TTESNo]], [[TTESNo24]]). That it denotes this place is **assumed**; the TBRS pages never say 永康 is a place.
+- **County.** Taitung County is the current name; the sources use the same county (Su 2009 "Taitung Co.", Jhou 2024 "Taitung County"), so there is no older name to record. No source or [[taiwan-gazetteer]] entry gives a township.
+- **Elevation.** The only elevations come from the herbarium specimen records in Su et al. (2009): Yungkangshan, **elev. 900 m** (S. Y. Lu 18580, 18595, TAIF, 9 Mar 1986), and **elev. 900–1,100 m** (M. H. Su 653, 654, 655, 656, 659, 660, 661, TAI, 28 Sep 2005). The frontmatter's 900–1,100 m therefore gives the elevations at which plants were collected (`elevation-basis: specimen-label`), not a mapped extent of the mountain or the population.
 - **Position relative to other populations.** Su et al. (2009) treat Yungkangshan as the only sampled site of the **East population** of *C. formosensis*. Their stated species range is "central, southern and southeastern parts of the island." No source says where the mountain lies within Taitung County (township, nearest settlement, watershed).
 - **Climate.** Su et al. (2009) say the climate of eastern Taiwan "is in fact quite different from that of central-west and south, especially in winter when the northeast monsoon is prevalent". This "brings strong winds to the Taitung region where the East population locates" but weakens after crossing the Central Mountain Range. The statement covers the Taitung region, not Yongkang Mountain specifically.
 
 ## Coordinates
 
 <!-- Fill lat/lon for the map page. Use the approximate center of the tea-growing area. -->
-<!-- Source your coordinates — don't guess. Google Maps, Taiwan government GIS data, etc. -->
+<!-- Source your coordinates — don't guess. Papers first, then [[taiwan-gazetteer]]. -->
+<!-- coord-basis: specimen (a sampled tree/site) | township-point (gazetteer point for the township) | area-centre -->
+<!-- elevation-basis: specimen-label | area-survey | gazetteer. Only area-survey describes the tea-growing range. -->
 
 | Field | Value | Source |
 |---|---|---|
-| Latitude | | Not given in any source in the vault |
-| Longitude | | Not given in any source in the vault |
-| Elevation min (m) | 900 | Herbarium specimen elevation, Yungkangshan (Lu 18580, 18595, 1986; Su 653–661, 2005), per Su et al. 2009 |
-| Elevation max (m) | 1100 | Herbarium specimen elevation, Yungkangshan (Su 653–661, 2005), per Su et al. 2009 |
+| Latitude | | None. No paper in the vault gives coordinates, and [[taiwan-gazetteer]] has no entry (no Wikidata item for 永康山; no link to 延平鄉 found) |
+| Longitude | | None (as above) |
+| Elevation min (m) | 900 | Specimen label, Yungkangshan (Lu 18580, 18595, 1986; Su 653–661, 2005), per Su et al. 2009 |
+| Elevation max (m) | 1100 | Specimen label, Yungkangshan (Su 653–661, 2005), per Su et al. 2009 |
 
 ## Wild C. formosensis Populations
 
 <!-- Is there documented presence of wild tea populations here? -->
 <!-- Reference: Su et al. 2009 distribution map, NTU Experimental Forest reports. -->
+<!-- wild-population-present: present | absent | unknown. absent needs a source saying so; no mention = unknown. -->
+<!-- wild-population-evidence: dna-sample | herbarium-only | literature-mention -->
 
-**Documented.** `wild-population-present: true` rests mainly on Su et al. (2009):
+**Documented.** `wild-population-present: present` and `wild-population-evidence: dna-sample` rest mainly on Su et al. (2009):
 - **DNA samples.** Table 1 includes two Yungkangshan samples, **F-TT-1** (voucher Su655; GenBank EU849028 / EU849063) and **F-TT-2** (Su654; EU849027 / EU849062). Both have habitat code **W**. The text says 11 of the 13 *C. formosensis* samples "were collected from wild populations," and the other two came from a germplasm garden (code G). These two are the paper's only Taitung samples.
 - **Herbarium records.** These are the 1986 Lu collections and the 2005 Su collections listed under Geographic Notes.
 - **Phylogenetic placement.** In the RPB2 analysis the East (Yungkangshan) samples fall in a subclade with the Nantou population, apart from the South population. Nantou–East distance is 0.0016 ± 0.0006, against South–East 0.0033 ± 0.0002 (Su et al. 2009).
@@ -60,21 +75,33 @@ Supporting statements from other sources:
 - Jhou et al. (2024): the Tea and Beverage Research Station "has identified *C. formosensis* from Yongkang Mountain, Taitung County as a source for breeding."
 - Hu et al. (2014): "Yung-Kang wild tea" (W8) is classed as **FY, *C. formosensis* var. *yungkangensis***, "Original from Taitung," with processing suitability coded B, G (black, green). In UPGMA it clusters in Group I with the other *C. formosensis* accessions. Its distance to De-Hua-She wild tea (0.38) is the largest pairwise distance among the eight wild accessions. The material was collected from the TRES germplasm garden in Taoyuan, not in the field.
 - Hu et al. (2023): four "Yong-Kang wild tea" accessions (No. 2 W008, No. 5 W009, No. 13 W010, No. 20 W011) are listed as Formosana / Native, sampled from the TRES Taitung experimental plantation.
-- Lee et al. (2017): "No. 102 Yung Kang" is one of the native Taiwanese wild teas held at the TRES Taitung Substation. It clusters with Sun Cha, Fong Huang, Mei Yuan and Min Ghai in a separate wild *Camellia* cluster.
+- Lee et al. (2017): "No. 102 Yung Kang" is one of the native Taiwanese wild teas held at the TRES Taitung Substation, coded (I) *Camellia sinensis* in their three-code species legend (I *C. sinensis*; II var. *sinensis*; III var. *assamica*). It clusters with Sun Cha, Fong Huang, Mei Yuan and Min Ghai in a separate wild *Camellia* cluster.
+
+Taxonomic labels by source and scheme (classification-scheme values, kept as separate rows and not entered in `conflicts:`):
+
+| Source | Scheme | Label for the Yongkang material |
+|---|---|---|
+| [[suConfirmationCamelliaFormosensis]] (2009) | Specimen citation | *C. formosensis*, no infraspecific rank; East population treated as intraspecific variation |
+| [[huDevelopmentSTSCAPS2014]] (2014) | Type code (A/AS/S/SA/F/FY) | FY, *C. formosensis* var. *yungkangensis* |
+| [[leeDNABarcodeIdentification2017]] (2017) | Species code (I/II/III) | (I) *Camellia sinensis*. The legend has only three *C. sinensis* codes and no *C. formosensis* option, so this is a scheme label, not a competing species assignment; Lee does not say the accession came from Yongkang Mountain |
+| [[huSSRbasedMolecularDiagnosis2023]] (2023) | Genetic group / Origin | Formosana / Native |
+| [[jhouInfluenceNaturalLight2024]] (2024) | Prose | *C. formosensis* (no rank given) |
+| [[TTESNo24]], [[2019TTESNo]] | TBRS pedigree text | 臺灣原生山茶永康變種 (Yongkang variant of Taiwan native wild tea; no Latin name) |
 
 Limits of this evidence: none of the germplasm papers (Hu 2014, Hu 2023, Lee 2017) says that its "Yung-Kang/Yong-Kang" accessions were collected on Yongkang Mountain. Linking them to this region relies on the shared name and the Taitung origin. No source gives the size, extent, or current condition of the wild population.
 
 ## Cultivars Grown Here
 
 <!-- Which TTES cultivars are primarily associated with this region? Link to Cultivar notes. -->
+<!-- cultivars-grown: only cultivars a source says are grown/produced here, as [[TTES-No-N]] links or plain names. Cultivars only sampled here go in the body, not the field. -->
 
-`cultivars-grown` is left empty because no source says any cultivar is *grown* on Yongkang Mountain. The region's link to a cultivar is as a **source population**:
+`cultivars-grown` is empty because no source says any cultivar is grown or any tea is produced on Yongkang Mountain. The region's link to a cultivar is as a **source population**:
 
-- **TTES No. 24 (臺茶24號, 山蘊 "Shan Yun", "Yongkang tea")**
+- **[[TTES-No-24]] (臺茶24號, 山蘊 "Shan Yun", "Yongkang tea")**
   - Jhou et al. (2024) say the *C. formosensis* identified from Yongkang Mountain was used to breed a fast-growing, disease- and pest-resistant cultivar "officially named Yongkang tea (Taiwan Tea No. 24) in 2019."
   - The TBRS documents give its parent as 臺灣原生山茶永康變種引種, an introduction from the Yongkang variant of Taiwan native wild tea, named in ROC year 108, i.e. 2019 (2019TTESNo; TTESNo24).
   - The 2019 report credits the TBRS **Eastern Branch Station (東部分場, Taitung)** with the cultivar (2019TTESNo).
-- No Cultivar note for TTES No. 24 exists in `Entities/` yet, so there is nothing to link to.
+  - Hu et al. (2023) sampled V024 at the TRES Taitung experimental plantation; that is germplasm sampling, not production on Yongkang Mountain.
 
 ## Terroir Notes
 
@@ -84,29 +111,22 @@ The sources give no soil, rainfall, or temperature data for Yongkang Mountain. T
 
 ## Source Conflicts
 
-<!-- Disagreements between sources about this region — record both sides, don't pick a winner. -->
+<!-- Explicitly document any disagreement between sources on any field above. -->
+<!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-1. **Is 永康 a place name? (A source gap, not a direct contradiction.)**
-   - [[2019TTESNo]] and [[TTESNo24]] give TTES No. 24's parent only as "臺灣原生山茶永康變種引種" (introduction of the Yongkang variant of Taiwan native wild tea). Neither names a mountain, county, or collection site. The TTESNo24 literature note records that the page "does not explicitly state [永康] is a place name." The 2019TTESNo literature note says it "likely denotes the collection locality," but that is the note-taker's inference, not the report's text.
-   - [[jhouInfluenceNaturalLight2024]] says explicitly that the source *C. formosensis* is "from Yongkang Mountain, Taitung County."
-   - Su et al. 2009 ([[suConfirmationCamelliaFormosensis]]) independently document a wild *C. formosensis* site named Yungkangshan in Taitung County. This fits Jhou et al., but Su et al. do not mention TTES No. 24.
-   - Neither side explains the difference. The TBRS documents may simply omit locality detail.
-2. **Taxonomic rank of the Yongkang population.**
-   - [[huDevelopmentSTSCAPS2014]] classifies Yung-Kang wild tea as *C. formosensis* var. *yungkangensis* (FY), citing Hu et al. 2005, Su 2007 and Su et al. 2009.
-   - The TBRS documents ([[2019TTESNo]], [[TTESNo24]]) use "永康變種" (Yongkang variant/variety).
-   - [[suConfirmationCamelliaFormosensis]] lists the Yungkangshan specimens under *C. formosensis* with no varietal name. It treats the East population as intraspecific variation, "much less than the interspecific variability."
-   - [[leeDNABarcodeIdentification2017]] files all 12 native wild teas, No. 102 Yung Kang included, as *C. sinensis*.
-   - No source discusses the variety name's formal publication or status.
-3. **Origin type of the cultivar derived from this population.**
-   - [[huSSRbasedMolecularDiagnosis2023]] puts TTES No. 24 (V024) among "Hybrid" TTES cultivars.
-   - [[2019TTESNo]], [[TTESNo24]] and [[jhouInfluenceNaturalLight2024]] describe it as an introduction/selection from the wild Yongkang material, not a cross.
-   - The existing literature notes record this conflict and suggest the "Hybrid" label may reflect the paper's V-code convention. That paper does not itself say so.
+No real conflicts remain for this note's fields; `conflicts: []`.
+
+1. **Species code in Lee 2017 (classification scheme, not a conflict).** [[leeDNABarcodeIdentification2017]] codes "No. 102 Yung Kang" (I) *Camellia sinensis*, as it does all 12 native wild teas, while [[suConfirmationCamelliaFormosensis]], [[huDevelopmentSTSCAPS2014]] and [[jhouInfluenceNaturalLight2024]] place the material in *C. formosensis*. Lee's three-code legend has no *C. formosensis* option, and AGENTS.md lists Lee 2017's species codes as a scheme example, so this is kept as a row in the taxonomic-labels table (as in the TTES cultivar notes). Not entered in `conflicts:`.
+2. **Infraspecific rank (not a conflict).** [[huDevelopmentSTSCAPS2014]] names var. *yungkangensis*, and the TBRS pages ([[2019TTESNo]], [[TTESNo24]]) use 永康變種 ("Yongkang variant/variety"). [[suConfirmationCamelliaFormosensis]] and [[jhouInfluenceNaturalLight2024]] give no infraspecific rank, but neither says the population is not a variety; Su 2009 describes the East population's differences as intraspecific variation. No source contradicts another, so these are kept as scheme rows. The parent-framing conflict (TBRS 永康變種 vs Jhou's species-level *C. formosensis*) is recorded and decided in [[TTES-No-24]] for [[TTESNo24]] (newest-source rule); it concerns the cultivar's parent field, not a field of this note. Not entered in `conflicts:`.
+3. **Origin type of [[TTES-No-24]] (classification scheme, not a conflict).** [[huSSRbasedMolecularDiagnosis2023]] labels V024 "Hybrid", the Origin label it gives every V-coded TTES cultivar (wild accessions are "Native"); the TBRS pages and Jhou 2024 describe an introduction/selection from the wild Yongkang material. As in the TTES-No-24 note, Hu's Origin column is treated as a scheme label, not a pedigree claim. Not entered in `conflicts:`.
+4. **Is 永康 a place name? (Source gap, not a conflict.)** [[2019TTESNo]] and [[TTESNo24]] use 永康 only in 永康變種 and name no mountain, county, or collection site. [[jhouInfluenceNaturalLight2024]] says the source is "from Yongkang Mountain, Taitung County", and [[suConfirmationCamelliaFormosensis]] independently documents a wild *C. formosensis* site "Yungkangshan" in Taitung Co. The TBRS pages are silent rather than contrary, so there is no competing value for the newest-source rule to choose between. Not entered in `conflicts:`.
 
 ## Open Questions
 
-- **Chinese place name.** No source in the vault writes 永康山. Jhou et al. (2024) give only the English "Yongkang Mountain," Su et al. (2009) only "Yungkangshan," and the TBRS pages only "永康." `name-zh` comes from the task brief and needs a primary source.
-- **Coordinates and location.** No source gives latitude/longitude, a township, or the mountain's position within Taitung County.
-- **Elevation extent.** 900–1,100 m are specimen collection elevations (Su et al. 2009), not the mountain's or the population's full range.
+- **Chinese place name.** No source in the vault writes 永康山, and [[taiwan-gazetteer]] has no entry for it. 永康山 is an **unsourced candidate** (from the original task brief only); `name-zh` stays blank until a primary source prints it.
+- **Coordinates and location.** No paper gives latitude/longitude, a township, or the mountain's position within Taitung County; [[taiwan-gazetteer]] found no Wikidata item and no link to 延平鄉, so `lat`/`lon`/`coord-basis` are blank.
+- **Is Yungkangshan the same place as "Yongkang Mountain"?** Assumed from name and county; no source equates Su 2009's site with Jhou 2024's.
+- **Elevation extent.** 900–1,100 m are specimen-label elevations (Su et al. 2009), not the mountain's or the population's full range.
 - **Accession provenance.** Were the germplasm accessions "Yung-Kang wild tea" (Hu 2014 W8), "Yong-Kang wild tea No. 2/5/13/20" (Hu 2023) and "No. 102 Yung Kang" (Lee 2017) collected on Yongkang Mountain? Which of them, if any, is the direct source of TTES No. 24?
 - **Selection history.** The research-journal progress report mentions introduction in 2001, individual selection in 2012 and five elite lines in 2015 for TTES No. 24. None of this is in the literature notes used here. It needs a citable literature note (e.g. a Yu et al. 2019 paper, if it is in the vault) before it can be added.
 - **Population status.** What is the current size and condition of the wild population? Su et al. (2009) note a species-wide decline but give no site-level data.
@@ -121,7 +141,8 @@ The sources give no soil, rainfall, or temperature data for Yongkang Mountain. T
 - [[TTESNo24]]: TBRS TTES No. 24 cultivar page. Gives the parent 永康變種 and the 2019 naming. No place name is stated.
 - [[huDevelopmentSTSCAPS2014]]: Hu et al. (2014). Yung-Kang wild tea (W8) as *C. formosensis* var. *yungkangensis*, "Original from Taitung."
 - [[huSSRbasedMolecularDiagnosis2023]]: Hu et al. (2023). Yong-Kang wild tea accessions W008–W011 (Native, Taitung plantation); V024 labeled Hybrid.
-- [[leeDNABarcodeIdentification2017]]: Lee et al. (2017). No. 102 Yung Kang, a native wild tea at the TRES Taitung Substation, in the wild *Camellia* cluster; classified there as *C. sinensis*.
+- [[leeDNABarcodeIdentification2017]]: Lee et al. (2017). No. 102 Yung Kang, a native wild tea at the TRES Taitung Substation, in the wild *Camellia* cluster; coded (I) *C. sinensis*.
+- [[taiwan-gazetteer]]: consulted for name-zh, county and coordinates; it has no entry for Yongkang Mountain, so no value was taken from it (not listed in `sources:`).
 
 Cross-check with `Entities/Species/Camellia-formosensis.md`: consistent. That note places the East population at Yungkangshan, Taitung County, from Su et al. (2009) alone. It does not yet mention TTES No. 24, var. *yungkangensis*, or the Yungkangshan specimen elevations. Those would be additions there, not contradictions.
 

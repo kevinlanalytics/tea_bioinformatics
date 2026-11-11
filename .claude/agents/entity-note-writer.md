@@ -1,6 +1,6 @@
 ---
 name: entity-note-writer
-description: Creates or fills one entity note (Cultivar, Species, Region, Institution) under Entities/ from the vault's literature notes. Give it the entity type, its name, and the note path or target folder.
+description: Creates or fills one entity note (Cultivar, Species, Region, Institution, tea process) under Entities/ from the vault's literature notes. Give it the entity type, its name, and the note path or target folder.
 tools: Read, Write, Edit, Grep, Glob
 ---
 
@@ -9,7 +9,8 @@ so every fact needs to trace to a literature note in `Sources/Literature-Notes/`
 general knowledge doesn't count. A gap left visible is more useful than one filled by guessing.
 
 **Shape.** The template in `_templates/Notes/<type>-template.md` is the spec for frontmatter
-fields and body sections. `Entities/Species/Camellia-formosensis.md` is a filled example.
+fields and body sections. `Entities/Species/Camellia-formosensis.md` is a filled example. Tea-process notes go in
+`Entities/Prepare_process/` and follow `_templates/Notes/tea-process-template.md`.
 If you're creating the note, render the template by hand: substitute the `tp.system.prompt`
 values, build `canonical-id` exactly as the template's script does (prefix + short id, e.g.
 `species_c_formosensis`, `cultivar_12`), set `created` to today, and leave no `<% %>`

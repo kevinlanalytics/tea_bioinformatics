@@ -1,4 +1,3 @@
-
 ---
 node-type: Species
 canonical-id: species_c_formosensis
@@ -50,7 +49,7 @@ created: 2026-08-07
 Endemic to Taiwan; distributed in the central, southern, and southeastern parts of the island, at elevations of **800–1,800 m**. Documented (per the formal taxonomic treatment) in **Nantou, Yunlin, Chiayi, Kaohsiung, Pingtung, and Taitung Counties**.
 
 The molecular sampling in this study defined three geographically separated populations:
-- **Nantou population** — e.g. Meiyuanshan, Derhuasia, Fenhuanshan, Yuchih, Yuchih Branch of the Tea Research and Extension Station, Luku, Shuili-to-Yuchih.
+- **Nantou population** — DNA samples from Meiyuanshan, Derhuasia and Fenhuanshan only (Table 1, checked against the PDF 2026-11-10). Yuchih, the Yuchih Branch of the Tea Research and Extension Station, Luku and Shuili-to-Yuchih appear only as herbarium localities (see below), not as DNA samples.
 - **South population** — spanning Chiayi, Kaohsiung, and Pingtung Counties, e.g. Sitin (Chiayi), Yuyuoshan and Sasi Logging Road (Kaohsiung), Jenlishan and Wuweishan (Pingtung).
 - **East population** — Taitung County, at Yungkangshan.
 
