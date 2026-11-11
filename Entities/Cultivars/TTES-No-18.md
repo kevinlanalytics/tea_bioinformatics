@@ -7,12 +7,12 @@ name-zh: 臺茶18號 (紅玉)
 name-en: Red Jade
 year-released: 1999
 purpose: black
-parent-1: "Burma / Myanmar large-leaf B-729 (緬甸大葉種B-729), maternal"
-parent-2: "Taiwan wild mountain tea B-607 (臺灣野生山茶B-607; Camellia formosensis), paternal"
+parent-1: B-729
+parent-2: B-607
 parent-confidence: high (cross direction agreed by 4 sources; accession codes B-729/B-607 from one source, TBRS page)
 regions: [Yuchi]
 sources: ["[[TTESNo18]]", "[[suConfirmationCamelliaFormosensis]]", "[[jhouInfluenceNaturalLight2024]]", "[[huDevelopmentSTSCAPS2014]]", "[[huSSRbasedMolecularDiagnosis2023]]", "[[leeDNABarcodeIdentification2017]]"]
-conflicts: ["Taxon label for the cultivar itself: [[huDevelopmentSTSCAPS2014]] codes TTES-18 as 'A' (C. sinensis var. assamica) and [[huSSRbasedMolecularDiagnosis2023]] as 'Assamica', while [[leeDNABarcodeIdentification2017]] codes it '(I) Camellia sinensis'; none uses a formosensis-hybrid category, although [[TTESNo18]], [[suConfirmationCamelliaFormosensis]], [[jhouInfluenceNaturalLight2024]] and Hu 2014's own parent column give a Taiwan wild tea / C. formosensis paternal parent. Decision: pending", "Meaning of 1999: [[TTESNo18]] says officially named (正式命名) in 1999; [[jhouInfluenceNaturalLight2024]] says the cultivar was 'created through crossbreeding' in 1999 and that B-729 'was used as the female parent' in 1999, which reads as the cross year. Decision: pending"]
+conflicts: ["Meaning of 1999: [[TTESNo18]] says officially named (正式命名) in 1999; [[jhouInfluenceNaturalLight2024]] says the cultivar was 'created through crossbreeding' in 1999 and that B-729 'was used as the female parent' in 1999, which reads as the cross year. Decision: use [[TTESNo18]] (2026). Reason: Newest-source rule (2026-11-10). Earlier caveat: a cross and an official naming in the same year is unlikely for a perennial tree crop, but no vault source gives the cross year."]
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -33,11 +33,18 @@ Other names in sources: 紅玉 / "Red Jade" (TBRS page; Jhou et al. 2024), "Taiw
 
 | Field | Value | Source |
 |---|---|---|
-| Year released | 1999 (ROC year 88), officially named (正式命名) | [[TTESNo18]]. [[jhouInfluenceNaturalLight2024]] also says 1999 but calls it the cross/creation year (see Source Conflicts) |
+| Year released | 1999 (ROC year 88), officially named (正式命名) (chosen by newest-source rule; Jhou et al. 2024 differs on what 1999 means — see conflicts) | [[TTESNo18]] |
+| Year released (superseded reading) | 1999 as the year the cultivar was "created through crossbreeding" | [[jhouInfluenceNaturalLight2024]] |
 | Purpose (oolong/black/green) | Black tea (適製紅茶) | [[TTESNo18]]. Also [[huDevelopmentSTSCAPS2014]] (processing suitability "B" only), [[suConfirmationCamelliaFormosensis]] ("a black tea strain"), [[leeDNABarcodeIdentification2017]] (tea type 3, "red tea") |
 | Parent 1 | Maternal (母本): 緬甸大葉種B-729, Myanmar/Burma large-leaf accession B-729 | [[TTESNo18]]. [[jhouInfluenceNaturalLight2024]] ("Myanmar large leaf Burma (B-729)", female parent), [[suConfirmationCamelliaFormosensis]] ("a cultivar from Burma", maternal), [[huDevelopmentSTSCAPS2014]] ("Burma (MM)", listed first) |
 | Parent 2 | Paternal (父本): 臺灣野生山茶B-607, Taiwan wild mountain tea accession B-607 | [[TTESNo18]]. [[suConfirmationCamelliaFormosensis]] ("Taiwanese wild tea", paternal), [[jhouInfluenceNaturalLight2024]] ("C. formosensis"), [[huDevelopmentSTSCAPS2014]] ("Taiwanese wild tea (TW)", listed second) |
 | Primary growing regions | Yuchi (魚池), Nantou County: one of the main black-tea cultivars there | [[TTESNo18]]. [[huDevelopmentSTSCAPS2014]]: TTES-18, TTES-8 and TTES-7 "are mainly planted in Nantou County" (TRES 2011 estimate) |
+| Pedigree description (TBRS) | 緬甸大葉種B-729 × 臺灣野生山茶B-607; no Latin taxon label given for the cultivar itself | [[TTESNo18]] |
+| Type code (Hu et al. 2014 scheme) | "A" (*C. sinensis* var. *assamica*) | [[huDevelopmentSTSCAPS2014]] |
+| Genetic group (Hu et al. 2023 scheme) | "Assamica" | [[huSSRbasedMolecularDiagnosis2023]] |
+| Origin label (Hu et al. 2023 scheme) | "Hybrid" | [[huSSRbasedMolecularDiagnosis2023]] |
+| Species code (Lee et al. 2017 scheme) | "(I)" *Camellia sinensis* (no variety) | [[leeDNABarcodeIdentification2017]] |
+| Tea-type and leaf-type codes (Lee et al. 2017 scheme) | (3) "red tea"; (L) large-leaf; flag "f" | [[leeDNABarcodeIdentification2017]] |
 
 Additional traits, all per the TBRS cultivar page ([[TTESNo18]]):
 - Bred by the Tea and Beverage Research Station (茶及飲料作物改良場育成).
@@ -71,6 +78,10 @@ Species framing of the maternal parent: none of the four sources gives a Latin n
 
 Hu 2023 and Lee 2017 do not state the parentage.
 
+Classification labels and the pedigree: the cultivar's own labels come from three different schemes (see Known Facts) and are recorded side by side, not as a conflict. They sit uneasily with the documented cross. Hu 2014 codes H18 "A" (*C. sinensis* var. *assamica*); its table has SA/AS categories for sinensis × assamica crosses and F for *C. formosensis*, but no formosensis-hybrid category. Hu 2023 places V018 in its "Assamica" group ("the cultivars belonging to *C. sinensis* var. *assamica*") with origin "Hybrid". Lee 2017 codes it "(I)" *Camellia sinensis*, the same code it gives the native Taiwanese wild teas. Meanwhile [[TTESNo18]], [[suConfirmationCamelliaFormosensis]], [[jhouInfluenceNaturalLight2024]] and Hu 2014's own parent column give a Taiwan wild tea / *C. formosensis* paternal parent. None of the papers says whether its label is a taxonomic claim or a grouping convention.
+
+Frontmatter `parent-1` / `parent-2` hold the accession codes as TBRS prints them (B-729, B-607); neither accession has its own entity note in the vault.
+
 ## Geographic Range
 
 <!-- Which named regions grow this cultivar? Link to Region notes. -->
@@ -99,13 +110,7 @@ Jhou et al. 2024 present Red Jade as showing "that *C. formosensis* is an excell
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Taxon label of the cultivar itself.**
-  - [[huDevelopmentSTSCAPS2014]] codes H18/TTES-18 as "A" (*C. sinensis* var. *assamica*). Its table has categories SA and AS for sinensis × assamica hybrids and F for *C. formosensis*, but no formosensis-hybrid category.
-  - [[huSSRbasedMolecularDiagnosis2023]] classes V018 as "Assamica", meaning "the cultivars belonging to *C. sinensis* var. *assamica*", with Origin "Hybrid".
-  - [[leeDNABarcodeIdentification2017]] codes TTES No.18 as "(I)", i.e. *Camellia sinensis* with no variety. Lee also codes the native Taiwanese wild teas as (I) *C. sinensis*.
-  - Against these, [[TTESNo18]], [[suConfirmationCamelliaFormosensis]], [[jhouInfluenceNaturalLight2024]] and Hu 2014's own parent column say one parent is Taiwanese wild tea / *C. formosensis*. A var. *assamica* label does not fit an assamica-type × *C. formosensis* hybrid.
-  - Decision: pending. Reason: these may be pragmatic grouping labels rather than taxonomic claims, but none of the papers says so.
-- **What happened in 1999.** [[TTESNo18]] says the cultivar was officially named (正式命名) in ROC year 88 (1999). [[jhouInfluenceNaturalLight2024]] says "In 1999, Taiwan Tea No. 18 (Red Jade) was created through crossbreeding" and "In 1999, Myanmar large leaf Burma (B-729) was used as the female parent to crossbreed with C. formosensis". Read literally, that makes 1999 the year of the cross. Decision: pending, though leaning on TBRS for the naming year. Reason: a cross and an official naming are unlikely in the same year for a perennial tree crop, but no source in the vault gives the cross year, so the reading of Jhou cannot be settled here.
+- **What happened in 1999.** [[TTESNo18]] says the cultivar was officially named (正式命名) in ROC year 88 (1999). [[jhouInfluenceNaturalLight2024]] says "In 1999, Taiwan Tea No. 18 (Red Jade) was created through crossbreeding" and "In 1999, Myanmar large leaf Burma (B-729) was used as the female parent to crossbreed with C. formosensis". Read literally, that makes 1999 the year of the cross. Decision: use [[TTESNo18]] (2026). Reason: Newest-source rule (2026-11-10). Earlier caveat: a cross and an official naming are unlikely in the same year for a perennial tree crop, but no source in the vault gives the cross year, so the reading of Jhou cannot be settled here.
 - **Parentage.** No disagreement on parent identity or cross direction across [[TTESNo18]], [[jhouInfluenceNaturalLight2024]], [[suConfirmationCamelliaFormosensis]] and [[huDevelopmentSTSCAPS2014]]. They differ only in detail: accession codes appear only in TBRS (both) and Jhou (B-729 only).
 
 ## Open Questions
@@ -116,7 +121,6 @@ Jhou et al. 2024 present Red Jade as showing "that *C. formosensis* is an excell
 - **Year of the cross and of selection/testing:** only the 1999 naming year is documented. Jhou et al.'s wording needs checking against a primary breeding report.
 - **Provenance of B-607:** which wild *C. formosensis* population (Nantou, South or East per Su et al. 2009) or which germplasm garden accession it came from is not stated in any source.
 - **Identity of B-729:** how it relates to the "Burma" accessions in Hu et al. 2014 (I2) and Hu et al. 2023 (I006 "Burma", I006F "Burma No.761"), and whether it is formally var. *assamica*, is not stated.
-- **Taxon labels:** whether the "A" / "Assamica" / "(I) *C. sinensis*" labels in Hu 2014, Hu 2023 and Lee 2017 are taxonomic claims or grouping conventions (see Source Conflicts).
 - **Hu 2014 cross notation:** whether "×" is female × male; the paper does not say.
 - **Molecular confirmation of parentage:** no source in the vault reports a marker-based check (e.g., maternal chloroplast haplotype matching B-729, or paternal *C. formosensis* alleles). Hu 2014 genotyped H18 and the wild teas, but its text does not discuss TTES-18's placement in the PCoA or dendrogram.
 - **Growing regions beyond Yuchi/Nantou:** current acreage and any other areas are not documented. Hu 2014's figure is a 2011 estimate.

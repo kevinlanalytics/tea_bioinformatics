@@ -7,12 +7,12 @@ name-zh:
 name-en: 
 year-released: 
 purpose: black tea
-parent-1: Shan line (Thailand)
+parent-1: Shan line
 parent-2: 
-parent-confidence: low (single source; Hu et al. 2014 gives a line of origin, not a cross)
+parent-confidence: "low (single source, Hu et al. 2014 'Origin or Parent' column; a single line, no cross, is listed)"
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[leeDNABarcodeIdentification2017]]", "[[huSSRbasedMolecularDiagnosis2023]]"]
-conflicts: ["Origin type: Hu et al. 2014 lists 'Shan line (TH)' as origin, code A (pure var. assamica, no cross); Hu et al. 2023 lists origin 'Hybrid'. Decision: pending"]
+conflicts: []
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -33,8 +33,13 @@ created: 2026-11-08
 |---|---|---|
 | Year released | Not stated in any source in the vault | — |
 | Purpose (oolong/black/green) | Black tea ("B", the only processing suitability listed); "red tea" (tea type 3), large leaf | Hu et al. 2014 (Table 1); Lee et al. 2017 (Table 1) |
-| Parent 1 | Shan line (Thailand), given as "Origin or Parent" | Hu et al. 2014 (Table 1) |
-| Parent 2 | None given; Hu et al. 2014 lists a single line, not a cross | Hu et al. 2014 (Table 1) |
+| Parent 1 | "Shan line (TH)" (TH = Thailand), given in the "Origin or Parent" column | Hu et al. 2014 (Table 1) |
+| Parent 2 | None named in any source; Hu et al. 2014 lists a single line, not a cross | Hu et al. 2014 (Table 1) |
+| Origin label (Hu et al. 2023 scheme) | "Hybrid" | Hu et al. 2023 (Table 1) |
+| Genetic group (Hu et al. 2023 scheme) | "Assamica" | Hu et al. 2023 (Table 1) |
+| Type code (Hu et al. 2014 scheme) | A (*C. sinensis* var. *assamica*) | Hu et al. 2014 (Table 1) |
+| Germplasm type (Hu et al. 2014 scheme) | "Developed variety" | Hu et al. 2014 (Table 1) |
+| Species code (Lee et al. 2017 scheme) | I (*Camellia sinensis*, no variety given) | Lee et al. 2017 (Table 1) |
 | Primary growing regions | Not stated in any source in the vault | — |
 
 **Identifiers and classification across sources:**
@@ -50,7 +55,7 @@ Only Hu et al. 2014 gives any pedigree information. In its Table 1, the "Origin 
 
 Hu et al. 2014 also lists the Shan line as introduced germplasm: "Shan" (I3) and "Shan-1" to "Shan-4" (I4–I7) are all class A, suited to black tea, and "Original from Thailand". The paper does not say which Shan accession, if any, TTES-7 came from. In the same paper, the Shan-1 to Shan-4 samples came from the Tung Pang Black Tea Co. Ltd. tea garden in Nantou County, not from the TRES germplasm garden.
 
-Hu et al. 2023 lists TTES No. 7's origin as "Hybrid". In that table, all 25 TTES-numbered entries (V001–V025) are labelled "Hybrid", so the label may be a blanket category for TTES releases rather than a statement about this cultivar's pedigree. See Source Conflicts.
+Hu et al. 2023 lists TTES No. 7's origin as "Hybrid". In that table, all 25 TTES-numbered entries (V001–V025) are labelled "Hybrid", so the label may be a blanket category for TTES releases rather than a statement about this cultivar's pedigree. It is a different classification scheme from Hu et al. 2014's "Origin or Parent" column, so it is recorded alongside it rather than treated as a conflict. Note that "Hybrid" sits uneasily with Hu et al. 2014's listing of a single line and its class A (rather than SA or AS); neither source explains its terms well enough to reconcile the two labels.
 
 ## Geographic Range
 
@@ -71,8 +76,7 @@ No source links TTES No. 7 to *C. formosensis*. Hu et al. 2014 classes it as A (
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Origin type (line selection vs. hybrid).** [[huDevelopmentSTSCAPS2014]] says the origin/parent is "Shan line (TH)" with class A (pure *C. sinensis* var. *assamica*), so no cross is listed. [[huSSRbasedMolecularDiagnosis2023]] says the origin is "Hybrid". Decision: pending. Reason: the 2023 "Hybrid" label is applied to every TTES-numbered entry, so it may be a category label rather than a pedigree claim. The two sources may not really disagree, but neither explains its terms well enough to settle this.
-- **Taxonomic resolution (not a contradiction).** [[leeDNABarcodeIdentification2017]] classes TTES No.7 only as species "I, *Camellia sinensis*", with no variety. [[huDevelopmentSTSCAPS2014]] (A) and [[huSSRbasedMolecularDiagnosis2023]] (Assamica) both place it in var. *assamica*. Lee et al. assign class I to every TTES-numbered entry, so this is a difference in how finely they classify, not a disagreement.
+No conflicts recorded. The sources' classification labels (Hu et al. 2014 type code and origin/parent; Hu et al. 2023 genetic group and origin label; Lee et al. 2017 species code) belong to different schemes and are listed as separate rows in Known Facts.
 
 ## Open Questions
 
@@ -82,7 +86,7 @@ No source links TTES No. 7 to *C. formosensis*. Hu et al. 2014 classes it as A (
 - **English or trade name:** no source gives an English trade name. `name-en` is blank and the title uses "TTES No. 7".
 - **Year of release or registration:** not stated in any source.
 - **Breeding code or selection number:** none given. Hu et al. 2014's "H7" and Hu et al. 2023's "V007" are study sample codes, not breeding codes.
-- **Exact pedigree:** is TTES No. 7 a direct clonal selection from the Thai Shan line, a seedling selection, or a cross, as Hu et al. 2023's "Hybrid" label might suggest? Which Shan accession was used?
+- **Exact pedigree:** is TTES No. 7 a direct clonal selection from the Thai Shan line, a seedling selection, or a cross? Hu et al. 2023's "Hybrid" origin label is applied to all TTES entries and does not settle this. Which Shan accession was used?
 - **Commercial growing regions:** no source says where it is grown commercially.
 - **Molecular placement:** the Hu et al. 2014 dendrogram (Fig. 3) and core-marker flowchart include TTES-7. The figure contents are not in the text extract, so its exact cluster position and diagnostic marker alleles have not been recorded here.
 - **Possible missed sources:** spellings searched for were "TTES No.7", "TTES No. 7", "TTES-7", "Taicha 7", "臺茶7號", "台茶7號", "H7" and "V007". The Lai et al. 2001 sample set has no Taicha 7 or TTE No. 7.

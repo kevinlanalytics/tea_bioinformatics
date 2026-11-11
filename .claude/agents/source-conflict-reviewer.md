@@ -19,7 +19,8 @@ For each conflict, write an entry in **both** notes:
 - Entity notes: `## Source Conflicts` and the `conflicts:` frontmatter.
 
 Each entry links the other note as `[[citekey]]`, states each side's claim, and gives the
-reason for the difference if a source states one. See
+reason for the difference if a source states one. In entity notes, also add the decision by
+the newest-source rule in `AGENTS.md` and update the affected frontmatter field. See
 `Sources/Literature-Notes/suConfirmationCamelliaFormosensis.md` for the house style.
 
 For a literature note you checked and found nothing, replace the placeholder with

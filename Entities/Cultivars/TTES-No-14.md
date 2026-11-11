@@ -12,7 +12,7 @@ parent-2: Bair-Mau-Hour
 parent-confidence: Single explicit source (Hu et al. 2014, Table 1); Lai et al. 2001 independently says "Taicha 14" was developed from "Peimaohu" (apparently the same landrace under another romanization, which no source confirms). Hu et al. 2014 writes the cross as "Tainon-983 × Bair-Mau-Hour" but does not say which parent is female.
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[laiAssessmentGeneticRelationships]]", "[[leeDNABarcodeIdentification2017]]", "[[huSSRbasedMolecularDiagnosis2023]]"]
-conflicts: ["Taxonomic group: [[huDevelopmentSTSCAPS2014]] classes TTES-14 as SA (C. sinensis var. sinensis × var. assamica hybrid) and [[laiAssessmentGeneticRelationships]] lists Taicha 14 among 'China x Assam' hybrid clones; [[huSSRbasedMolecularDiagnosis2023]] places V014 in the 'Sinensis' group (C. sinensis var. sinensis); [[leeDNABarcodeIdentification2017]] codes it only as species I (Camellia sinensis), with no variety given. Decision: pending", "Parentage detail: [[huDevelopmentSTSCAPS2014]] gives Tainon-983 × Bair-Mau-Hour; [[laiAssessmentGeneticRelationships]] says only that Taicha 14 was 'developed from Peimaohu' and does not name Tainon-983 or a second parent. Decision: pending"]
+conflicts: ["Parentage detail: [[huDevelopmentSTSCAPS2014]] gives Tainon-983 × Bair-Mau-Hour; [[laiAssessmentGeneticRelationships]] says only that Taicha 14 was 'developed from Peimaohu' and does not name Tainon-983 or a second parent. Decision: use [[huDevelopmentSTSCAPS2014]] (2014). Reason: Newest-source rule (2026-11-10). Earlier caveat: the two are compatible if Peimaohu = Bair-Mau-Hour, but no source states that equivalence."]
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -34,14 +34,21 @@ created: 2026-11-08
 | Field | Value | Source |
 |---|---|---|
 | Year released | Not stated in any source | — |
-| Purpose (oolong/black/green) | Oolong and Paochong tea (processing suitability "O,P") | Hu et al. 2014, Table 1 |
-| | Oolong and Pou Chong tea (tea-type codes 2, 5); small leaf type (S) | Lee et al. 2017, Table 1 |
+| Purpose (Hu et al. 2014 processing-suitability scheme) | Oolong and Paochong tea (processing suitability "O,P") | Hu et al. 2014, Table 1 |
+| Purpose and leaf type (Lee et al. 2017 scheme) | Oolong and Pou Chong tea (tea-type codes 2, 5); small leaf type (S) | Lee et al. 2017, Table 1 |
 | Parent 1 | Tainon-983 (a Taiwanese breeding line, per Hu et al. 2014's footnote "Hwang-Gan × Kyang") | Hu et al. 2014, Table 1 and footnote |
 | Parent 2 | Bair-Mau-Hour (a Taiwanese landrace, "planting in north of Taiwan") | Hu et al. 2014, Table 1 |
+| Parentage (superseded) | "Developed from 'Peimaohu'", no second parent named — superseded by Hu et al. 2014 under the newest-source rule (2026-11-10) | Lai et al. 2001 |
 | Primary growing regions | Not stated in any source. The sources only give germplasm or sampling sites (see Geographic Range). | — |
+| Genetic group (Hu et al. 2023 scheme) | Sinensis (footnote: cultivars belonging to *C. sinensis* var. *sinensis*) | Hu et al. 2023, Table 1 |
+| Origin (Hu et al. 2023 scheme) | Hybrid | Hu et al. 2023, Table 1 |
+| Type code (Hu et al. 2014 scheme) | SA (*C. sinensis* var. *sinensis* × var. *assamica* hybrid) | Hu et al. 2014, Table 1 |
+| Germplasm type (Hu et al. 2014 scheme) | Developed variety | Hu et al. 2014, Table 1 |
+| Clone grouping (Lai et al. 2001) | One of 7 "hybrid clones between China and Assam tea" | Lai et al. 2001 |
+| Species code (Lee et al. 2017 scheme) | I (*Camellia sinensis*, variety not specified) | Lee et al. 2017, Table 1 |
 
 **Other sourced attributes:**
-- **Germplasm type and taxonomic group:** "Developed variety", classed as **SA** (*C. sinensis* var. *sinensis* × var. *assamica* hybrid), per Hu et al. 2014 (Table 1). Hu et al. 2023 (Table 1) lists V014 with classified group "Sinensis" and origin "Hybrid". Lai et al. 2001 lists "Taicha 14" among 7 "hybrid clones between China and Assam tea". Lee et al. 2017 gives species code I (*Camellia sinensis*, variety not specified). See Source Conflicts.
+- **Germplasm type and taxonomic group:** "Developed variety", classed as **SA** (*C. sinensis* var. *sinensis* × var. *assamica* hybrid), per Hu et al. 2014 (Table 1). Hu et al. 2023 (Table 1) lists V014 with classified group "Sinensis" and origin "Hybrid". Lai et al. 2001 lists "Taicha 14" among 7 "hybrid clones between China and Assam tea". Lee et al. 2017 gives species code I (*Camellia sinensis*, variety not specified). These are different classification schemes, each recorded as its own row in Known Facts.
 - **Popularity:** Lee et al. 2017 (Table 1, footnote f) flags TTES No.14 as a "popular or distinguishing tea variety in Taiwan".
 - **Molecular identity, ITS2 (Lee et al. 2017):** the highest ITS2 sequence similarity among all 113 TRES varieties was between TTES No.14 and Dah Terng. Lee et al. also report that no two varieties had identical ITS2 sequences.
 - **Molecular identity, STS/CAPS (Hu et al. 2014):** the smallest genetic distance (modified Roger's distance) among the 37 sinensis-type accessions was **0.11, between TTES-14 and TTES-15** (range 0.11–0.62, average 0.44).
@@ -54,6 +61,8 @@ created: 2026-11-08
 Hu et al. 2014 (Table 1, "Origin or Parent") gives TTES No.14 as **Tainon-983 (TW) × Bair-Mau-Hour (TW)**. TTES No.15 has exactly the same parentage, so TTES-14 and TTES-15 are full sibs from the same cross. They are also the closest pair among Hu et al.'s sinensis-type accessions (MRD 0.11). The table's footnote defines **Tainon-983 as Hwang-Gan × Kyang**. Hu et al. 2014 lists Hwang-Gan as a Taiwanese landrace (S, black tea, "planting in north-west of Taiwan") and Kyang as an introduced assamica variety (A, "original from India"). Hu et al. 2023 lists Tainon No.983 (H007) as a "Selected" Sinensis line sampled at Yangmei.
 
 Hu et al. 2014 writes the cross in the order Tainon-983 × Bair-Mau-Hour but does not label the parents as female or male. The paper's general statement that six landraces have been "used as female parents for hybridization breeding" since 1945 covers Hwang-Gan but not Bair-Mau-Hour or Tainon-983. Treating Tainon-983 as the seed parent is therefore an assumption, not a sourced fact.
+
+Classification labels and the pedigree: Hu et al. 2014 classes TTES-14 as SA, and its documented pedigree includes assamica ancestry via Kyang in Tainon-983. Hu et al. 2023 assigns V014 to its "Sinensis" genetic group (with origin "Hybrid"); that scheme has only three groups (Sinensis/Assamica/Formosana) and no hybrid group, so the "Sinensis" label sits uneasily with a sinensis × assamica pedigree. The two papers use different schemes, and neither states how the other's label should be read.
 
 Lai et al. 2001 states that clones "Taicha 14", "Taicha 15", "Taicha 16", and "Taicha 17" "were developed from 'Peimaohu'". It also reports that Taicha 14 clustered with Peimaohu in both the RAPD and ISSR dendrograms, "reflecting pedigree relationship". Lai et al. name no second parent. "Peimaohu" and "Bair-Mau-Hour" look like two romanizations of the same landrace name. The parallel naming sets support this: Lai et al. have Peimaohu, Dananuanpeimaohu, and Tutuyykengpeimaohu, while Lee et al. 2017 has Bair Mau Hour, Dah Nan Bair Mau Hour, and Tuh Tzy Keng Bair Mau Hour. No source states the equivalence outright, though. If it holds, Lai et al. corroborates Bair-Mau-Hour as a parent.
 
@@ -82,8 +91,7 @@ None of the four sources links TTES No. 14 to *Camellia formosensis*. Its source
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Taxonomic group.** [[huDevelopmentSTSCAPS2014]] says TTES-14 is SA, a *C. sinensis* var. *sinensis* × var. *assamica* hybrid. [[laiAssessmentGeneticRelationships]] lists "Taicha 14" as a China × Assam hybrid clone. [[huSSRbasedMolecularDiagnosis2023]] says V014 belongs to the "Sinensis" group, defined in its footnote as cultivars belonging to *C. sinensis* var. *sinensis*. [[leeDNABarcodeIdentification2017]] gives only species code I (*Camellia sinensis*), with no variety. Decision: pending. Reason: Hu et al. 2023's table has only three group labels (Sinensis/Assamica/Formosana) and no hybrid category, so "Sinensis" may be a coarse assignment rather than a denial of assamica ancestry. That is an interpretation and needs a reviewer.
-- **Parentage detail.** [[huDevelopmentSTSCAPS2014]] says Tainon-983 × Bair-Mau-Hour. [[laiAssessmentGeneticRelationships]] says only "developed from 'Peimaohu'", with no second parent and no mention of Tainon-983. Decision: pending. Reason: the two are compatible if Peimaohu = Bair-Mau-Hour, but no source states that equivalence, and Lai et al. do not confirm the Tainon-983 side.
+- **Parentage detail.** [[huDevelopmentSTSCAPS2014]] says Tainon-983 × Bair-Mau-Hour. [[laiAssessmentGeneticRelationships]] says only "developed from 'Peimaohu'", with no second parent and no mention of Tainon-983. Decision: use [[huDevelopmentSTSCAPS2014]] (2014). Reason: Newest-source rule (2026-11-10). Earlier caveat: the two are compatible if Peimaohu = Bair-Mau-Hour, but no source states that equivalence, and Lai et al. do not confirm the Tainon-983 side.
 
 ## Open Questions
 
@@ -96,7 +104,6 @@ None of the four sources links TTES No. 14 to *Camellia formosensis*. Its source
 - **Cross direction:** which of Tainon-983 and Bair-Mau-Hour is the female (seed) parent? Hu et al. 2014 does not say.
 - **Peimaohu = Bair-Mau-Hour?** This equivalence is inferred from the romanization and the parallel naming sets in Lai et al. 2001 and Lee et al. 2017. It needs a source that states it.
 - **"Taicha 14" = TTES No. 14?** The vault treats Lai et al. 2001's "Taicha 14" as TTES No. 14. Lai et al. use "TTES No. 12/13" for the neighbouring clones and "Taicha" for 14–17, but never state that the two names are equivalent.
-- **Taxonomic group (SA vs. Sinensis):** see Source Conflicts.
 - **Growing regions and acreage:** no source gives where TTES No. 14 is commercially cultivated or its share of Taiwan's tea acreage.
 - **Tainon-983 parentage** (Hwang-Gan × Kyang) comes from a single footnote in Hu et al. 2014. Hu et al. 2023 lists Tainon No.983 as "Selected" and Sinensis without parentage.
 

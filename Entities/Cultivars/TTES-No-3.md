@@ -6,13 +6,13 @@ breeding-code:
 name-zh: 
 name-en: 
 year-released: 
-purpose: black, green (per Hu et al. 2014; see Source Conflicts)
+purpose: "B,G = black tea, green tea (Hu et al. 2014 processing-suitability scheme); red tea, Mee tea (Lee et al. 2017 tea-type scheme)"
 parent-1: Horng-Shin-Dahpan
 parent-2: Manipuri
 parent-confidence: single-source (Hu et al. 2014 Table 1 only; female/male roles not labelled for this cross)
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[huSSRbasedMolecularDiagnosis2023]]", "[[leeDNABarcodeIdentification2017]]"]
-conflicts: ["taxonomic-group: huDevelopmentSTSCAPS2014 = SA (C. sinensis var. sinensis x var. assamica hybrid) vs huSSRbasedMolecularDiagnosis2023 = Sinensis (C. sinensis var. sinensis) vs leeDNABarcodeIdentification2017 = I (Camellia sinensis, no variety)", "purpose: huDevelopmentSTSCAPS2014 = black + green vs leeDNABarcodeIdentification2017 = red tea + Mee tea"]
+conflicts: []
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -32,15 +32,21 @@ created: 2026-11-08
 | Field | Value | Source |
 |---|---|---|
 | Year released | Not stated in any source | — |
-| Purpose (oolong/black/green) | Black tea and green tea (Table 1 code "B,G"). Lee et al. 2017 instead lists tea types "red tea" and "Mee Tea" (see Source Conflicts) | [[huDevelopmentSTSCAPS2014]]; [[leeDNABarcodeIdentification2017]] |
+| Processing suitability (Hu et al. 2014 scheme) | "B,G" = black tea, green tea (Table 1) | [[huDevelopmentSTSCAPS2014]] |
+| Tea types (Lee et al. 2017 scheme) | "3,4" = "red tea" and "Mee Tea" (Table 1) | [[leeDNABarcodeIdentification2017]] |
+| Type code (Hu et al. 2014 scheme) | "SA", *C. sinensis* var. *sinensis* × var. *assamica* hybrid | [[huDevelopmentSTSCAPS2014]] |
+| Germplasm type (Hu et al. 2014 scheme) | "Developed variety" | [[huDevelopmentSTSCAPS2014]] |
+| Genetic group (Hu et al. 2023 scheme) | "Sinensis", cultivars belonging to *C. sinensis* var. *sinensis* | [[huSSRbasedMolecularDiagnosis2023]] |
+| Origin label (Hu et al. 2023 scheme) | "Hybrid" | [[huSSRbasedMolecularDiagnosis2023]] |
+| Species code (Lee et al. 2017 scheme) | "I", *Camellia sinensis*, no variety assigned | [[leeDNABarcodeIdentification2017]] |
+| Leaf type (Lee et al. 2017 scheme) | "M" (medium) | [[leeDNABarcodeIdentification2017]] |
 | Parent 1 | Horng-Shin-Dahpan (Taiwan landrace) | [[huDevelopmentSTSCAPS2014]] |
 | Parent 2 | Manipuri (introduced *C. sinensis* var. *assamica* variety, of Indian origin) | [[huDevelopmentSTSCAPS2014]] |
 | Primary growing regions | Not stated in any source; only sampling locations are given (see Geographic Range) | — |
 
 **Other sourced attributes:**
 - **Designations used in sources:** "TTES No.3 (TTES-3)", accession code **H3**, germplasm type "Developed variety" (Hu et al. 2014, Table 1); "TTES No.3", cultivar code **V003**, origin "Hybrid" (Hu et al. 2023, Table 1); "TTES No.3", code 3 (Lee et al. 2017, Table 1). These are study accession codes, not breeding codes, so `breeding-code` is left blank.
-- **Taxonomic group:** "SA" = *C. sinensis* var. *sinensis* × var. *assamica* hybrid (Hu et al. 2014); "Sinensis" = cultivars belonging to *C. sinensis* var. *sinensis* (Hu et al. 2023); "I" = *Camellia sinensis*, with no variety assigned (Lee et al. 2017). See Source Conflicts.
-- **Leaf type:** medium ("M") (Lee et al. 2017, Table 1).
+- **Classification labels:** "SA" = *C. sinensis* var. *sinensis* × var. *assamica* hybrid (Hu et al. 2014); "Sinensis" = cultivars belonging to *C. sinensis* var. *sinensis* (Hu et al. 2023, which uses three genetic groups: Sinensis / Assamica / Formosana); "I" = *Camellia sinensis*, with no variety assigned (Lee et al. 2017). These are different classification schemes, recorded side by side in the table rather than treated as a conflict.
 - **Molecular clustering:** in the UPGMA dendrogram from 39 STS/CAPS loci (modified Roger's distance), TTES-3 falls in **Group IIIa** of the sinensis-type group (Group III). Group IIIa also holds Chin-Shin-Oolong, Shy-Jih-Chuen, Bair-Mau-Hour, Wuu-Yi, and Horng-Shin-Dahpan, with TTES-3, TTES-4 and TTES-9 described as Horng-Shin-Dahpan's "derived varieties" (Hu et al. 2014).
 - **Marker coverage:** included in the 144-cultivar SSR genotype database behind the TTVID 12-SSR identification kit (Hu et al. 2023), and in the 113-accession ITS2 phylogenetic tree set (Lee et al. 2017). Neither paper discusses TTES No. 3's results individually.
 - **Not a prevailing cultivar:** TTES-3 is not one of the 12 prevailing cultivars that Hu et al. 2014 selected for variety identification, which covered over 98% of Taiwan's tea acreage (2011 TRES statistics). Lee et al. 2017 also does not flag it as a "popular or distinguishing" variety (footnote f).
@@ -50,6 +56,8 @@ created: 2026-11-08
 <!-- Describe the breeding cross in prose. Note if sources disagree on parentage. -->
 
 Hu et al. 2014 (Table 1, "Origin or Parent") gives the cross as **Horng-Shin-Dahpan (TW) × Manipuri (IN)**. That paper is the only source that states TTES No. 3's parentage. Hu et al. 2023 and Lee et al. 2017 list the cultivar but give no parents, so there is nothing for them to disagree with.
+
+Classification labels and this pedigree: Hu et al. 2014's type code "SA" (*sinensis* × *assamica* hybrid) matches the listed cross. Hu et al. 2023 places TTES No. 3 in its "Sinensis" genetic group (with origin label "Hybrid"), which sits uneasily with a cross involving an *assamica* parent; that paper's three-group scheme has no hybrid group. Lee et al. 2017's species code "I" (*Camellia sinensis*) assigns no variety. None of these sources comments on the difference.
 
 - **Horng-Shin-Dahpan**: a landrace, *C. sinensis* var. *sinensis* ("S"), planted in north-west Taiwan, suited to green tea (Hu et al. 2014, Table 1). Hu et al. 2014 names it among six landraces that were prevailing during the Japanese occupation and "have been used as female parents for hybridization breeding" since 1945. The same paper says all six were introduced from Fukien or Guangdong, China. This supports, but does not explicitly state, Horng-Shin-Dahpan as the seed parent of TTES No. 3. Table 1 does not label female/male for individual crosses. Hu et al. 2023 lists Horng-Shin-Dahpan (L009) as a Sinensis landrace. Lee et al. 2017 lists "Horng Shin Dah Pan" as *C. sinensis* var. *sinensis*, partially fermented, small leaf.
 - **Manipuri**: an introduced variety, *C. sinensis* var. *assamica* ("A"), originally from India, suited to black tea (Hu et al. 2014, Table 1). Hu et al. 2023 lists Manipuri (I010) as an imported Assamica cultivar. Lee et al. 2017 lists it as *C. sinensis* var. *assamica*, fermented, red tea, large leaf.
@@ -76,8 +84,7 @@ No source traces TTES No. 3 to *C. formosensis*. Per Hu et al. 2014, both parent
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-1. **Taxonomic group.** [[huDevelopmentSTSCAPS2014]] classes TTES No. 3 as "SA", a *C. sinensis* var. *sinensis* × var. *assamica* hybrid, consistent with its listed sinensis × assamica parents. [[huSSRbasedMolecularDiagnosis2023]] classes it as "Sinensis" ("cultivars belonging to *C. sinensis* var. *sinensis*"), origin "Hybrid". [[leeDNABarcodeIdentification2017]] gives species code "I" (*Camellia sinensis*), without the var. *sinensis* (II) or var. *assamica* (III) assignment it gives landraces and introduced varieties. Decision: pending. Reason: Hu et al. 2023 uses only three groups (Sinensis / Assamica / Formosana), so its label may be a coarser grouping rather than a real disagreement. The sources do not say which applies.
-2. **Processing suitability.** [[huDevelopmentSTSCAPS2014]] gives "B,G" (black tea, green tea). [[leeDNABarcodeIdentification2017]] gives tea types "3,4" ("red tea" and "Mee Tea") and no fermentation-suitability code. Decision: pending. Reason: the two papers use different vocabularies. Neither says whether Lee's "red tea" and "Mee Tea" correspond to Hu's black and green tea, so this may be only a terminology difference.
+None. The sources differ only in classification scheme (Hu et al. 2014 type code and processing-suitability letters; Hu et al. 2023 genetic group and origin label; Lee et al. 2017 species code, tea types and leaf type); each value is kept as its own labelled row in Known Facts. Parentage comes from Hu et al. 2014 alone, and no source gives a conflicting release year or origin locality.
 
 ## Open Questions
 
@@ -90,7 +97,7 @@ No source traces TTES No. 3 to *C. formosensis*. Per Hu et al. 2014, both parent
 - **Corroborating parentage:** the parentage rests on a single table entry (Hu et al. 2014). A primary breeding or registration record would raise confidence.
 - **Relationship to TTES No. 4:** same listed cross. The sources do not say whether the two are sister selections.
 - **Growing regions and acreage:** no source says where TTES No. 3 is grown commercially or how much area it covers.
-- **Taxonomic group and purpose:** both conflicts above need resolving, ideally from the official cultivar description.
+- **Purpose vocabularies:** neither paper says whether Lee et al. 2017's "red tea"/"Mee Tea" correspond to Hu et al. 2014's black/green tea; the official cultivar description would settle the cultivar's intended purpose.
 
 ## Source Notes
 

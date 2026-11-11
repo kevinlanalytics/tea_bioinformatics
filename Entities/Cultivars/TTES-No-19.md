@@ -36,14 +36,19 @@ created: 2026-11-08
 | Parent 1 | [[TTES-No-12]] (listed first in the cross "TTES-12 × Chin-Shin-Oolong") | Hu et al. 2014, Table 1 |
 | Parent 2 | Chin-Shin-Oolong (explicitly called the male parent) | Hu et al. 2014 |
 | Primary growing regions | Not stated in any source | — |
+| Type code (Hu et al. 2014 scheme) | S (*C. sinensis* var. *sinensis*) | Hu et al. 2014, Table 1 |
+| Processing suitability (Hu et al. 2014 scheme) | O,P (Oolong, Paochong) | Hu et al. 2014, Table 1 |
+| Genetic group (Hu et al. 2023 scheme) | Sinensis | Hu et al. 2023, Table 1 |
+| Origin label (Hu et al. 2023 scheme) | Hybrid | Hu et al. 2023, Table 1 |
+| Species code (Lee et al. 2017 scheme) | I (*Camellia sinensis*) | Lee et al. 2017, Table 1 |
+| Tea-type codes (Lee et al. 2017 scheme) | 2 (Oolong), 5 (Pou Chong) | Lee et al. 2017, Table 1 |
+| Leaf type (Lee et al. 2017 scheme) | S (small) | Lee et al. 2017, Table 1 |
 
 Other sourced attributes:
 
-- **Botanical classification:** *C. sinensis* var. *sinensis* ("S") per Hu et al. 2014 (Table 1) and "Sinensis" group per Hu et al. 2023 (Table 1); Lee et al. 2017 (Table 1) records it only at species level as "I, *Camellia sinensis*".
 - **Legal status:** Registered with plant variety rights under the Plant Variety and Plant Seed Act (Council of Agriculture, R.O.C.), per Hu et al. 2023 (Table 1 footnote c, which marks V019, V020, V022 and V025); Hu et al. 2014 likewise states TTES-19 has been protected by that Act since 2004.
-- **Leaf type:** Small ("S"), per Lee et al. 2017 (Table 1).
 - **Status in Taiwan:** Counted among the 12 "prevailing"/dominant Taiwan cultivars chosen for variety identification in Hu et al. 2014, which selected it as a newly bred variety and named it among the cultivars "most urgently desirable for variety identification". Lee et al. 2017 flags it as a "popular or distinguishing tea variety in Taiwan" (footnote f), and it is among the 25 "important and distinctive" varieties in their ITS2 comparison.
-- **Study accession codes (study-specific, not breeding codes):** H19 in Hu et al. 2014; V019 in Hu et al. 2023 (origin type "Hybrid"); accession no. 19 in Lee et al. 2017.
+- **Study accession codes (study-specific, not breeding codes):** H19 in Hu et al. 2014; V019 in Hu et al. 2023; accession no. 19 in Lee et al. 2017.
 
 ## Parentage Notes
 
@@ -55,7 +60,9 @@ Deeper pedigree, assembled from the same table and its footnote (Hu et al. 2014)
 
 In Hu et al. 2014's UPGMA dendrogram, TTES-19 falls in Group IIIb with Tiee-Guan-In, Hwang-Gan, TTES-10, TTES-12, TTES-14 and TTES-15. It sits with its female-side parent TTES-12 and not with its male parent Chin-Shin-Oolong, which is in Group IIIa. The paper lists TTES-19 among the "derived varieties" in Group IIIb. Its wording ("Tiee-Guan-In, Hwang-Gan, and its derived varieties") is ambiguous about which ancestor is meant.
 
-No other source in the vault gives a parentage for TTES No. 19. Hu et al. 2023 labels V019 only as "Hybrid" origin, and Lee et al. 2017 gives no parentage.
+No other source in the vault gives a parentage for TTES No. 19. Hu et al. 2023 gives no parents, only its own origin label "Hybrid" and genetic group "Sinensis", both consistent with a cross between two var. *sinensis* parents. Lee et al. 2017 gives no parentage.
+
+`parent-1` is TTES-12 (linked to its own note) and `parent-2` is Chin-Shin-Oolong, as printed in Hu et al. 2014. The parent order follows the paper's cross notation; the female/male roles are explained above.
 
 ## Geographic Range
 
@@ -86,9 +93,9 @@ Its recorded lineage does not trace back to *C. formosensis*. Per Hu et al. 2014
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-None found. The three sources agree on everything they share: sinensis-type classification, Oolong/Paochong use, and 2004 protection or release.
+None found. No two sources give incompatible values for the same claim (parentage, release year, origin locality).
 
-One difference in detail, not treated as a conflict: Lee et al. 2017 classifies TTES No. 19 only as "I, *Camellia sinensis*", while Hu et al. 2014 ("S") and Hu et al. 2023 ("Sinensis") assign it to var. *sinensis*. Lee's Table 1 uses "I" for every TTES cultivar, so this looks like coarser classification rather than disagreement.
+The classification labels (Hu et al. 2014 type code "S", Hu et al. 2023 genetic group "Sinensis" and origin label "Hybrid", Lee et al. 2017 species code "I") come from different schemes and are not conflicts. Each is recorded as its own row in Known Facts.
 
 ## Open Questions
 

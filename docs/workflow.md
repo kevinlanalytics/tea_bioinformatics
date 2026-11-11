@@ -30,6 +30,14 @@ The guiding rule throughout: every claim traces to a specific source, and disagr
 sources are recorded on both sides rather than resolved silently. Disagreements are findings
 (proposal §3.4–3.5), and they become separate, source-tagged relationships in the graph.
 
+Each recorded conflict is then decided by the **newest-source rule** (adopted 2026-11-10): the
+source whose publication date — or, for an undated web page, capture date — is closest to today
+wins, and the entity note's field takes its value. The losing claim stays in the note marked
+"superseded". Conflicts inside a single source, or between same-year sources, stay
+`Decision: pending`. Labels from different classification schemes (e.g. Hu 2023 genetic
+groups vs Hu 2014 pedigree types) are not conflicts: each is kept as its own row. Full wording
+is in `AGENTS.md`.
+
 ### Where the sources live
 
 | What | Path | Notes |
@@ -129,7 +137,8 @@ How the agent works:
   missing, the agent reads the PDF in `/Users/kevinlan/Zotero/storage/` directly.
 - Claims are attributed inline ("per Su et al. 2009"); `sources:` lists each publication used
   as `"[[citekey]]"`. Nothing comes from general knowledge.
-- Conflicting sources go into `## Source Conflicts` and `conflicts:`, without choosing a winner.
+- Conflicting sources go into `## Source Conflicts` and `conflicts:`, decided by the
+  newest-source rule (section 1); the superseded value stays visible.
 - Unknowns go into `## Open Questions`. `verified` stays `false`.
 
 Manual alternative: create the note in the entity folder, then `Cmd+P` → **Templater: Insert

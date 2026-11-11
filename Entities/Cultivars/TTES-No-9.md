@@ -12,7 +12,7 @@ parent-2: Kyang
 parent-confidence: single-source
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[huSSRbasedMolecularDiagnosis2023]]", "[[leeDNABarcodeIdentification2017]]"]
-conflicts: ["Taxonomic group: Hu et al. 2014 = SA (C. sinensis var. sinensis x var. assamica hybrid); Hu et al. 2023 = Sinensis (C. sinensis var. sinensis); Lee et al. 2017 = I (C. sinensis, no variety assigned). Decision: pending."]
+conflicts: []
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -32,11 +32,17 @@ created: 2026-11-08
 | Field | Value | Source |
 |---|---|---|
 | Year released | Not stated in any source in the vault | — |
-| Purpose (oolong/black/green) | Green and black tea ("G,B" processing suitability) | Hu et al. 2014, Table 1 |
-| | Tea types "1, green tea" and "3, red tea" | Lee et al. 2017, Table 1 |
+| Processing suitability (Hu et al. 2014 scheme) | "G,B" (green and black tea) | Hu et al. 2014, Table 1 |
+| Tea types (Lee et al. 2017 scheme) | "1, green tea" and "3, red tea" | Lee et al. 2017, Table 1 |
 | Parent 1 | Horng-Shin-Dahpan (Taiwan landrace) | Hu et al. 2014, Table 1 |
 | Parent 2 | Kyang (introduced variety, India) | Hu et al. 2014, Table 1 |
 | Primary growing regions | Not stated in any source in the vault | — |
+| Type code (Hu et al. 2014 scheme) | SA (*C. sinensis* var. *sinensis* × var. *assamica* hybrid) | Hu et al. 2014, Table 1 |
+| Germplasm type (Hu et al. 2014 scheme) | "Developed variety" | Hu et al. 2014, Table 1 |
+| Genetic group (Hu et al. 2023 scheme) | "Sinensis" (defined in the Table 1 footnote as *C. sinensis* var. *sinensis*) | Hu et al. 2023, Table 1 |
+| Origin (Hu et al. 2023 scheme) | "Hybrid" | Hu et al. 2023, Table 1 |
+| Species code (Lee et al. 2017 scheme) | "I, *Camellia sinensis*" (no variety) | Lee et al. 2017, Table 1 |
+| Leaf type (Lee et al. 2017 scheme) | L, large | Lee et al. 2017, Table 1 |
 
 **Names and codes in the sources:**
 - "TTES No.9 (TTES-9)", study code **H9**, per Hu et al. 2014 (Table 1).
@@ -44,10 +50,7 @@ created: 2026-11-08
 - "TTES No.9", accession code **9**, per Lee et al. 2017 (Table 1).
 - These are sample/accession codes specific to each study, not TRES breeding-line codes, so `breeding-code` is left blank. None of the three sources gives a Chinese name or an English trade name.
 
-**Other recorded attributes:**
-- Germplasm type: "Developed variety" (Hu et al. 2014); origin "Hybrid" (Hu et al. 2023).
-- Taxonomic group: SA, *C. sinensis* var. *sinensis* × var. *assamica* hybrid (Hu et al. 2014); "Sinensis" (Hu et al. 2023); "I, *Camellia sinensis*" with no variety given (Lee et al. 2017). See Source Conflicts.
-- Leaf type: L, large (Lee et al. 2017, Table 1).
+The classification rows above come from three different schemes (Hu et al. 2014 pedigree type codes, Hu et al. 2023 genetic groups and origin labels, Lee et al. 2017 species codes). They are kept side by side rather than reconciled.
 
 ## Parentage Notes
 
@@ -61,7 +64,9 @@ In Hu et al. 2014's UPGMA dendrogram (Figure 3), TTES-9 falls in sinensis subgro
 
 Of the three sources, only Hu et al. 2014 gives parentage. Hu et al. 2023 and Lee et al. 2017 list the cultivar without parents. Same-parent and related cultivars per Hu et al. 2014: TTES-3 and TTES-4 (Horng-Shin-Dahpan × Manipuri), and TTES-1 (Chin-Shin-Dahpan × Kyang).
 
-**Transcription note:** the literature note [[huDevelopmentSTSCAPS2014]] lists this cultivar as "Horng-Shin-Dahpan × Jaipuri". The paper's Table 1, checked in both the markdown cache and the PDF (page 4), reads "Horng-Shin-Dahpan (TW) × Kyang (IN)" for H9. "× Jaipuri" belongs to H10 and H11. This note follows the paper. The literature note needs a correction, which is out of scope for this task.
+**Classification labels vs. pedigree:** Hu et al. 2014's SA type code matches its documented sinensis-landrace × Indian-assamica cross. Hu et al. 2023 label V009 "Sinensis" (*C. sinensis* var. *sinensis*) in their genetic-group column while giving its origin as "Hybrid"; that genetic-group label sits uneasily with the sinensis × assamica pedigree in Hu et al. 2014, but the 2023 scheme has no hybrid genetic group. Lee et al. 2017 assign species code "I, *Camellia sinensis*" without a variety. These are different classification schemes, not competing pedigree claims.
+
+**Transcription note:** the literature note [[huDevelopmentSTSCAPS2014]] lists this cultivar as "Horng-Shin-Dahpan × Kyang", matching the paper's Table 1 for H9 (corrected 2026-11-10 from an earlier "× Jaipuri"; "× Jaipuri" belongs to H10 and H11).
 
 ## Geographic Range
 
@@ -85,7 +90,7 @@ None of the sources links it to *C. formosensis*. Per Hu et al. 2014, both paren
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Taxonomic group.** [Hu et al. 2014] says SA, a *C. sinensis* var. *sinensis* × var. *assamica* hybrid (Table 1). This fits the stated sinensis-landrace × Indian-assamica cross. [Hu et al. 2023] says "Sinensis", which its Table 1 footnote defines as cultivars belonging to *C. sinensis* var. *sinensis*. Hu et al. 2023 has no hybrid category, so this may be a coarser scheme rather than a factual disagreement. [Lee et al. 2017] says "I, *Camellia sinensis*" with no variety. Lee uses that code for all TTES breeding varieties. Decision: pending. Reason: the three papers use different classification schemes, and a reviewer should decide whether this is a real disagreement or only a difference in granularity.
+None. The classification labels from Hu et al. 2014, Hu et al. 2023 and Lee et al. 2017 belong to different schemes and are recorded as separate rows in Known Facts, not as conflicts. Only Hu et al. 2014 gives parentage, so there is no parentage disagreement.
 
 ## Open Questions
 
@@ -95,11 +100,8 @@ None of the sources links it to *C. formosensis*. Per Hu et al. 2014, both paren
 - **English trade name:** none of the sources gives one, so `name-en` is blank and the title uses "TTES No. 9".
 - **Release/registration year:** no source states it. An official TRES/TBRS cultivar page or registration record would be needed.
 - **Parentage:** only one source (Hu et al. 2014) gives it, and it does not explicitly state cross direction (female vs. male parent) for this cultivar. A second, independent pedigree source is needed.
-- **Purpose wording:** Lee et al. 2017 code "3" is "red tea", while Hu et al. 2014 says "B" (black tea). Whether these mean the same product category should be confirmed from the sources, not assumed.
 - **Growing regions:** no source names production regions or acreage for TTES No. 9.
 - **Breeding-line code:** no TRES breeding-line or selection code is recorded. H9, V009 and 9 are study-specific sample codes.
-- **Literature note fix:** a human should correct the "× Jaipuri" parent in [[huDevelopmentSTSCAPS2014]] to "× Kyang", matching the paper's Table 1.
-
 ## Source Notes
 
 <!-- Link to relevant literature notes -->

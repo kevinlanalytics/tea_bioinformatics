@@ -7,12 +7,12 @@ name-zh:
 name-en: 
 year-released: 
 purpose: green tea, Paochong (Pouchong) tea
-parent-1: Tainon-355 (printed so in Hu et al. 2014 Table 1; the same paper's footnote defines "Tainon-335")
+parent-1: Tainon-355
 parent-2: Tainon-1958
 parent-confidence: low (single source, Hu et al. 2014; parent-1 number inconsistent within that source)
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[huSSRbasedMolecularDiagnosis2023]]", "[[laiAssessmentGeneticRelationships]]", "[[leeDNABarcodeIdentification2017]]"]
-conflicts: ["Parent-1 number: [[huDevelopmentSTSCAPS2014]] Table 1 gives TTES-16's maternal parent as 'Tainon-355*', but the asterisked footnote of the same table defines 'Tainon-335: Dah-Yeh-Oolong × Kyang' and never defines a Tainon-355. [[huSSRbasedMolecularDiagnosis2023]] Table 1 lists an accession 'Tainon No.335' (H006) and no Tainon No.355, though it gives no parentage for TTES No.16. Checked against the Hu 2014 PDF: the inconsistency is in the published paper, not a transcription error in the note. Decision: pending.", "Taxonomic group: [[huDevelopmentSTSCAPS2014]] classes TTES-16 as 'SA' (C. sinensis var. sinensis × var. assamica hybrid), and [[laiAssessmentGeneticRelationships]] lists 'Taicha 16' among the 'China x Assam hybrid clones bred in Taiwan'. [[huSSRbasedMolecularDiagnosis2023]] places TTES No.16 in the 'Sinensis' group, and its scheme has no hybrid group. [[leeDNABarcodeIdentification2017]] gives only 'Camellia sinensis' at species level. Decision: pending."]
+conflicts: ["Parent-1 number: [[huDevelopmentSTSCAPS2014]] Table 1 gives TTES-16's maternal parent as 'Tainon-355*', but the asterisked footnote of the same table defines 'Tainon-335: Dah-Yeh-Oolong × Kyang' and never defines a Tainon-355. [[huSSRbasedMolecularDiagnosis2023]] Table 1 lists an accession 'Tainon No.335' (H006) and no Tainon No.355, though it gives no parentage for TTES No.16. Checked against the PDF's text layer on 2026-11-10: Table 1 prints 'Tainon-355*' and the footnote defines 'Tainon-335', so the inconsistency is in the paper itself, not a conversion or transcription error. Decision: pending. Reason: newest-source rule cannot apply — the 355/335 discrepancy is internal to a single source (Hu 2014); Hu 2023 only lists a 335 accession without giving TTES No.16's parentage, so it is not a competing claim."]
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -33,7 +33,7 @@ created: 2026-11-08
 |---|---|---|
 | Year released | Not stated in any vault source | — |
 | Purpose (oolong/black/green) | Green tea and Paochong tea (processing-suitability codes "G, P"). Lee et al. list tea types "5, 7" = Pou Chong tea and Long Jing tea | Hu et al. 2014 (Table 1); Lee et al. 2017 (Table 1) |
-| Parent 1 | Tainon-355 (marked * in the table), but the table footnote reads "Tainon-335" (see Source Conflicts) | Hu et al. 2014 (Table 1) |
+| Parent 1 | Tainon-355 (marked * in the table), but the table footnote reads "Tainon-335" (see Parentage Notes and Source Conflicts) | Hu et al. 2014 (Table 1) |
 | Parent 2 | Tainon-1958 | Hu et al. 2014 (Table 1) |
 | Primary growing regions | Not stated in any vault source (only germplasm-collection sites are given; see Geographic Range) | — |
 
@@ -42,11 +42,14 @@ Other sourced attributes:
 | Field | Value | Source |
 |---|---|---|
 | Type of germplasm | "Developed variety", sample code H16 | Hu et al. 2014 (Table 1) |
-| Taxonomic group | SA = *C. sinensis* var. *sinensis* × var. *assamica* hybrid | Hu et al. 2014 (Table 1) |
-| Taxonomic group | "Sinensis" group, origin "Hybrid", code V016 | Hu et al. 2023 (Table 1) |
-| Taxonomic group | "China x Assam hybrid clone bred in Taiwan" (as "Taicha 16", hybrid tea sample 6) | Lai et al. 2001 |
-| Taxonomic group | Species code "I" = *Camellia sinensis* (no variety given) | Lee et al. 2017 (Table 1) |
-| Leaf type | S (small) | Lee et al. 2017 (Table 1) |
+| Genetic group (Hu et al. 2023 scheme) | "Sinensis" (scheme groups: Sinensis/Assamica/Formosana), code V016 | Hu et al. 2023 (Table 1) |
+| Origin (Hu et al. 2023 scheme) | "Hybrid" | Hu et al. 2023 (Table 1) |
+| Type code (Hu et al. 2014 scheme) | SA = *C. sinensis* var. *sinensis* × var. *assamica* hybrid | Hu et al. 2014 (Table 1) |
+| Processing suitability (Hu et al. 2014 scheme) | G, P (green tea, Paochong tea) | Hu et al. 2014 (Table 1) |
+| Clone category (Lai et al. 2001 scheme) | "China x Assam hybrid clone bred in Taiwan" (as "Taicha 16", hybrid tea sample 6) | Lai et al. 2001 |
+| Species code (Lee et al. 2017 scheme) | "I" = *Camellia sinensis* (no variety given) | Lee et al. 2017 (Table 1) |
+| Tea-type codes (Lee et al. 2017 scheme) | 5, 7 = Pou Chong tea, Long Jing tea | Lee et al. 2017 (Table 1) |
+| Leaf type (Lee et al. 2017 scheme) | S (small) | Lee et al. 2017 (Table 1) |
 | Names/codes used | "TTES No.16 (TTES-16)", H16 (Hu et al. 2014); "TTES No.16", V016 (Hu et al. 2023); "TTES No.16", sample no. 16 (Lee et al. 2017); "Taicha 16" (Lai et al. 2001) | as listed |
 
 ## Parentage Notes
@@ -61,6 +64,10 @@ The asterisk on "Tainon-355" points to the table footnote, which gives the ances
 - Tainon-20: Hann-Koou line (same footnote)
 
 If the footnote entry is the right one, the grandparents of TTES No.16 would be Dah-Yeh-Oolong, Kyang (an Indian assamica introduction), Tainon-20 (a Hann-Koou line) and Bair-Mau-Hour. That would fit Hu et al.'s "SA" (sinensis × assamica) classification. This inference is not stated in any source and depends on resolving 355 vs 335.
+
+**Parent-1 field.** `parent-1` holds "Tainon-355" exactly as Hu et al. 2014 Table 1 prints it ("Tainon-355*"). The PDF's text layer was checked on 2026-11-10: the table prints "Tainon-355*" and the footnote the asterisk points to defines "Tainon-335", so the discrepancy is in the published paper itself, not a conversion error. Which number is correct is unresolved (see Source Conflicts).
+
+**Classification labels.** The sources use different schemes, recorded separately in Known Facts. Hu et al. 2014 code TTES-16 "SA" and Lai et al. 2001 call "Taicha 16" a China x Assam hybrid clone, consistent with the documented Tainon × Tainon cross and the footnote's Kyang (assamica) ancestry. Hu et al. 2023 place TTES No.16 in their "Sinensis" genetic group while labelling its origin "Hybrid"; their scheme has only Sinensis, Assamica and Formosana groups, and they do not comment on how hybrid cultivars are assigned. Lee et al. 2017 give only species-level *Camellia sinensis*.
 
 **Lai et al. 2001** say that clones "Taicha 14", "Taicha 15", "Taicha 16" and "Taicha 17" "were developed from 'Peimaohu'". "Taicha 16" did not cluster with "Peimaohu" in their RAPD or ISSR dendrograms, but it showed high similarity to it (RAPD 0.80, ISSR 0.77). This fits Hu et al.'s footnote, which puts Bair-Mau-Hour in the ancestry through Tainon-1958, if "Peimaohu" and "Bair-Mau-Hour" are the same landrace. No vault source states that equivalence (see Open Questions).
 
@@ -91,8 +98,7 @@ No source links TTES No.16 to *Camellia formosensis*. Hu et al. 2014 classify it
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Parent-1 number (355 vs 335).** [[huDevelopmentSTSCAPS2014]] Table 1 says the parent is "Tainon-355*" (for both TTES-16 and TTES-17). [[huDevelopmentSTSCAPS2014]]'s own Table 1 footnote, which the asterisk refers to, says "Tainon-335: Dah-Yeh-Oolong × Kyang" and has no Tainon-355 entry. [[huSSRbasedMolecularDiagnosis2023]] lists a "Tainon No.335" accession (H006) and no Tainon No.355, but gives no parentage for TTES No.16. Decision: pending. Reason: I checked the published Hu et al. 2014 PDF (page 4 table, page 5 footnote). Both numbers are printed there, so the inconsistency is in the paper itself, not a literature-note typo. The literature note correctly copies the table's "355". Hu 2023 and the Group IIIc / Dah-Yeh-Oolong clustering both point toward 335. But no source explicitly gives TTES No.16's parent as "335", so the parent-1 field keeps the printed "355" with a caveat.
-- **Taxonomic group.** [[huDevelopmentSTSCAPS2014]] says SA (*C. sinensis* var. *sinensis* × var. *assamica* hybrid). [[laiAssessmentGeneticRelationships]] says a China x Assam hybrid clone. [[huSSRbasedMolecularDiagnosis2023]] says the "Sinensis" group. [[leeDNABarcodeIdentification2017]] says only *Camellia sinensis*, with no variety. Decision: pending. Reason: Hu et al. 2023 use only three groups (Sinensis, Assamica, Formosana), so "Sinensis" may mean "mostly sinensis" rather than a denial of hybrid origin. They also label the cultivar's origin "Hybrid". No source comments on the difference.
+- **Parent-1 number (355 vs 335).** [[huDevelopmentSTSCAPS2014]] Table 1 says the parent is "Tainon-355*" (for both TTES-16 and TTES-17). [[huDevelopmentSTSCAPS2014]]'s own Table 1 footnote, which the asterisk refers to, says "Tainon-335: Dah-Yeh-Oolong × Kyang" and has no Tainon-355 entry. [[huSSRbasedMolecularDiagnosis2023]] lists a "Tainon No.335" accession (H006) and no Tainon No.355, but gives no parentage for TTES No.16. Decision: pending. Reason: newest-source rule cannot apply — the discrepancy is internal to a single source (Hu 2014), and Hu 2023 only lists a 335 accession without giving TTES No.16's parentage, so it is not a competing claim. Context: the PDF's text layer was checked on 2026-11-10 (page 4 table, page 5 footnote). Table 1 prints "Tainon-355*" and the footnote defines "Tainon-335", so the inconsistency is in the paper itself, not a conversion error or literature-note typo. The literature note correctly copies the table's "355". Hu 2023 and the Group IIIc / Dah-Yeh-Oolong clustering both point toward 335. But no source explicitly gives TTES No.16's parent as "335", so the parent-1 field keeps the printed "355".
 
 ## Open Questions
 

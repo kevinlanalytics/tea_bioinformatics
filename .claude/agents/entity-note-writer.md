@@ -27,7 +27,8 @@ mention the entity; the publications themselves hold the detail. Each one's full
   al. 2009"). Keep the template's guidance comments.
 - `sources:` lists each publication used as `"[[citekey]]"`.
 - When sources disagree, record both sides in `## Source Conflicts` and `conflicts:`, in the
-  template's format; don't pick a winner.
+  template's format, then decide by the newest-source rule in `AGENTS.md`. Set the frontmatter
+  field to the winning value and keep the superseded one visible in the Known Facts table.
 - Put what's still unknown in `## Open Questions`.
 - Leave `verified: false`; a person flips it after review.
 

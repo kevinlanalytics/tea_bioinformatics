@@ -12,7 +12,7 @@ parent-2: Tainon-80
 parent-confidence: single source (Hu et al. 2014, Table 1); not corroborated by any other source in the vault
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[leeDNABarcodeIdentification2017]]", "[[laiAssessmentGeneticRelationships]]", "[[huSSRbasedMolecularDiagnosis2023]]"]
-conflicts: ["Variety group: [[laiAssessmentGeneticRelationships]] lists TTES No. 13 as 'Hybrid tea 3', one of its 'hybrid clones between China and Assam tea'. [[huDevelopmentSTSCAPS2014]] codes TTES-13 as S (C. sinensis var. sinensis), not SA (sinensis x assamica hybrid), and gives both parents as sinensis-type. [[huSSRbasedMolecularDiagnosis2023]] puts V013 in the Sinensis group. Decision: pending."]
+conflicts: ["China x Assam hybrid ancestry: [[laiAssessmentGeneticRelationships]] lists TTES No. 13 as 'Hybrid tea 3', one of its 'hybrid clones between China and Assam tea'. [[huDevelopmentSTSCAPS2014]] gives the cross as Ying-Jy-Horng-Shin x Tainon-80, both sinensis-type, and codes TTES-13 S (var. sinensis) rather than SA (var. sinensis x var. assamica hybrid). Decision: use [[huDevelopmentSTSCAPS2014]] (2014). Reason: Newest-source rule. Caveat: Lai et al. 2001 gives no pedigree or rationale for its grouping and may be grouping all TRES-bred clones the same way."]
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -43,9 +43,14 @@ created: 2026-11-08
 | Parent 1 | Ying-Jy-Horng-Shin (landrace; S type) | Hu et al. 2014, Table 1 |
 | Parent 2 | Tainon-80 (a Hann-Koou line, per the Table 1 footnote) | Hu et al. 2014, Table 1 and footnote |
 | Primary growing regions | "Distributed around Taiwan." No county- or township-level growing region is named. | Hu et al. 2014, Discussion (TRES 2011 estimate) |
+| Type code (Hu et al. 2014 scheme) | S (*C. sinensis* var. *sinensis*) | Hu et al. 2014, Table 1 |
+| Genetic group (Hu et al. 2023 scheme) | Sinensis | Hu et al. 2023, Table 1 |
+| Origin label (Hu et al. 2023 scheme) | Hybrid | Hu et al. 2023, Table 1 |
+| Species code (Lee et al. 2017 scheme) | I (*Camellia sinensis*, variety not specified; used for all 20 TRES-bred varieties) | Lee et al. 2017, Table 1 |
+| China × Assam hybrid ancestry | Not a China × Assam hybrid: both parents sinensis-type (Ying-Jy-Horng-Shin × Tainon-80) — chosen by newest-source rule; see Source Conflicts | Hu et al. 2014, Table 1 |
+| China × Assam hybrid ancestry (superseded) | "Hybrid tea 3", one of the "hybrid clones between China and Assam tea" — superseded by Hu et al. 2014 under the newest-source rule | Lai et al. 2001 |
 
 **Other attributes from the sources:**
-- **Variety group:** S, *C. sinensis* var. *sinensis* (Hu et al. 2014, Table 1). "Sinensis" group, origin "Hybrid" (Hu et al. 2023, Table 1). Lai et al. 2001 classes it as a China × Assam hybrid clone. See Source Conflicts. Lee et al. 2017 codes it "I" (*Camellia sinensis*, variety not specified), as it does all 20 TRES-bred varieties.
 - **Type of germplasm:** "Developed variety" (Hu et al. 2014). Lee et al. 2017 counts it among the 20 TRES breeding varieties (TTES 1–20).
 - **Leaf type:** small (S) (Lee et al. 2017, Table 1).
 - **Suitability:** Lee et al. 2017 marks TTES No.13 with footnote "f", "popular or distinguishing tea variety in Taiwan". Lee et al. 2017 also names it as one of four varieties (with Chin Shin Oolong, TTES No.12 (Chinhsuan) and Shy Jih Chuen) "currently produced and sold in bulk in Taiwan".
@@ -63,6 +68,8 @@ Per Hu et al. 2014 (Table 1), TTES-13 comes from the cross **Ying-Jy-Horng-Shin 
 - **Molecular placement:** In the UPGMA dendrogram of Hu et al. 2014 (Fig. 3), TTES-13 falls in sinensis subgroup **IIIc** with "Ying-Jy-Horng-Shin [and] its derived variety (TTES-13)". This fits the stated maternal landrace.
 
 Only Hu et al. 2014 gives the pedigree. Lee et al. 2017, Lai et al. 2001 and Hu et al. 2023 give none, so the parentage is uncorroborated.
+
+- **Classification labels vs. pedigree:** Hu et al. 2014's S code and Hu et al. 2023's "Sinensis" group both sit consistently with a cross of two sinensis-type parents. Hu et al. 2023's origin label "Hybrid" is a separate column and does not by itself say which varieties were crossed. Lai et al. 2001's "hybrid clones between China and Assam tea" does not fit the Hu et al. 2014 pedigree; see Source Conflicts.
 
 ## Geographic Range
 
@@ -95,7 +102,7 @@ No source in the vault traces TTES No. 13 to *C. formosensis*. Per Hu et al. 201
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Variety group (China × Assam hybrid vs. sinensis):** [[laiAssessmentGeneticRelationships]] (Lai et al. 2001) lists TTES No. 13 as "Hybrid tea 3", one of its 7 "hybrid clones between China and Assam tea". [[huDevelopmentSTSCAPS2014]] (Hu et al. 2014) codes TTES-13 as **S** (*C. sinensis* var. *sinensis*), not **SA** (var. *sinensis* × var. *assamica* hybrid), and gives both parents as sinensis-type (Ying-Jy-Horng-Shin, S landrace; Tainon-80, a Hann-Koou line, with Hann-Koou coded S). [[huSSRbasedMolecularDiagnosis2023]] (Hu et al. 2023) agrees with Hu 2014 and puts V013 in the "Sinensis" group. Its "Hybrid" label is in the Origin column and means a bred cross, not a varietal hybrid. Decision: pending. Reason: Lai et al. 2001 gives no pedigree or rationale for the grouping, and Hu et al. 2014 does not comment on it. The same discrepancy affects TTES No. 12 in Lai et al. 2001, so it may reflect how Lai et al. grouped all TRES-bred clones rather than a specific claim about TTES No. 13.
+- **China × Assam hybrid ancestry:** [[laiAssessmentGeneticRelationships]] (Lai et al. 2001) lists TTES No. 13 as "Hybrid tea 3", one of its 7 "hybrid clones between China and Assam tea". [[huDevelopmentSTSCAPS2014]] (Hu et al. 2014) gives the cross as Ying-Jy-Horng-Shin × Tainon-80, both sinensis-type (Ying-Jy-Horng-Shin, S landrace; Tainon-80, a Hann-Koou line, with Hann-Koou coded S), and codes TTES-13 **S** rather than **SA** (var. *sinensis* × var. *assamica* hybrid). Decision: use [[huDevelopmentSTSCAPS2014]] (2014). Reason: Newest-source rule. Caveat: Lai et al. 2001 gives no pedigree or rationale for the grouping, and Hu et al. 2014 does not comment on it. The same discrepancy affects TTES No. 12 in Lai et al. 2001, so it may reflect how Lai et al. grouped all TRES-bred clones rather than a specific claim about TTES No. 13.
 
 ## Open Questions
 
@@ -108,8 +115,8 @@ No source in the vault traces TTES No. 13 to *C. formosensis*. Per Hu et al. 201
 - **Parentage:** only Hu et al. 2014 states it. Corroborate the cross and its direction (which parent is maternal) from an independent source, ideally the official TRES registration.
 - **Tainon-80:** the only description is "Hann-Koou line" (Hu et al. 2014 footnote). Its selection history is undocumented.
 - **Growing regions:** no source names specific counties or districts. Hu et al. 2014 says only "distributed around Taiwan".
-- **Acreage share:** no figure for TTES-13 alone. Separately, the literature note [[huDevelopmentSTSCAPS2014]] says the "top five (adding Chin-Shin-Dahpan and TTES-13) cover >98%" of acreage. The paper's text says the **12** prevailing cultivars together exceed 98%, and calls the five "top five" cultivars suited to Paochong and Oolong without giving their combined share. A reviewer may want to correct the literature note; this entity note follows the paper.
-- **China × Assam classification:** resolve the Lai 2001 vs. Hu 2014/2023 discrepancy (see Source Conflicts).
+- **Acreage share:** no figure for TTES-13 alone; Hu et al. 2014 gives only the combined >98% share of the 12 prevailing cultivars.
+- **China × Assam hybrid ancestry:** the Lai 2001 vs. Hu 2014 disagreement is set to Hu et al. 2014 (sinensis × sinensis pedigree) by the newest-source rule; a reviewer should confirm (see Source Conflicts).
 - **Core-marker genotype:** pull TTES-13's genotype and flowchart path at M02/C02/G01/G03/G04 from the Hu et al. 2014 figures, which the markdown text did not capture.
 - **TJK107 origin:** in the Table 2 extraction of Lee et al. 2017 the location for TJK107 sits on a separate line. Table 5 confirms "Bao Loc, Lamdong (S.Vietnam)", but check against the PDF.
 

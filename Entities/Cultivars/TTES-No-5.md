@@ -9,10 +9,10 @@ year-released:
 purpose: [oolong, paochong, green]
 parent-1: Fwu-Jou line
 parent-2: 
-parent-confidence: low
+parent-confidence: "low (parent-1 rests on Hu et al. 2014 Table 1 only; no other source names any lineage)"
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[leeDNABarcodeIdentification2017]]", "[[huSSRbasedMolecularDiagnosis2023]]"]
-conflicts: ["origin-type: Hu et al. 2014 lists origin as 'Fwu-Jou line (CN)' (a line, no second parent) vs Hu et al. 2023 labels origin 'Hybrid'; decision pending"]
+conflicts: []
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -33,8 +33,13 @@ created: 2026-11-08
 |---|---|---|
 | Year released | Not stated in any vault source | n/a |
 | Purpose (oolong/black/green) | Oolong, Paochong, green tea (Hu et al. 2014 Table 1: "O,P,G"). Lee et al. 2017 Table 1 gives tea types 1, 2, 5 = green, oolong, Pou Chong | [[huDevelopmentSTSCAPS2014]], [[leeDNABarcodeIdentification2017]] |
-| Parent 1 | "Fwu-Jou line (CN)" (given as the single origin/parent entry) | [[huDevelopmentSTSCAPS2014]] |
-| Parent 2 | None given; Hu et al. 2014 names no second parent | [[huDevelopmentSTSCAPS2014]] |
+| Origin label (Hu et al. 2023 scheme) | "Hybrid" (Hu et al. 2023 label all 25 TTES varieties "Hybrid"; no parents named) | [[huSSRbasedMolecularDiagnosis2023]] |
+| Origin or Parent (Hu et al. 2014 scheme) | "Fwu-Jou line (CN)", a single entry with no second parent | [[huDevelopmentSTSCAPS2014]] |
+| Genetic group (Hu et al. 2023 scheme) | "Sinensis" | [[huSSRbasedMolecularDiagnosis2023]] |
+| Type code (Hu et al. 2014 scheme) | "S", *C. sinensis* var. *sinensis*; germplasm type "Developed variety"; processing suitability "O,P,G" | [[huDevelopmentSTSCAPS2014]] |
+| Species code (Lee et al. 2017 scheme) | "(I)", *Camellia sinensis*; tea types 1, 2, 5; leaf type M (medium) | [[leeDNABarcodeIdentification2017]] |
+| Parent 1 | "Fwu-Jou line (CN)" (given as the single origin/parent entry; the only named lineage in any source) | [[huDevelopmentSTSCAPS2014]] |
+| Parent 2 | None named in any source | [[huDevelopmentSTSCAPS2014]], [[huSSRbasedMolecularDiagnosis2023]] |
 | Primary growing regions | Not stated in any vault source. Only germplasm or sampling locations are recorded (see Geographic Range) | n/a |
 
 **Names and codes found in sources:**
@@ -61,7 +66,7 @@ Hu et al. (2014, Table 1, "Origin or Parent" column) give "Fwu-Jou line (CN)" fo
 
 The same paper lists Fwu-Jou separately as introduced variety I16. It is classed "S", Paochong-suitable ("P") and "Original from China" (Hu et al. 2014). Hu et al. (2023) list Fwu-Jou as imported cultivar I014. Lee et al. (2017) list Fwu Jou as accession No. 121: *C. sinensis* var. *sinensis*, partially fermented, small leaf. None of these sources says the Fwu-Jou accession they hold is the exact source plant of TTES No. 5.
 
-Hu et al. (2023) put TTES No. 5 (V005) under origin "Hybrid", which conflicts with the single-line entry above. See Source Conflicts.
+Hu et al. (2023) put TTES No. 5 (V005) under origin "Hybrid". This is a different classification scheme, not a competing pedigree: Hu et al. 2023 label all 25 TTES varieties (V001–V025) "Hybrid", including TTES No. 24, which other vault sources describe as a wild-population selection (see [[huSSRbasedMolecularDiagnosis2023]]). The label sits uneasily with Hu et al. 2014's single-line "Fwu-Jou line (CN)" entry, and neither source names a second parent. The Fwu-Jou line is kept as parent-1 because no source names any other lineage.
 
 ## Geographic Range
 
@@ -85,8 +90,7 @@ No source traces TTES No. 5 to *C. formosensis*. All three sources classify it a
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Origin type.** [[huDevelopmentSTSCAPS2014]] gives TTES No. 5's origin as "Fwu-Jou line (CN)", with no second parent, the format that table uses for single-line selections. [[huSSRbasedMolecularDiagnosis2023]] lists V005 (TTES No. 5) with origin "Hybrid". Decision: pending. Reason: Hu et al. 2023 label all 25 TTES varieties (V001–V025) "Hybrid". That includes TTES No. 24, which other vault sources describe as a wild-population selection (see the conflict note in [[huSSRbasedMolecularDiagnosis2023]]). So "Hybrid" may be a naming convention for TTES varieties rather than a pedigree claim. Neither source gives a second parent.
-- **Taxon resolution (minor; probably not a real disagreement).** [[huDevelopmentSTSCAPS2014]] and [[huSSRbasedMolecularDiagnosis2023]] say *C. sinensis* var. *sinensis*. [[leeDNABarcodeIdentification2017]] says only "(I) *Camellia sinensis*", without a variety. Decision: pending. Reason: Lee et al. give all TRES breeding varieties the species-level code (I), so this looks like coarser labelling rather than a contradiction.
+None. The sources differ only in classification scheme (Hu et al. 2023 genetic group and origin label, Hu et al. 2014 type code, Lee et al. 2017 species code), which are recorded as separate rows in Known Facts rather than as conflicts.
 
 ## Open Questions
 
@@ -95,7 +99,7 @@ No source traces TTES No. 5 to *C. formosensis*. All three sources classify it a
 - **Chinese name:** "臺茶5號" / "台茶5號" does not appear in any literature note or cached full text. `name-zh` is blank until a source confirms it.
 - **English trade name:** none is given in any source; only "TTES No.5", "TTES-5" and "Taiwan tea No.5" appear. `name-en` is blank.
 - **Year of release/registration:** not stated in any vault source.
-- **Breeding method:** was TTES No. 5 a pure-line or individual selection from the Fwu-Jou line, or a hybrid (the Hu et al. 2023 label)? A TRES registration report or cultivar profile page for TTES No. 5 would settle this.
+- **Breeding method:** was TTES No. 5 a pure-line or individual selection from the Fwu-Jou line, or a cross? Hu et al. 2014 give a single line; Hu et al. 2023's "Hybrid" label is applied to every TTES variety and names no parents. If a cross, what was the second parent? A TRES registration report or cultivar profile page for TTES No. 5 would settle this.
 - **Fwu-Jou identity:** is the Fwu-Jou accession held by TRES (Hu 2014 I16 / Hu 2023 I014 / Lee 2017 No. 121) the actual source line of TTES No. 5?
 - **Breeding code:** no TRES breeding or line code is given. H5 and V005 are study accession codes.
 - **Growing regions:** no source documents where TTES No. 5 is grown commercially.

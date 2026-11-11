@@ -6,13 +6,13 @@ breeding-code:
 name-zh: 
 name-en: 
 year-released: 
-purpose: "black, green, oolong (Hu et al. 2014); oolong, red, Mee tea (Lee et al. 2017) — see Source Conflicts"
+purpose: "oolong, red, Mee tea (Lee et al. 2017 tea-type codes 2,3,4); black, green, oolong (Hu et al. 2014 processing suitability B,G,O)"
 parent-1: Chin-Shin-Dahpan
 parent-2: Kyang
 parent-confidence: single-source (Hu et al. 2014 only); cross direction not explicitly labelled
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[leeDNABarcodeIdentification2017]]", "[[huSSRbasedMolecularDiagnosis2023]]"]
-conflicts: ["Taxonomic group: SA hybrid var. sinensis × var. assamica (Hu et al. 2014) vs. Sinensis / C. sinensis var. sinensis (Hu et al. 2023) vs. C. sinensis, variety unspecified (Lee et al. 2017) — pending", "Processing suitability: black/green/oolong (Hu et al. 2014) vs. oolong/red/Mee tea (Lee et al. 2017) — pending"]
+conflicts: []
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -32,8 +32,14 @@ created: 2026-11-08
 | Field | Value | Source |
 |---|---|---|
 | Year released | Not stated in any source | — |
-| Purpose (oolong/black/green) | Black, green, oolong | Hu et al. 2014 (Table 1, processing suitability "B,G,O") |
-| Purpose (oolong/black/green) | Oolong, red, Mee tea | Lee et al. 2017 (Table 1, tea types "2,3,4") |
+| Purpose: tea types (Lee et al. 2017 scheme) | "2,3,4" = oolong, red, Mee tea | Lee et al. 2017 (Table 1) |
+| Purpose: processing suitability (Hu et al. 2014 scheme) | "B,G,O" = black, green, oolong | Hu et al. 2014 (Table 1) |
+| Genetic group (Hu et al. 2023 scheme) | "Sinensis" (footnote: cultivars belonging to *C. sinensis* var. *sinensis*) | Hu et al. 2023 (Table 1, V001) |
+| Origin label (Hu et al. 2023 scheme) | "Hybrid" | Hu et al. 2023 (Table 1, V001) |
+| Type code (Hu et al. 2014 scheme) | "SA", var. *sinensis* × var. *assamica* | Hu et al. 2014 (Table 1) |
+| Germplasm type (Hu et al. 2014 scheme) | "Developed variety" | Hu et al. 2014 (Table 1) |
+| Species code (Lee et al. 2017 scheme) | "I", *Camellia sinensis*, variety unspecified | Lee et al. 2017 (Table 1) |
+| Leaf type (Lee et al. 2017 scheme) | Medium (M) | Lee et al. 2017 (Table 1) |
 | Parent 1 | Chin-Shin-Dahpan (Taiwan landrace) | Hu et al. 2014 (Table 1) |
 | Parent 2 | Kyang (introduced variety, India) | Hu et al. 2014 (Table 1) |
 | Primary growing regions | Not stated in any source | — |
@@ -58,7 +64,9 @@ created: 2026-11-08
 
 <!-- Describe the breeding cross in prose. Note if sources disagree on parentage. -->
 
-Per Hu et al. 2014 (Table 1, "Origin or Parent" column), TTES No. 1 comes from the cross **Chin-Shin-Dahpan (TW) × Kyang (IN)**. In the same table, Chin-Shin-Dahpan (L3) is a *C. sinensis* var. *sinensis* (S) landrace "planting in north-west of Taiwan", and Kyang (I10) is a *C. sinensis* var. *assamica* (A) introduced variety "original from India". This is consistent with Hu et al. 2014 classing TTES-1 as an SA hybrid (var. *sinensis* × var. *assamica*).
+Per Hu et al. 2014 (Table 1, "Origin or Parent" column), TTES No. 1 comes from the cross **Chin-Shin-Dahpan (TW) × Kyang (IN)**. In the same table, Chin-Shin-Dahpan (L3) is a *C. sinensis* var. *sinensis* (S) landrace "planting in north-west of Taiwan", and Kyang (I10) is a *C. sinensis* var. *assamica* (A) introduced variety "original from India". This matches Hu et al. 2014's own type code for TTES-1, "SA" (var. *sinensis* × var. *assamica*).
+
+Hu et al. 2023 label V001 (TTES No.1) with origin "Hybrid" but place it in genetic group "Sinensis", which their footnote defines as cultivars belonging to *C. sinensis* var. *sinensis*. Their three-group scheme (Sinensis/Assamica/Formosana) has no hybrid group, so this label sits uneasily with the sinensis × assamica pedigree recorded by Hu et al. 2014. The two are different classification schemes and are recorded separately in Known Facts rather than treated as a conflict.
 
 The table does not label which parent is female. In its Discussion, Hu et al. 2014 say Chin-Shin-Dahpan was one of six landraces "used as female parents for hybridization breeding" since 1945, citing Sanui 2011 and Shyu and Juan 1993. That supports Chin-Shin-Dahpan as the seed parent but does not state it for TTES-1 specifically. The order parent-1 = Chin-Shin-Dahpan follows the table and should not be read as a confirmed female parent.
 
@@ -68,7 +76,7 @@ No other source used here gives parents for TTES No. 1. Lee et al. 2017 and Hu e
 
 <!-- Which named regions grow this cultivar? Link to Region notes. -->
 
-None of the sources gives a growing region or acreage for TTES No. 1. Hu et al. 2014 list the top five prevailing cultivars, which cover more than 98% of Taiwan's tea acreage in 2011 TRES statistics. TTES-1 is not among them. The only locations tied to the cultivar are germplasm and experimental holdings: TRES Taoyuan, Taitung Substation, and the Wenshan experimental plantation (see Known Facts). For that reason `regions:` is left empty.
+None of the sources gives a growing region or acreage for TTES No. 1. Hu et al. 2014 select 12 prevailing (dominant) cultivars that together take over 98% of Taiwan's tea acreage in 2011 TRES statistics. TTES-1 is not among them. The only locations tied to the cultivar are germplasm and experimental holdings: TRES Taoyuan, Taitung Substation, and the Wenshan experimental plantation (see Known Facts). For that reason `regions:` is left empty.
 
 ## Relationship to Wild Species
 
@@ -81,8 +89,7 @@ None of the sources links TTES No. 1 to *Camellia formosensis*. Per Hu et al. 20
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Taxonomic group.** [[huDevelopmentSTSCAPS2014]] says TTES No.1 is "SA", a *C. sinensis* var. *sinensis* × var. *assamica* hybrid (Table 1). [[huSSRbasedMolecularDiagnosis2023]] says it is "Sinensis", which its footnote defines as cultivars belonging to *C. sinensis* var. *sinensis* (Table 1, V001). [[leeDNABarcodeIdentification2017]] says "I", *Camellia sinensis*, with no variety given (Table 1). Decision: pending. Reason: Hu et al. 2023 has no hybrid category in its three-group scheme (Sinensis/Assamica/Formosana), so "Sinensis" may be a coarser grouping rather than a real disagreement. Lee et al. 2017 also give all TTES varieties "I" rather than a variety-level label. This needs a reviewer's judgement.
-- **Processing suitability / purpose.** [[huDevelopmentSTSCAPS2014]] says black, green, and oolong tea ("B,G,O"). [[leeDNABarcodeIdentification2017]] says oolong (2), red (3), and Mee tea (4). Lee's scheme has a separate "green tea" category (1) that is not assigned to TTES No.1. Decision: pending. Reason: both sources agree on oolong and on black/red tea. They differ on green tea versus Mee tea. Neither source says whether its Mee tea category falls under green tea, and that should be checked against a source rather than assumed.
+No conflicts between sources recorded. The taxonomic labels (Hu et al. 2014 type code, Hu et al. 2023 genetic group and origin label, Lee et al. 2017 species code) and the purpose codes (Hu et al. 2014 processing-suitability letters, Lee et al. 2017 tea-type codes) are different classification schemes, recorded per scheme in Known Facts.
 
 ## Open Questions
 
@@ -95,7 +102,7 @@ None of the sources links TTES No. 1 to *Camellia formosensis*. Per Hu et al. 20
 - **Cross direction.** Is Chin-Shin-Dahpan confirmed as the female (seed) parent of TTES No.1? This is inferred only from Hu et al. 2014's general statement about landrace female parents.
 - **Corroborating parentage.** Only Hu et al. 2014 gives the parents. An official TBRS cultivar page or registration record for TTES No.1, like those held for TTES No.18 and No.24, would provide independent confirmation.
 - **Growing regions and acreage.** No source records where TTES No.1 is commercially grown.
-- **Taxonomic group and processing-suitability conflicts.** See Source Conflicts.
+- **Mapping between purpose schemes.** Lee et al. 2017 assign oolong, red and Mee tea (not their separate green-tea code 1); Hu et al. 2014 assign black, green and oolong. Neither source says whether Lee's Mee tea category corresponds to Hu's green tea.
 
 ## Source Notes
 

@@ -7,12 +7,12 @@ name-zh:
 name-en: 
 year-released: 
 purpose: black
-parent-1: Jaipuri (introduced var. assamica, India)
+parent-1: Jaipuri
 parent-2: 
-parent-confidence: medium - Hu et al. 2014 lists origin as "Jaipuri line (IN)" (no second parent); molecular closeness to Jaipuri supported by Hu et al. 2014 (MRD 0.08) and Hu et al. 2023 (1 of 12 SSR loci differ); breeding method unresolved (see Source Conflicts)
+parent-confidence: "medium - Jaipuri as parent/source line supported by Hu et al. 2014 (\"Jaipuri line (IN)\", MRD 0.08) and Hu et al. 2023 (1 of 12 SSR loci differ); no source names a second parent or states the derivation method"
 regions: [Nantou County]
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[huSSRbasedMolecularDiagnosis2023]]", "[[leeDNABarcodeIdentification2017]]"]
-conflicts: ["Origin type: Hu et al. 2014 lists origin as 'Jaipuri line (IN)' (selection from a single line); Hu et al. 2023 Table 1 lists origin as 'Hybrid'. Decision: pending", "Taxon/group: Hu et al. 2014 codes it 'A' (C. sinensis var. assamica) and Hu et al. 2023 groups it 'Assamica'; Lee et al. 2017 codes it 'I' (Camellia sinensis, no variety), while coding Jaipuri as 'III' (var. assamica). Decision: pending"]
+conflicts: []
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -34,7 +34,13 @@ created: 2026-11-08
 | Year released | Not stated in any source | - |
 | Purpose (oolong/black/green) | Black tea. Hu et al. 2014 Table 1 processing suitability "B" (black tea) and text: "TTES-18, TTES-8, and TTES-7 are the excellent cultivars for making black tea." Lee et al. 2017 Table 1 tea type "3" (red tea, i.e. black tea), leaf type "L" (large) | [[huDevelopmentSTSCAPS2014]], [[leeDNABarcodeIdentification2017]] |
 | Parent 1 | Jaipuri (introduced variety, var. assamica, "Original from India"); listed as "Jaipuri line (IN)" | [[huDevelopmentSTSCAPS2014]]; supported by [[huSSRbasedMolecularDiagnosis2023]] |
-| Parent 2 | None listed (Hu et al. 2014 gives a single origin line, not a cross) | [[huDevelopmentSTSCAPS2014]] |
+| Parent 2 | None named in any source | - |
+| Origin (Hu et al. 2014 Table 1) | "Jaipuri line (IN)" | [[huDevelopmentSTSCAPS2014]] |
+| Origin label (Hu et al. 2023 scheme) | "Hybrid" | [[huSSRbasedMolecularDiagnosis2023]] |
+| Germplasm type (Hu et al. 2014 scheme) | "Developed variety" | [[huDevelopmentSTSCAPS2014]] |
+| Type code (Hu et al. 2014 scheme) | "A" (*C. sinensis* var. *assamica*) | [[huDevelopmentSTSCAPS2014]] |
+| Genetic group (Hu et al. 2023 scheme) | "Assamica" | [[huSSRbasedMolecularDiagnosis2023]] |
+| Species code (Lee et al. 2017 scheme) | "I" (*Camellia sinensis*, no variety stated); Lee et al. 2017 codes Jaipuri "III" (var. *assamica*) | [[leeDNABarcodeIdentification2017]] |
 | Primary growing regions | Nantou County ("the other three cultivars [TTES-18, TTES-8, TTES-7] are mainly planted in Nantou County", estimated by TRES 2011) | [[huDevelopmentSTSCAPS2014]] |
 
 **Names and codes used in sources:**
@@ -61,7 +67,7 @@ Molecular data in two papers put TTES-8 very close to Jaipuri:
 - Hu et al. 2014: the smallest modified Roger's distance among the 14 assamica-type accessions was 0.08, between TTES-8 and Jaipuri (tied with Shan-1 vs Shan-2).
 - Hu et al. 2023: V008 (TTES No. 8) and I009 (Jaipuri) differ at only one of the 12 SSR loci, "echoing that TTES No. 08 (V008) is originated from Jaipuri (I009)."
 
-The sources agree that Jaipuri is the parent or source line. They do not say how the cultivar was derived: by selection within the Jaipuri line, from open-pollinated seed, or by a cross. Hu et al. 2023 labels its origin "Hybrid" but names no second parent (see Source Conflicts). No source gives a breeding code.
+The sources agree that Jaipuri is the parent or source line. They do not say how the cultivar was derived: by selection within the Jaipuri line, from open-pollinated seed, or by a cross. Hu et al. 2023 puts it under the origin label "Hybrid" in its own scheme but names no second parent; that label sits uneasily with Hu et al. 2014's single-line origin "Jaipuri line (IN)", and the two papers are recorded as separate scheme values rather than reconciled. Likewise, Lee et al. 2017's species code "I" (no variety) for TTES No.8 sits alongside its code "III" (var. *assamica*) for Jaipuri, while Hu et al. 2014 ("A") and Hu et al. 2023 ("Assamica") place it with assamica. No source gives a breeding code.
 
 ## Geographic Range
 
@@ -81,8 +87,7 @@ No source traces TTES-8 to *C. formosensis*. Its sourced lineage is Indian var. 
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Origin type.** [[huDevelopmentSTSCAPS2014]] says the origin is "Jaipuri line (IN)", a single line with no cross partner. [[huSSRbasedMolecularDiagnosis2023]] says the origin is "Hybrid" (Table 1 "Origin" column). Decision: pending. Reason: Hu et al. 2023 marks every TTES cultivar "Hybrid", so the label may be a blanket category rather than a statement about TTES No. 8 specifically. A primary TRES release record is needed.
-- **Taxonomic grouping.** [[huDevelopmentSTSCAPS2014]] codes it "A" (*C. sinensis* var. *assamica*), and [[huSSRbasedMolecularDiagnosis2023]] groups it "Assamica". [[leeDNABarcodeIdentification2017]] codes it "I" (*Camellia sinensis*, no variety stated) while coding its parent Jaipuri "III" (var. *assamica*). Decision: pending. Reason: Lee et al. 2017 appears to code all TTES-bred varieties "I", so this may be a difference in coding convention rather than a real disagreement.
+None. Origin labels, type codes, genetic groups and species codes differ between Hu et al. 2014, Hu et al. 2023 and Lee et al. 2017, but these are separate classification schemes, recorded as separate rows in Known Facts.
 
 ## Open Questions
 
@@ -92,7 +97,7 @@ No source traces TTES-8 to *C. formosensis*. Its sourced lineage is Indian var. 
 - **English trade name**: none found in any source. name-en is blank.
 - **Year released / registered**: not stated in any source.
 - **Breeding code**: not stated in any source.
-- **Derivation method**: was it a selection from the Jaipuri line or a hybrid? If a hybrid, who was the second parent? (See Source Conflicts.)
+- **Derivation method**: was it a selection from the Jaipuri line or a cross? If a cross, who was the second parent? Hu et al. 2014 gives "Jaipuri line (IN)" and Hu et al. 2023 uses the label "Hybrid", but no source names a second parent or states the method, and no primary TRES release record is in the vault.
 - **Growing regions below county level**: only "Nantou County" is sourced (Hu et al. 2014, from 2011 TRES estimates). It is not known which townships or production areas grow it, or whether this is still current.
 - Lee et al. 2017 gives the ITS2 similarity with TTES No.18 but no lineage interpretation. It is unresolved whether this similarity means anything for ancestry.
 

@@ -6,13 +6,13 @@ breeding-code:
 name-zh: 
 name-en: 
 year-released: 
-purpose: green, black
+purpose: "green, black (Hu et al. 2014 G,B); green, red tea (Lee et al. 2017 codes 1,3)"
 parent-1: Dah-Yeh-Oolong
 parent-2: Jaipuri
 parent-confidence: single-source (Hu et al. 2014 only; cross direction not explicitly stated)
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[laiAssessmentGeneticRelationships]]", "[[leeDNABarcodeIdentification2017]]", "[[huSSRbasedMolecularDiagnosis2023]]"]
-conflicts: ["Variety classification: Hu et al. 2014 = SA (var. sinensis x var. assamica hybrid); Lai et al. 2001 = China x Assam hybrid clone; Hu et al. 2023 = Sinensis group (C. sinensis var. sinensis); Lee et al. 2017 = I (C. sinensis, no variety assigned). Decision: pending"]
+conflicts: []
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -32,10 +32,18 @@ created: 2026-11-08
 | Field | Value | Source |
 |---|---|---|
 | Year released | Not stated in any source in the vault | — |
-| Purpose (oolong/black/green) | Green tea and black tea (Hu: "G,B"); green tea and "red tea" (Lee: tea types 1, 3) | Hu et al. 2014 (Table 1); Lee et al. 2017 (Table 1) |
+| Processing suitability (Hu et al. 2014 scheme) | Green tea and black tea ("G,B") | Hu et al. 2014 (Table 1) |
+| Tea-type codes (Lee et al. 2017 scheme) | Green tea and "red tea" (tea types 1, 3); Lee et al. do not define "red tea" as black tea | Lee et al. 2017 (Table 1) |
 | Parent 1 | Dah-Yeh-Oolong (Taiwan landrace) | Hu et al. 2014 (Table 1) |
 | Parent 2 | Jaipuri (introduced variety, from India) | Hu et al. 2014 (Table 1) |
 | Primary growing regions | Not stated in any source in the vault | — |
+| Genetic group (Hu et al. 2023 scheme) | Sinensis (one of three groups: Sinensis/Assamica/Formosana) | Hu et al. 2023 (Table 1) |
+| Origin label (Hu et al. 2023 scheme) | Hybrid | Hu et al. 2023 (Table 1) |
+| Type code (Hu et al. 2014 scheme) | SA (*C. sinensis* var. *sinensis* × var. *assamica* hybrid) | Hu et al. 2014 (Table 1) |
+| Germplasm type (Hu et al. 2014 scheme) | Developed variety | Hu et al. 2014 (Table 1) |
+| Species code (Lee et al. 2017 scheme) | I (*Camellia sinensis*, no variety assigned) | Lee et al. 2017 (Table 1) |
+| Leaf type (Lee et al. 2017 scheme) | L (large) | Lee et al. 2017 (Table 1) |
+| Description (Lai et al. 2001) | China × Assam hybrid clone ("Hybrid tea 1") | Lai et al. 2001 |
 
 **Names and codes found in sources:**
 - "TTES No.11 (TTES-11)", study accession code **H11**, type "Developed variety", per Hu et al. 2014 (Table 1).
@@ -58,6 +66,8 @@ Hu et al. (2014, Table 1) give the origin/parent of TTES-11 as **Dah-Yeh-Oolong 
 The table does not label which parent is the female. Elsewhere in its Discussion, Hu et al. (2014) say six landraces, Dah-Yeh-Oolong among them, "have been used as female parents for hybridization breeding" since 1945. That fits Dah-Yeh-Oolong as the seed parent and Jaipuri as the pollen parent, but the paper does not say so for TTES-11 specifically.
 
 No other source in the vault gives parent names. Lai et al. (2001) describe the clone only as a China × Assam hybrid, which agrees at the variety level with a var. *sinensis* landrace × Indian Assam-type parent. Lee et al. (2017) and Hu et al. (2023) give no pedigree. Hu et al. (2023) record "Hybrid" as the origin, but that paper uses "Hybrid" for every TTES V-code entry, including TTES No. 24, which other sources describe as a wild-tea selection (see [[huSSRbasedMolecularDiagnosis2023]] conflicts). So the 2023 label does not independently confirm a cross.
+
+Hu et al. (2023) place V011 in their "Sinensis" genetic group. That label sits uneasily with the var. *sinensis* × var. *assamica* cross documented by Hu et al. (2014), but the 2023 scheme has only three groups (Sinensis/Assamica/Formosana) and no hybrid category, so it is a group assignment rather than a pedigree statement. It is consistent with the sinensis-side molecular placement noted below.
 
 **Morphology versus molecular placement (agreement across sources, not a conflict):**
 - Lai et al. (2001) found that "TTE No. 11" clustered with the China tea cultivars in the RAPD dendrogram, and again with ISSR ("As was demonstrated with RAPDs"), "though it is morphologically more similar to Assam tea". It was the one hybrid clone where clustering did not match morphology. The authors conclude it "is closer to China tea in overall genetic relationship". They compare it with Wachira et al. (1995), whose putative China × Assam hybrids clustered against their morphology in the opposite direction.
@@ -87,8 +97,7 @@ No source traces TTES No. 11 to *Camellia formosensis*. Its recorded parents, Da
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Variety/taxonomic classification.** [[huDevelopmentSTSCAPS2014]] says **SA** (*C. sinensis* var. *sinensis* × var. *assamica* hybrid). [[laiAssessmentGeneticRelationships]] says a China × Assam hybrid clone. [[huSSRbasedMolecularDiagnosis2023]] says classified group **Sinensis** (*C. sinensis* var. *sinensis*). [[leeDNABarcodeIdentification2017]] says **I** (*Camellia sinensis*, no variety assigned) with a large leaf. Decision: pending. Reason: Hu et al. 2023 sort all 144 cultivars into only three groups (Sinensis/Assamica/Formosana) with no hybrid category, so "Sinensis" may reflect the scheme rather than a different claim about pedigree. A reviewer should decide whether a cultivar node records the pedigree-based label (SA) or a group assignment.
-- **Purpose wording (likely not a real conflict).** [[huDevelopmentSTSCAPS2014]] says green and black tea (G,B). [[leeDNABarcodeIdentification2017]] says green tea and "red tea" (tea-type codes 1, 3). Decision: pending. Reason: "red tea" probably corresponds to black tea (the same code is used for Assam/Burma/Jaipuri accessions marked "F, fermented"), but Lee et al. do not define it as black tea. Frontmatter `purpose` records "green, black" from Hu et al. 2014.
+None. The classification labels (Hu et al. 2014 type code and processing letters, Hu et al. 2023 genetic group and origin label, Lee et al. 2017 species, tea-type and leaf codes) come from different schemes and are kept as separate rows in Known Facts rather than treated as conflicts. Parentage (Dah-Yeh-Oolong × Jaipuri) is single-source, so no source disagrees with it.
 
 ## Open Questions
 
@@ -100,7 +109,6 @@ No source traces TTES No. 11 to *Camellia formosensis*. Its recorded parents, Da
 - **Parentage is single-source:** Dah-Yeh-Oolong × Jaipuri comes only from Hu et al. 2014 Table 1, which gives the same cross for TTES-2. A primary breeding record is needed to confirm it and to confirm cross direction (seed vs. pollen parent).
 - **Identity of "TTE No. 11":** Lai et al. 2001's "TTE No. 11" is assumed to be TTES No. 11, based on context (the adjacent "TTES No. 12/13"). The paper does not say so explicitly.
 - **Growing regions and market share:** No source gives where TTES No. 11 is commercially grown or its acreage. It is not among the 12 prevailing cultivars in Hu et al. 2014.
-- **Classification label for the graph:** Choose between SA hybrid and Sinensis group (see Source Conflicts).
 - **Not checked:** [[2019TTESNo]] has no markitdown cache, and its PDF was not read directly. Its literature note is about TTES No. 24 only, so it is unlikely to mention TTES No. 11.
 
 ## Source Notes

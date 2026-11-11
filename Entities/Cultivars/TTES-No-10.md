@@ -12,7 +12,7 @@ parent-2: Jaipuri
 parent-confidence: single-source
 regions: []
 sources: ["[[huDevelopmentSTSCAPS2014]]", "[[huSSRbasedMolecularDiagnosis2023]]", "[[leeDNABarcodeIdentification2017]]"]
-conflicts: ["Varietal classification: Hu et al. 2014 codes TTES-10 as SA (C. sinensis var. sinensis x var. assamica hybrid); Hu et al. 2023 places V010 in the 'Sinensis' group (C. sinensis var. sinensis); Lee et al. 2017 gives only species-level 'I, Camellia sinensis'. Decision: pending."]
+conflicts: []
 verified: false
 tags: [entity, cultivar]
 created: 2026-11-08
@@ -36,12 +36,14 @@ created: 2026-11-08
 | Parent 1 | Hwang-Gan (Taiwan landrace) | Hu et al. 2014 (Table 1: "Hwang-Gan(TW) × Jaipuri(IN)") |
 | Parent 2 | Jaipuri (introduced variety, India) | Hu et al. 2014 (Table 1) |
 | Primary growing regions | Not stated in any source | — |
+| Genetic group (Hu et al. 2023 scheme) | "Sinensis" (footnote a: "cultivars belonging to C. sinensis var. sinensis") | Hu et al. 2023 (Table 1) |
+| Origin (Hu et al. 2023 scheme) | "Hybrid" | Hu et al. 2023 (Table 1) |
+| Type code (Hu et al. 2014 scheme) | SA (*C. sinensis* var. *sinensis* × var. *assamica* hybrid) | Hu et al. 2014 (Table 1) |
+| Germplasm type (Hu et al. 2014 scheme) | "Developed variety" | Hu et al. 2014 (Table 1) |
+| Species code (Lee et al. 2017 scheme) | "I, *Camellia sinensis*" (no variety given) | Lee et al. 2017 (Table 1) |
+| Leaf type (Lee et al. 2017 scheme) | Large ("L") | Lee et al. 2017 (Table 1) |
 
 Other sourced attributes:
-
-- **Germplasm type:** "Developed variety" (Hu et al. 2014, Table 1); "Hybrid" origin (Hu et al. 2023, Table 1).
-- **Varietal classification:** SA, i.e. *C. sinensis* var. *sinensis* × var. *assamica* hybrid (Hu et al. 2014, Table 1); "Sinensis" group, defined as cultivars belonging to *C. sinensis* var. *sinensis* (Hu et al. 2023, Table 1); "I, *Camellia sinensis*", with no variety given (Lee et al. 2017, Table 1). See Source Conflicts.
-- **Leaf type:** large ("L") (Lee et al. 2017, Table 1).
 - **Study accession codes (not breeding codes):** H10 in Hu et al. 2014; V010 in Hu et al. 2023; No. 10 in Lee et al. 2017. Hu et al. 2014 also uses the short form "TTES-10".
 - **Sampling locations:** Hu et al. 2023 collected its V010 leaf sample at the TRES experimental tea plantation in Wenshan (Table 1, footnote b). Hu et al. 2014 says its material came "mainly" from the germplasm garden of the Tea Research and Extension Station, Taoyuan County. Lee et al. 2017 used the variety as one of 113 accessions held by TRES. These are germplasm sampling sites, not growing regions.
 - **Popularity:** Lee et al. 2017 does not flag TTES No. 10 as a "popular or distinguishing tea variety in Taiwan" (footnote f), although it flags TTES Nos. 8, 12, 13, 14, 17, 18, 19 and 20. Hu et al. 2014 does not list it among the 12 prevailing Taiwan cultivars.
@@ -55,6 +57,8 @@ Only one source gives a pedigree. Hu et al. 2014 (Table 1) lists TTES No. 10 as 
 Hu et al. 2014 also lists two sibling crosses with the same introduced pollen-side parent: TTES No. 2 and TTES No. 11 (both Dah-Yeh-Oolong × Jaipuri). Hwang-Gan is also listed as a parent of the breeding lines Tainon-983 (Hwang-Gan × Kyang) and Tainon-8 (Hwang-Gan × Chin-Shin-Oolong), which in turn are parents of TTES Nos. 12, 14 and 15 (Table 1 footnote).
 
 Molecular placement: In Hu et al. 2014's UPGMA dendrogram (STS/CAPS markers, modified Roger's distance), TTES-10 falls in **Group IIIb** with Tiee-Guan-In, Hwang-Gan and other Hwang-Gan-derived varieties (TTES-12, TTES-14, TTES-15, TTES-19). The authors describe TTES-10 as one of Hwang-Gan's "derived varieties", which is consistent with the Table 1 pedigree. The paper does not report a pairwise distance specifically for TTES-10.
+
+Classification labels: Hu et al. 2014 codes TTES-10 as SA (sinensis × assamica hybrid), consistent with its Hwang-Gan × Jaipuri pedigree, while placing SA hybrids inside its "sinensis type" cluster. Hu et al. 2023 puts V010 in its "Sinensis" genetic group, which it defines as cultivars belonging to *C. sinensis* var. *sinensis*; that label sits uneasily with a documented var. *sinensis* × var. *assamica* cross, though Hu et al. 2023 has only three groups (Sinensis/Assamica/Formosana) and separately records V010's origin as "Hybrid". Lee et al. 2017 gives only the species-level code "I, *Camellia sinensis*". These are different classification schemes and are kept side by side in Known Facts rather than treated as a conflict.
 
 Hu et al. 2023 genotyped V010 at 12 SSR loci as part of a 144-cultivar database, but its literature note and text extract report no TTES No. 10-specific pedigree finding. Lee et al. 2017 included it in its ITS2 barcoding set, but no TTES No. 10-specific result appears in the literature note or the extracted text.
 
@@ -75,9 +79,7 @@ No source links TTES No. 10 to *C. formosensis*. Its reported parents are a *C. 
 <!-- Explicitly document any disagreement between sources on any field above. -->
 <!-- Format: [Source A] says X. [Source B] says Y. Decision: pending/use A/use B. Reason: -->
 
-- **Varietal classification.** [[huDevelopmentSTSCAPS2014]] says SA: a *C. sinensis* var. *sinensis* × var. *assamica* hybrid, which matches its listed Hwang-Gan × Jaipuri pedigree. [[huSSRbasedMolecularDiagnosis2023]] places V010 in the "Sinensis" group, defined in its footnote a as "cultivars belonging to C. sinensis var. sinensis". [[leeDNABarcodeIdentification2017]] gives only "I, Camellia sinensis", without a variety. Decision: pending. Reason: Hu et al. 2023 uses only three groups (Sinensis/Assamica/Formosana) and has no hybrid category, so the difference may reflect classification granularity rather than a real disagreement about ancestry. Hu et al. 2014 also puts SA hybrids inside its "sinensis type" cluster. A reviewer should decide which label the graph uses.
-
-No source disagrees on parentage or processing suitability. However, parentage rests on a single source.
+No conflicts recorded. The differing varietal labels (Hu et al. 2023 genetic group, Hu et al. 2014 type code, Lee et al. 2017 species code) are classification-scheme differences, not conflicts; see Known Facts and Parentage Notes. No source disagrees on parentage or processing suitability. However, parentage rests on a single source.
 
 ## Open Questions
 
@@ -88,7 +90,6 @@ No source disagrees on parentage or processing suitability. However, parentage r
 - **Year released/named:** No source gives a date.
 - **Breeding code:** Not given; H10 and V010 are study accession codes.
 - **Parentage:** Hwang-Gan × Jaipuri comes from one table (Hu et al. 2014). An official TBRS/TRES record would corroborate it and confirm which parent was female.
-- **Varietal classification:** SA hybrid vs. "Sinensis" (see Source Conflicts).
 - **Growing regions:** No source names where TTES No. 10 is grown commercially, or whether it is still grown.
 - **Molecular results:** Lee et al. 2017 (ITS2 sequence) and Hu et al. 2023 (12-locus SSR genotype) have per-cultivar data for TTES No. 10 that the literature notes and text extracts don't report. Check their supplementary tables or figures.
 

@@ -44,7 +44,7 @@ Conclusions: We have successfully developed a tool for tea germplasm discriminat
 - Genetic diversity indices (nuclear markers, Table 4): Nei's gene diversity H = 0.36 (sinensis S/SA), 0.34 (assamica A/AS), 0.15 (wild F/FY); observed heterozygosity Ho = 0.38 (S/SA), 0.35 (A/AS), 0.16 (F/FY); Shannon's Information Index I = 0.58 (S/SA), 0.55 (A/AS), 0.26 (F/FY). Cultivated C. sinensis (combined S+SA+A+AS) has consistently higher genetic diversity than wild C. formosensis.
 - Chin-Shin-Oolong and Shy-Jih-Chuen have a very close genetic distance of 0.21 (well below the 0.49 average), with all 10 cytoplasmic marker alleles identical between them — confirming Shy-Jih-Chuen is a genetic descendant of Chin-Shin-Oolong (consistent with earlier ISSR/leaf-morphology work by Hu 2004).
 - Chin-Shin-Oolong is also recorded as the male parent of two more recent released varieties, TTES-19 and TTES-20 (both registered 2004).
-- Together Chin-Shin-Oolong and Shy-Jih-Chuen account for 70.5% of all tea plantation acreage in Taiwan. Top three prevailing cultivars: Chin-Shin-Oolong (57.3%), TTES-12 (13.7%), Shy-Jih-Chuen (13.2%) — >84.2% combined; top five (adding Chin-Shin-Dahpan and TTES-13) cover >98% of Taiwan's tea acreage (2011 Tea Research and Extension Station statistics).
+- Together Chin-Shin-Oolong and Shy-Jih-Chuen account for 70.5% of all tea plantation acreage in Taiwan. Top three prevailing cultivars: Chin-Shin-Oolong (57.3%), TTES-12 (13.7%), Shy-Jih-Chuen (13.2%) — >84.2% combined; the top five (adding Chih-Shih-Dahpan and TTES-13) are the cultivars suited to both Paochong and Oolong tea. All 12 dominant cultivars selected for the study take over 98% of Taiwan's tea acreage (2011 Tea Research and Extension Station statistics).
 - This close relatedness among the dominant cultivars, plus heavy reliance on a small number of varieties, is flagged as a genetic vulnerability risk for Taiwan's tea industry (paralleling Japan's Yabukita cultivar, which alone covers >80% of Japan's green tea acreage, with several other prevailing Japanese cultivars — Kanayamidori, Sayamakaori, Saemidori, Okumidori, Meiryoku — themselves selected from Yabukita).
 - UPGMA dendrogram (Figure 3): at MRD coefficient 0.57, Group I (C. formosensis, F/FY) splits off from all cultivated germplasm; at 0.51, Group II (assamica, A/AS) and Group III (sinensis, S/SA) separate. Group III further splits into IIIa (Chin-Shin-Oolong, Shy-Jih-Chuen, Bair-Mau-Hour, Wuu-Yi, Horng-Shin-Dahpan and derived TTES-3, TTES-4, TTES-9), IIIb (Tiee-Guan-In, Hwang-Gan and derived TTES-10, TTES-12, TTES-14, TTES-15, TTES-19), and IIIc (Chin-Shin-Gantzy, Chin-Shin-Dahpan and derived TTES-1; Dah-Yeh-Oolong and derived TTES-2, TTES-11, TTES-16, TTES-17, TTES-20; Ying-Jy-Horng-Shin and derived TTES-13).
 - Marker informativeness: of 39 total markers, average PIC = 0.32 (range 0.04–0.62). 10 cytoplasmic markers: average PIC 0.25 (mtDNA avg 0.29, cpDNA avg 0.18), avg 2 alleles/locus. 29 nuclear markers: average PIC 0.34 (range 0.04 [G16] to 0.62 [G22]), 2–7 alleles/locus (avg 2.7). 11 nuclear CAPS markers (G03, G12, G14, G15, G17, G18, G20, G22, G23, G26 and one more) show multi-allele patterns; the rest are bi-allelic.
@@ -83,7 +83,7 @@ Conclusions: We have successfully developed a tool for tea germplasm discriminat
 - TTES No.6 / TTES-6 (H6; Chin-Shin-Oolong line)
 - TTES No.7 / TTES-7 (H7; Shan line)
 - TTES No.8 / TTES-8 (H8; Jaipuri line)
-- TTES No.9 / TTES-9 (H9; Horng-Shin-Dahpan × Jaipuri)
+- TTES No.9 / TTES-9 (H9; Horng-Shin-Dahpan × Kyang)
 - TTES No.10 / TTES-10 (H10; Hwang-Gan × Jaipuri)
 - TTES No.11 / TTES-11 (H11; Dah-Yeh-Oolong × Jaipuri)
 - TTES No.12 / TTES-12 (H12; Tainon-8 × Ying-Jy-Horng-Shin)
@@ -118,7 +118,7 @@ Conclusions: We have successfully developed a tool for tea germplasm discriminat
 - Nan-Fong wild tea (W6; Kaohsiung)
 - Long-Tou wild tea (W7; Kaohsiung)
 - Yung-Kang wild tea (W8; Taitung)
-- Named breeding-parent lines referenced in pedigree notes (Table 1 footnotes): Tainon-8, Tainon-983, Tainon-355, Tainon-1958, Tainon-20, Tainon-80, "2022" line
+- Named breeding-parent lines referenced in pedigree notes (Table 1 footnotes): Tainon-8, Tainon-983, Tainon-335 (footnote spelling; Table 1 rows print "Tainon-355"), Tainon-1958, Tainon-20, Tainon-80, "2022" line
 - Yabukita (Japanese cultivar, discussion — comparison case for genetic vulnerability)
 - Kanayamidori, Sayamakaori, Saemidori, Okumidori, Meiryoku (Japanese cultivars selected from Yabukita, discussion)
 
@@ -157,6 +157,7 @@ Conclusions: We have successfully developed a tool for tea germplasm discriminat
 - **Genetic diversity ranking directly contradicts [[laiAssessmentGeneticRelationships]] (Lai et al. 2001).** This paper (STS/CAPS markers) finds cultivated *C. sinensis* (sinensis H=0.36, assamica H=0.34) has *higher* genetic diversity than wild *C. formosensis* (H=0.15). Lai et al. (2001, RAPD/ISSR) found the opposite: native Taiwanese wild tea had the *highest* diversity of the three groups (Hs: RAPD 0.280, ISSR 0.253, vs. China tea 0.197/0.181 and Assam tea 0.074/0.114). This paper explicitly addresses the discrepancy in its Discussion, arguing two of Lai et al.'s "wild tea" samples (Laitou, Shueijing) were later shown by Su (2007) to actually be *Camellia furfuracea*, not true *C. formosensis*, inflating Lai et al.'s apparent wild-species diversity; and that Lai et al.'s Assam-type samples were all India-sourced rather than representative of Taiwan-grown assamica germplasm.
 - **Taxonomic treatment of Taiwanese wild tea differs from [[laiAssessmentGeneticRelationships]].** This paper (2014) treats Taiwan wild tea as the independent species *Camellia formosensis*, per Su et al. (2007, 2009) — see [[suConfirmationCamelliaFormosensis]]. Lai et al. (2001) predates that reclassification and instead calls it *C. sinensis var. assamica f. formosensis* Kitam. (a form nested under the assamica variety). Same underlying taxon, different taxonomic rank/name — a pre- vs. post-2009 split that recurs across the vault (see also [[suConfirmationCamelliaFormosensis]]).
 - **TTES No. 18 parentage ("H18; Burma × Taiwanese wild tea") corroborated by [[TTESNo18]]**, the official TBRS cultivar page, which agrees on parent identity/cross direction and additionally names the specific accession codes (B-729 maternal Burma parent, B-607 paternal wild-tea parent).
+- **Internal inconsistency (within this paper):** Table 1 gives TTES-16 and TTES-17 as "Tainon-355* (TW) × Tainon-1958 (TW)", but the asterisked footnote defines "Tainon-335: Dah-Yeh-Oolong × Kyang". Both spellings are in the PDF's own text layer (checked 2026-11-10), so this is not a conversion error. Not resolvable from this paper; see [[TTES-No-16]], [[TTES-No-17]].
 
 ## Extraction Status
 
